@@ -1,1 +1,2 @@
-print("hello world?")
+username = input("hoe heet je? ")
+print("yoo " + username)
