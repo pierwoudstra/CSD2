@@ -1,7 +1,7 @@
 import simpleaudio
 
 # wav file wordt naar WaveObject overgezet
-snare = "snare.wav"
+snare = "samples/snare.wav"
 wave_object = simpleaudio.WaveObject.from_wave_file(snare)
 
 # met try en except wordt bepaald of het input getal een int is of niet, 
