@@ -11,12 +11,16 @@ def getInput():
         print("please input 'y' or 'n' ")
     
     noteArray = [i for i in input("what rhythm pattern do you want to play? ")]
+    # wordt niet overgezet naar ints in een array ↑
 
     print(bpm, noteArray)
 
     return bpm, noteArray
 
 def playRhythm(bpm, noteArray):
+
+    # maakt nog geen geluid
+
     snare = "samples/snare.wav"
     wave_object = sa.WaveObject.from_wave_file(snare)
 
