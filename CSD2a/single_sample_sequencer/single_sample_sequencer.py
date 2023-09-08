@@ -84,6 +84,7 @@ def playRhythm(bpm, noteArray):
 
 def getCommand():
     # dit werkt nog niet
+    global command 
     command = input("type 'stop' to stop the loop, or fill in another rhythm to change the beat (: \n")
 
     if command == 'stop':
@@ -93,15 +94,13 @@ def getCommand():
 
 def main():
     bpm, noteArray = getInput()
+    beat_thread = threading.Thread(target=playRhythm, args=(bpm, noteArray))
+    beat_thread.start()
+    input_thread = threading.Thread(target=getCommand)
+    input_thread.start()
+    input_thread.join()
+
     # playRhythm(bpm, noteArray)
     # getCommand()
-
-    # creating threads
-    t1 = threading.Thread(target=playRhythm, args=(bpm, noteArray))
-    t2 = threading.Thread(target=getCommand, name='t2')
- 
-    # starting threads
-    t1.start()
-    t2.start()
 
 main()
