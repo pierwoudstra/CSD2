@@ -1,7 +1,5 @@
 import simpleaudio as sa
 import time
-import threading
-# ↑ multithreading experiment, bron: https://www.geeksforgeeks.org/multithreading-python-set-1/
 
 def getInput():
     standardBPM = input("the standard BPM is 120, do you want to use this one? y/n \n")
@@ -82,25 +80,8 @@ def playRhythm(bpm, noteArray):
 
     playRhythm(bpm, noteArray)
 
-def getCommand():
-    # dit werkt nog niet
-    global command 
-    command = input("type 'stop' to stop the loop, or fill in another rhythm to change the beat (: \n")
-
-    if command == 'stop':
-        quit()
-    else:
-        return command
-
 def main():
     bpm, noteArray = getInput()
-    beat_thread = threading.Thread(target=playRhythm, args=(bpm, noteArray))
-    beat_thread.start()
-    input_thread = threading.Thread(target=getCommand)
-    input_thread.start()
-    input_thread.join()
-
-    # playRhythm(bpm, noteArray)
-    # getCommand()
+    playRhythm(bpm, noteArray)
 
 main()
