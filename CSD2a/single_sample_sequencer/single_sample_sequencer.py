@@ -78,7 +78,8 @@ def playRhythm(bpm, noteArray):
 
         i += 1
 
-    playRhythm(bpm, noteArray)
+    # ritme speelt maar één keer
+
 
 def main():
     bpm, noteArray = getInput()
