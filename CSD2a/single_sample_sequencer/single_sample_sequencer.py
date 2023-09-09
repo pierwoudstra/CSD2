@@ -1,3 +1,8 @@
+# te doen:
+# multithreading toevoegen of 
+# - om twee ritmes tegelijkertijd te kunnen of 
+# - om commands in te kunnen tijdens dat het programma speelt
+
 import simpleaudio as sa
 import time
 
