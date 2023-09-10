@@ -3,9 +3,9 @@
 # ook heb ik alle variablen en functies volgens de python conventie genoemd - bron: https://realpython.com/python-pep8/
 #
 # te doen:
-# multithreading toevoegen of 
-# - om twee ritmes tegelijkertijd te kunnen of 
-# - om commands in te kunnen tijdens dat het programma speelt
+# multithreading toevoegen oid om
+# - t̶w̶e̶e̶ ̶r̶i̶t̶m̶e̶s̶ ̶t̶e̶g̶e̶l̶i̶j̶k̶e̶r̶t̶i̶j̶d̶ ̶t̶e̶ ̶k̶u̶n̶n̶e̶n̶ ̶o̶f̶ 
+# - commands in te kunnen voeren tijdens dat het programma speelt
 
 import simpleaudio as sa
 import time
