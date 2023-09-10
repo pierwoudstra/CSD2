@@ -9,6 +9,7 @@
 
 import simpleaudio as sa
 import time
+import threading
 
 def get_bpm():
 
@@ -21,7 +22,7 @@ def get_rhythm_pattern():
 
     # ritme patroon wordt opgehaald
     # ↓ array itereert om lijst te maken, bron:  https://devsheet.com/get-integer-only-values-from-a-list-in-python/
-    return [i for i in input("what rhythm pattern do you want to play? \n write 'k' for kick, 's' for snare and '-' for nothing. \n you can also add numbers in front of the letters to make the sample repeat :o \n")]
+    return [i for i in input("what rhythm pattern do you want to play? \n write 'k' for kick, 's' for snare, 'b' for both and '-' for nothing. \n you can also add numbers in front of the letters to make the sample repeat :o \n")]
 
 def play_sample(file_path, bpm_to_seconds):
 
@@ -32,6 +33,8 @@ def play_sample(file_path, bpm_to_seconds):
     play_object.stop()
 
 def play_rhythm_step(note, bpm_to_seconds):
+
+    # checkt welke sample gespeeld moet worden
     if note == 'k':
         play_sample("samples/kick.wav", bpm_to_seconds)
     elif note == 's':
@@ -46,6 +49,20 @@ def play_rhythm_step(note, bpm_to_seconds):
         for _ in range(amt):
             play_sample("samples/kick.wav", bpm_to_seconds) if note == 'k' else play_sample("samples/snare.wav", bpm_to_seconds)
             time.sleep((bpm_to_seconds/4)/amt)
+    elif note == 'b':
+
+        # functies worden gespesificeerd voor de threads
+        thread1 = threading.Thread(target=play_sample, args=("samples/kick.wav", bpm_to_seconds))
+        thread2 = threading.Thread(target=play_sample, args=("samples/snare.wav", bpm_to_seconds))
+
+        # threads beginnen
+        thread1.start()
+        thread2.start()
+
+        # wacht tot beide threads klaar zijn
+        thread1.join()
+        thread2.join()
+
     else:
         time.sleep(bpm_to_seconds/4)
 
