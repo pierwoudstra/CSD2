@@ -1,6 +1,8 @@
 # versie twee die exact hetzelfde doet als de eerste maar overzichtelijker geordend met behulp van functies
 #
 # ook heb ik alle variablen en functies volgens de python conventie genoemd - bron: https://realpython.com/python-pep8/
+# verdere bron voor efficientie was: https://www.loginradius.com/blog/engineering/speed-up-python-code/
+#                                  & https://towardsdatascience.com/5-simple-techniques-to-write-your-code-more-efficiently-in-python-f095bb2b1e15
 #
 # te doen:
 # multithreading toevoegen oid om
