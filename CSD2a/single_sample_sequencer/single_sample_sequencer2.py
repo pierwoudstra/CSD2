@@ -24,6 +24,16 @@ def get_rhythm_pattern():
     # ↓ array itereert om lijst te maken, bron:  https://devsheet.com/get-integer-only-values-from-a-list-in-python/
     return [i for i in input("what rhythm pattern do you want to play? \n write 'k' for kick, 's' for snare, 'b' for both and '-' for nothing. \n you can also add numbers in front of the letters to make the sample repeat :o \n")]
 
+def get_loop_amt():
+
+    # haalt het aantal loops op en houdt rekening met de optie dat gebruiker geen int invoert
+
+    try:
+        return int(input("how often do you want the pattern to repeat? ")) 
+    
+    except ValueError:
+          print("please input a number >:(")
+
 def play_sample(file_path, bpm_to_seconds):
 
     # functie om een sample te spelen
@@ -73,9 +83,14 @@ def play_rhythm(bpm, note_array):
     for note in note_array:
         play_rhythm_step(note, bpm_to_seconds)
 
+def loop_rhythm(bpm, note_array, loop_amt):
+    for _ in range(loop_amt):
+        play_rhythm(bpm, note_array)
+
 def main():
     bpm = get_bpm()
     note_array = get_rhythm_pattern()
-    play_rhythm(bpm, note_array)
+    loop_amt = get_loop_amt()
+    loop_rhythm(bpm, note_array, loop_amt)
 
 main()
