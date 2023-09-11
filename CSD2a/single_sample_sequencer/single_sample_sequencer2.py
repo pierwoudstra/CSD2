@@ -120,7 +120,7 @@ def play_rhythm(bpm, note_array):
     bpm_to_seconds = 60 / bpm
     index = 0
 
-    while index < len(note_array) - 1:
+    while index < len(note_array):
         note = note_array[index]
         try:
             next_note = note_array[index + 1] # deze variabele laat zien wat de volgende noot zal zijn (voor de repeat functie)
