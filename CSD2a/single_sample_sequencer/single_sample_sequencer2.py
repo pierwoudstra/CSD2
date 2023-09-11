@@ -18,14 +18,28 @@ def get_bpm():
 
     # bpm wordt opgehaald
     # met lower() functie wordt de input als lowercase gelezen
-    standard_bpm = input("the standard BPM is 120, do you want to use this one? y/n \n")
-    return 120 if standard_bpm.lower() == 'y' else int(input("what do you want the BPM to be? "))
+    try:
+        standard_bpm = str(input("the standard BPM is 120, do you want to use this one? y/n \n"))
+    except:
+        print("please input 'y' or 'n' >:(")
+        main()       
+
+    try:
+        return 120 if standard_bpm.lower() == 'y' else int(input("what do you want the BPM to be? "))
+    except:
+        print("please input a number >:(")
+        main()
+
 
 def get_rhythm_pattern():
 
     # ritme patroon wordt opgehaald
     # ↓ array itereert om lijst te maken, bron:  https://devsheet.com/get-integer-only-values-from-a-list-in-python/
-    return [i for i in input("what rhythm pattern do you want to play? \n write 'k' for kick, 's' for snare, 'b' for both and '-' for nothing. \n you can also add numbers in front of the letters to make the sample repeat :o \n")]
+    try:
+        return [i for i in input("what rhythm pattern do you want to play? \n write:\n 'k' for kick,\n 's' for snare,\n 'b' for kick and snare,\n 'h' for hihat, \n and '-' for nothing. \n you can also add numbers in front of the letters to make the sample repeat :o \n")]
+    except TypeError or ValueError:
+        print("please input a pattern >:(")
+        main()
 
 def get_loop_amt():
 
@@ -36,6 +50,7 @@ def get_loop_amt():
     
     except ValueError:
           print("please input a number >:(")
+          main()
 
 def play_sample(file_path, bpm_to_seconds):
 
@@ -52,6 +67,8 @@ def play_rhythm_step(note, bpm_to_seconds, next_note):
         play_sample("samples/kick.wav", bpm_to_seconds)
     elif note == 's':
         play_sample("samples/snare.wav", bpm_to_seconds)
+    elif note == 'h':
+        play_sample("samples/hihat.wav", bpm_to_seconds)
     elif note.isdigit() and isinstance(next_note, str):
 
         # checkt of er een getal voor letter zit (om rolls te kunnen maken)
@@ -60,13 +77,25 @@ def play_rhythm_step(note, bpm_to_seconds, next_note):
         # hierbij geruik ik een for loop puur voor herhaling
         # de iterator is niet belangrijk dus kan ik _ neerzetten
         for _ in range(amt):
-            play_sample("samples/kick.wav", bpm_to_seconds) if next_note == 'k' else play_sample("samples/snare.wav", bpm_to_seconds)
+            if next_note == 'k':
+                play_sample("samples/kick.wav", bpm_to_seconds)
+            elif next_note == 's':
+                play_sample("samples/snare.wav", bpm_to_seconds)
+            else:
+                play_sample("samples/hihat.wav", bpm_to_seconds)
+
             time.sleep((bpm_to_seconds/4)/amt)
     elif len(note) == 2:
         amt = int(note[0])
 
         for _ in range(amt):
-            play_sample("samples/kick.wav", bpm_to_seconds) if note[1] == 'k' else play_sample("samples/snare.wav", bpm_to_seconds)
+            if note[1] == 'k':
+                play_sample("samples/kick.wav", bpm_to_seconds)
+            elif note[1] == 's':
+                play_sample("samples/snare.wav", bpm_to_seconds)
+            else:
+                play_sample("samples/hihat.wav", bpm_to_seconds)
+                
             time.sleep((bpm_to_seconds/4)/amt)
 
     elif note == 'b':
@@ -104,9 +133,7 @@ def play_rhythm(bpm, note_array):
             note_array.pop(index + 1)
         
         index += 1
-
-        print(note_array)
-    
+   
         play_rhythm_step(note, bpm_to_seconds, next_note)
 
 def loop_rhythm(bpm, note_array, loop_amt):
