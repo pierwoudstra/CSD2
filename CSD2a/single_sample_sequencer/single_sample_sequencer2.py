@@ -5,6 +5,7 @@
 #                                  & https://towardsdatascience.com/5-simple-techniques-to-write-your-code-more-efficiently-in-python-f095bb2b1e15
 #
 # te doen:
+#
 # multithreading toevoegen oid om
 # - t̶w̶e̶e̶ ̶r̶i̶t̶m̶e̶s̶ ̶t̶e̶g̶e̶l̶i̶j̶k̶e̶r̶t̶i̶j̶d̶ ̶t̶e̶ ̶k̶u̶n̶n̶e̶n̶ ̶o̶f̶ 
 # - commands in te kunnen voeren tijdens dat het programma speelt
@@ -44,14 +45,14 @@ def play_sample(file_path, bpm_to_seconds):
     time.sleep(bpm_to_seconds/4)
     play_object.stop()
 
-def play_rhythm_step(note, bpm_to_seconds):
+def play_rhythm_step(note, bpm_to_seconds, next_note):
 
     # checkt welke sample gespeeld moet worden
     if note == 'k':
         play_sample("samples/kick.wav", bpm_to_seconds)
     elif note == 's':
         play_sample("samples/snare.wav", bpm_to_seconds)
-    elif note.isdigit():
+    elif note.isdigit() and isinstance(next_note, str):
 
         # checkt of er een getal voor letter zit (om rolls te kunnen maken)
         amt = int(note)
@@ -59,8 +60,15 @@ def play_rhythm_step(note, bpm_to_seconds):
         # hierbij geruik ik een for loop puur voor herhaling
         # de iterator is niet belangrijk dus kan ik _ neerzetten
         for _ in range(amt):
-            play_sample("samples/kick.wav", bpm_to_seconds) if note == 'k' else play_sample("samples/snare.wav", bpm_to_seconds)
+            play_sample("samples/kick.wav", bpm_to_seconds) if next_note == 'k' else play_sample("samples/snare.wav", bpm_to_seconds)
             time.sleep((bpm_to_seconds/4)/amt)
+    elif len(note) == 2:
+        amt = int(note[0])
+
+        for _ in range(amt):
+            play_sample("samples/kick.wav", bpm_to_seconds) if note[1] == 'k' else play_sample("samples/snare.wav", bpm_to_seconds)
+            time.sleep((bpm_to_seconds/4)/amt)
+
     elif note == 'b':
 
         # functies worden gespesificeerd voor de threads
@@ -80,10 +88,26 @@ def play_rhythm_step(note, bpm_to_seconds):
 
 def play_rhythm(bpm, note_array):
 
-    # loopt door de ingevoerde lijst en roept die functie op de beslist wat daar gespeeld moet worden
     bpm_to_seconds = 60 / bpm
-    for note in note_array:
-        play_rhythm_step(note, bpm_to_seconds)
+    index = 0
+
+    while index < len(note_array) - 1:
+        note = note_array[index]
+        try:
+            next_note = note_array[index + 1] # deze variabele laat zien wat de volgende noot zal zijn (voor de repeat functie)
+        except IndexError:
+            next_note = None
+
+        if note.isdigit() and isinstance(next_note, str):
+            repeat_note = note + next_note
+            note_array[index] = repeat_note
+            note_array.pop(index + 1)
+        
+        index += 1
+
+        print(note_array)
+    
+        play_rhythm_step(note, bpm_to_seconds, next_note)
 
 def loop_rhythm(bpm, note_array, loop_amt):
     for _ in range(loop_amt):
