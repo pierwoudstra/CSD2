@@ -64,7 +64,7 @@ def play_rhythm_step(note, bpm_to_seconds, next_note):
 
     # checkt welke sample gespeeld moet worden
     if note == 'k':
-        play_sample("samples/kick.wav", bpm_to_seconds)
+        play_sample("../assignments/samples/kick.wav", bpm_to_seconds)
     elif note == 's':
         play_sample("samples/snare.wav", bpm_to_seconds)
     elif note == 'h':
