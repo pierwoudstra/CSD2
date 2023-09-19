@@ -25,7 +25,7 @@ def get_bpm():
         main()       
 
     try:
-        return 120 if standard_bpm.lower() == 'y' else int(input("what do you want the BPM to be? "))
+        return 120.00 if standard_bpm.lower() == 'y' else float(input("what do you want the BPM to be? "))
     except:
         print("please input a number >:(")
         main()
