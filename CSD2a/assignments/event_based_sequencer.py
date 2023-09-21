@@ -1,3 +1,6 @@
+# event based sequencer:
+# should play sequence based on timestamps without deleting the original sequence
+
 import simpleaudio as sa
 import time
 
@@ -20,6 +23,10 @@ def play_array(timestamps):
     current_ts = timestamps[0]
 
     # TODO make loop that handles timestamps and plays right sample
+
+    # if current_ts = now then play sample
+    # if current_ts > now then wait
+    # if current_ts < now then current_ts++
     while True:
 
         if current_ts[1] > time_zero:
