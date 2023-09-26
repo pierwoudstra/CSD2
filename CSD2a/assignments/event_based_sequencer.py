@@ -19,30 +19,24 @@ def rhythm_to_timestamps(rhythm_array, bpm):
 
     timestamps = []
 
+    sum = 0.0
     for note in chopped_array:
         if note == 'k':
-            timestamps.append(['kick', sixteenthnote_dur])
+            timestamps.append(['kick', sum])
         elif note == 's':
-            timestamps.append(['snare', sixteenthnote_dur])
+            timestamps.append(['snare', sum])
         else:
-            timestamps.append(['~', sixteenthnote_dur])
+            timestamps.append(['~', sum])
 
-    timestamps_no_rests = []
+        sum += sixteenthnote_dur
 
-    sum = 0.0
-    for i in range(len(timestamps)):
-        timestamps[i][1] = sum
-        sum = sum + sixteenthnote_dur
-
-        if timestamps[i][0] != '~':
-            timestamps_no_rests.append(timestamps[i])
+    timestamps_no_rests = [ts for ts in timestamps if ts[0] != '~']
 
     return timestamps_no_rests
 
 def play_sample(file_path):
     wave_object = sa.WaveObject.from_wave_file(file_path)
     play_object = wave_object.play()
-    play_object.wait_done()
 
 def play_array(timestamps):
     if timestamps:
@@ -55,6 +49,8 @@ def play_array(timestamps):
 
     while True:
         now = time.time() - time_zero
+
+        print(now)
 
         if now >= current_ts[1]:
             play_sample("samples/" + current_ts[0] + ".wav")
