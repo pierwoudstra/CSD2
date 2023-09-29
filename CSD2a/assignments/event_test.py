@@ -12,9 +12,9 @@
 import simpleaudio as sa
 import time
 
-kick = sa.WaveObject.from_wave_file("samples/kick")
-snare = sa.WaveObject.from_wave_file("samples/snare")
-hihat = sa.WaveObject.from_wave_file("samples/hihat")
+kick = sa.WaveObject.from_wave_file("samples/kick.wav")
+snare = sa.WaveObject.from_wave_file("samples/snare.wav")
+hihat = sa.WaveObject.from_wave_file("samples/hihat.wav")
 
 rhythm = [
     {timestamp: 0.0, instrument: kick},
@@ -22,3 +22,5 @@ rhythm = [
     {timestamp: 0.75, instrument: snare},
     {timestamp: 1.0, instrument: snare}
 ]
+
+ts = rhythm.pop(0)

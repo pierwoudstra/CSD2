@@ -4,10 +4,14 @@
 import simpleaudio as sa
 import time
 
+kick = sa.WaveObject.from_wave_file("samples/kick.wav")
+snare = sa.WaveObject.from_wave_file("samples/snare.wav")
+hihat = sa.WaveObject.from_wave_file("samples/hihat.wav")
+
 def get_info():
     
-    rhythm_array = 'k--s--k-k---s---'
-    bpm = 114.0
+    rhythm_array = 'k-s-k-s-k-s-k-s-k-s-k-s-k-s-k-s-'
+    bpm = 60.0
 
     return rhythm_array, bpm
 
@@ -34,32 +38,51 @@ def rhythm_to_timestamps(rhythm_array, bpm):
 
     return timestamps_no_rests
 
-def play_sample(file_path):
-    wave_object = sa.WaveObject.from_wave_file(file_path)
-    play_object = wave_object.play()
+def play_sample(instrument):
+    if instrument == 'kick':
+        kick.play()
+    elif instrument == 'snare':
+        snare.play()
+    elif instrument == 'hihat':
+        hihat.play()
+    # play_object.wait_done()
 
 def play_array(timestamps):
-    if timestamps:
-        current_ts = timestamps.pop(0)
-    else:
-        exit()
-
     # get starting time
     time_zero = time.time()
 
+    current_ts = timestamps.pop(0)
+
     while True:
+
+        print(current_ts)
+
         now = time.time() - time_zero
 
-        print(now)
+        # print("current ts = " + str(current_ts))
 
-        if now >= current_ts[1]:
-            play_sample("samples/" + current_ts[0] + ".wav")
-            if timestamps:
-                current_ts = timestamps.pop(0)
-            else:
-                break
+        if now < current_ts[1]:
+            time.sleep(current_ts[1] - now)
+            now = time.time() - time_zero
+
+        play_sample(current_ts[0])
         
-        time.sleep(0.001)
+        if timestamps:
+            current_ts = timestamps.pop(0)
+        else:
+            time.sleep(0.5)
+            break
+        
+
+        # if now >= current_ts[1]:
+        #     print("now = " + str(now))
+        #     play_sample(current_ts[0])
+        #     if timestamps:
+        #         current_ts = timestamps.pop(0)
+        #     else:
+        #         break
+        
+        # time.sleep(0.001)
    
 
 def main():
@@ -67,7 +90,6 @@ def main():
     timestamps = rhythm_to_timestamps(rhythm_array, bpm)
     print(timestamps)
 
-    # TODO make a way to get input and convert it to timestamps
     # TODO make arrays based on loop amount
     play_array(timestamps)
     time.sleep(2)
