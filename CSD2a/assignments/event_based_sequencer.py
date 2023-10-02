@@ -14,15 +14,21 @@ def get_sounds():
 
 def get_info():
     
-    rhythm_array = 'k-s-k-s-k-s-k-s-k-s-k-s-k-s-k-s-'
-    bpm = 60.0
+    rhythm_array = 'k--s--s-h-k-shhh'
+    bpm = 100.0
+    loop_amt = 4
 
-    return rhythm_array, bpm
+    return rhythm_array, bpm, loop_amt
 
-def rhythm_to_timestamps(rhythm_array, bpm):
+def rhythm_to_timestamps(rhythm_array, bpm, loop_amt):
 
     quarternote_dur = 60.0 / bpm
     sixteenthnote_dur = quarternote_dur / 4
+
+    rhythm_array2 = rhythm_array
+
+    for _ in range(loop_amt):
+        rhythm_array += (rhythm_array2)
 
     chopped_array = [i for i in rhythm_array]
 
@@ -34,6 +40,8 @@ def rhythm_to_timestamps(rhythm_array, bpm):
             timestamps.append(['kick', sum])
         elif note == 's':
             timestamps.append(['snare', sum])
+        elif note == 'h':
+            timestamps.append(['hihat', sum])
         else:
             timestamps.append(['~', sum])
 
@@ -85,16 +93,14 @@ def main():
     kick, snare, hihat = get_sounds()
 
     # rhythm array is used without user input, to test faster
-    rhythm_array, bpm = get_info()
+    rhythm_array, bpm, loop_amt = get_info()
 
     # the used type of rhythm notation is converted to timestamps
-    timestamps = rhythm_to_timestamps(rhythm_array, bpm)
-    print(timestamps)
-
-    # TODO make arrays based on loop amount
+    timestamps = rhythm_to_timestamps(rhythm_array, bpm, loop_amt)
 
     # array is played, still with problems at the start
     play_array(timestamps)
+
     time.sleep(1.5)
 
 main()
