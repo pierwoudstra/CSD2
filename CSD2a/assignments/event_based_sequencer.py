@@ -9,8 +9,13 @@ def get_sounds():
     kick = sa.WaveObject.from_wave_file("samples/kick.wav")
     snare = sa.WaveObject.from_wave_file("samples/snare.wav")
     hihat = sa.WaveObject.from_wave_file("samples/hihat.wav")
+    silence = sa.WaveObject.from_wave_file("samples/silence.wav")
 
-    return kick,snare,hihat
+    return kick,snare,hihat, silence
+
+def init_sound(silence):
+    silence.play()
+    time.sleep(1)
 
 def get_info():
     
@@ -90,7 +95,11 @@ def main():
     global kick
     global snare
     global hihat
-    kick, snare, hihat = get_sounds()
+    global silence
+
+    kick, snare, hihat, silence = get_sounds()
+
+    init_sound(silence)
 
     # rhythm array is used without user input, to test faster
     rhythm_array, bpm, loop_amt = get_info()
