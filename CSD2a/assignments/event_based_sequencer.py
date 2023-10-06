@@ -4,36 +4,37 @@
 import simpleaudio as sa
 import time
 
-def get_sounds():
 
+def get_sounds():
     kick = sa.WaveObject.from_wave_file("samples/kick.wav")
     snare = sa.WaveObject.from_wave_file("samples/snare.wav")
     hihat = sa.WaveObject.from_wave_file("samples/hihat.wav")
     silence = sa.WaveObject.from_wave_file("samples/silence.wav")
 
-    return kick,snare,hihat, silence
+    return kick, snare, hihat, silence
+
 
 def init_sound(silence):
     silence.play()
     time.sleep(1)
 
+
 def get_info():
-    
-    rhythm_array = 'k--s--s-h-k-shhh'
+    rhythm_array = "k--s--s-h-k-shhh"
     bpm = 100.0
     loop_amt = 4
 
     return rhythm_array, bpm, loop_amt
 
-def rhythm_to_timestamps(rhythm_array, bpm, loop_amt):
 
+def rhythm_to_timestamps(rhythm_array, bpm, loop_amt):
     quarternote_dur = 60.0 / bpm
     sixteenthnote_dur = quarternote_dur / 4
 
     rhythm_array2 = rhythm_array
 
     for _ in range(loop_amt):
-        rhythm_array += (rhythm_array2)
+        rhythm_array += rhythm_array2
 
     chopped_array = [i for i in rhythm_array]
 
@@ -41,29 +42,30 @@ def rhythm_to_timestamps(rhythm_array, bpm, loop_amt):
 
     sum = 0.0
     for note in chopped_array:
-        if note == 'k':
-            timestamps.append(['kick', sum])
-        elif note == 's':
-            timestamps.append(['snare', sum])
-        elif note == 'h':
-            timestamps.append(['hihat', sum])
+        if note == "k":
+            timestamps.append(["kick", sum])
+        elif note == "s":
+            timestamps.append(["snare", sum])
+        elif note == "h":
+            timestamps.append(["hihat", sum])
         else:
-            timestamps.append(['~', sum])
+            timestamps.append(["~", sum])
 
         sum += sixteenthnote_dur
 
-    timestamps_no_rests = [ts for ts in timestamps if ts[0] != '~']
+    timestamps_no_rests = [ts for ts in timestamps if ts[0] != "~"]
 
     return timestamps_no_rests
 
+
 def play_sample(instrument):
-    if instrument == 'kick':
+    if instrument == "kick":
         kick.play()
-    elif instrument == 'snare':
+    elif instrument == "snare":
         snare.play()
-    elif instrument == 'hihat':
+    elif instrument == "hihat":
         hihat.play()
-    # play_object.wait_done()
+
 
 def play_array(timestamps):
     # get starting time
@@ -73,22 +75,24 @@ def play_array(timestamps):
     current_ts = timestamps.pop(0)
 
     while True:
-
         print(current_ts)
 
         now = time.time() - time_zero
 
+        # current timestamp - now to determine sleep time
+        # got the idea via jozef
         if now < current_ts[1]:
             time.sleep(current_ts[1] - now)
             now = time.time() - time_zero
 
         play_sample(current_ts[0])
-        
+
         if timestamps:
             current_ts = timestamps.pop(0)
         else:
             time.sleep(0.5)
             break
+
 
 def main():
     # initialize samples
@@ -111,5 +115,6 @@ def main():
     play_array(timestamps)
 
     time.sleep(1.5)
+
 
 main()
