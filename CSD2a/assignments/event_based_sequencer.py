@@ -80,7 +80,7 @@ def play_array(timestamps):
         now = time.time() - time_zero
 
         # current timestamp - now to determine sleep time
-        # got the idea via jozef
+        # got the idea from Jozef
         if now < current_ts[1]:
             time.sleep(current_ts[1] - now)
             now = time.time() - time_zero
