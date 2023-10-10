@@ -1,4 +1,6 @@
 def generate_sequence(meter, bpm):
+
+    
     
     return sequence
 

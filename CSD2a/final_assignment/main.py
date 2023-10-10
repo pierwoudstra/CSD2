@@ -1,5 +1,5 @@
 from user_input import get_info
-from generate import *
+from generate import generate_sequence, sequence_to_timestamps
 
 def main():
     meter, bpm, sound_choice = get_info()

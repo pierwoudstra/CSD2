@@ -1,6 +1,6 @@
 import random
 
-num = 7 # natural number between 2 and ∞
+num = 13 # natural number between 2 and ∞
 
 print("input: " + str(num))
 
