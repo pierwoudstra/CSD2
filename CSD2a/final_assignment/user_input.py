@@ -1,3 +1,6 @@
+import os
+from midiutil.MidiFile import MIDIFile
+
 class Text:
     BLUE = "\033[94m"
     RED = "\033[91m"
@@ -57,8 +60,86 @@ def get_sound_choice():
 
 
 def get_info():
+
+    print("\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n| welcome 2 my " + Text.RED + "RHYTHM GENERATOR" + Text.END + " |\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n")
+
     meter = get_meter()
     bpm = get_bpm()
     sound_choice = get_sound_choice()
 
     return meter, bpm, sound_choice
+
+
+def save_to_midi( kicks, snares, snare_offset, hihats, openhats, bpm ):
+
+    # set the necessary values for MIDI util
+    velocity=100
+    track = 0
+    channel = 9  # corresponds to channel 10 drums
+
+
+    # create the MIDIfile object, to which we can add notes
+    mf = MIDIFile(1)
+    # set name and tempo
+    time_beginning = 0
+    mf.addTrackName(track, time_beginning, "generated rhythm")
+    mf.addTempo(track, time_beginning, bpm)
+
+    time = 0
+
+    # add the notes for the kick
+    kick_midi_pitch = 36
+    for dur in kicks:
+        mf.addNote(track, channel, kick_midi_pitch, time, dur / 2, velocity)
+        # increment time based on the duration of the added note
+        time = time + (dur / 2)
+
+    time = 0
+
+    # add the notes for the hihat
+    hihat_midi_pitch = 42
+    for dur in hihats:
+        mf.addNote(track, channel, hihat_midi_pitch, time, dur / 4, velocity)
+        # increment time based on the duration of the added note
+        time = time + (dur / 4)
+
+    time = 0
+
+    # add the notes for the open-hat
+    openhat_midi_pitch = 46
+    for dur in openhats:
+        mf.addNote(track, channel, openhat_midi_pitch, time, dur / 2, velocity)
+        # increment time based on the duration of the added note
+        time = time + (dur / 2)
+
+    # reset the time to snare offset in case the snare does not start at the beginning
+    time = snare_offset
+    # add the notes for the snare
+    snare_midi_pitch = 38
+    for dur in snares:
+        mf.addNote(track, channel, snare_midi_pitch, time, dur / 2, velocity)
+        # increment time based on the duration of the added note
+        time = time + (dur / 2)
+
+    # variable to find path to sub folder
+    filepath = os.path.abspath("./exports/generated_rhythm.midi")
+
+    with open(filepath,'wb') as outf:
+        mf.writeFile(outf)
+
+def ask_midi( kicks, snares, snare_offset, hihats, openhats, bpm ):
+    text1 = "\ndo you want to save this rhythm as midi?"
+    text2 = " y/n\n\n"
+    value = input(Text.BLUE + Text.UNDERLINE + text1 + Text.END + text2)
+
+    while True:
+        if value == 'y' or 'Y':
+            save_to_midi( kicks, snares, snare_offset, hihats, openhats, bpm )
+            print("\nyour rhythm has been saved in the exports folder :)")
+            break
+        elif value == 'n' or 'N':
+            print("\nok bye")
+            quit()
+        else:
+            print("please type 'y' or 'n' :) ")
+            ask_midi( kicks, snares, snare_offset, hihats, openhats, bpm )
