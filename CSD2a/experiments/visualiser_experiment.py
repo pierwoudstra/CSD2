@@ -1,5 +1,25 @@
 import simpleaudio as sa
 import time
+import turtle
+import random
+
+
+def draw_circle():
+    turtle.pendown()
+    turtle.fillcolor("royal blue")
+    turtle.begin_fill()
+    turtle.circle(70)
+    turtle.end_fill()
+    turtle.penup()
+
+
+def draw_triangle():
+    turtle.pendown()
+    turtle.fillcolor("yellow")
+    turtle.begin_fill()
+    turtle.circle(50, steps = 3)
+    turtle.end_fill()
+    turtle.penup() 
 
 
 def get_sounds(sound_choice):
@@ -31,9 +51,16 @@ def init_sound(silence):
 
 
 def play_sample(instrument):
+    # Generate random coordinates for the circle
+    x = random.randint(-200, 200)
+    y = random.randint(-200, 200)
+    turtle.goto(x, y)
+
     if instrument == "kick":
+        draw_circle()
         kick.play()
     elif instrument == "snare":
+        draw_triangle()
         snare.play()
     elif instrument == "hihat":
         hihat.play()
@@ -42,6 +69,15 @@ def play_sample(instrument):
 
 
 def play_array(timestamps):
+    turtle.screensize(400,400)
+    turtle.bgcolor("bisque")
+    turtle.speed(0)  # Set the fastest drawing speed
+    turtle.width(None)
+    turtle.pencolor("bisque")
+    turtle.penup()
+    turtle.hideturtle()
+
+
     # get starting time
     time_zero = time.time()
 
@@ -66,6 +102,7 @@ def play_array(timestamps):
             break
 
 
+
 def play_timestamps(timestamps, sound_choice):
     # initialize samples
     global kick
@@ -84,3 +121,5 @@ def play_timestamps(timestamps, sound_choice):
 
     # sleep at the end to make sure sample plays through
     time.sleep(1.5)
+
+play_timestamps([{"ts": 0, "instrument": "kick"}, {"ts": 0.4, "instrument": "kick"}, {"ts": 0.8, "instrument": "snare"}, {"ts": 1.2, "instrument": "kick"}, {"ts": 1.6, "instrument": "kick"}], 2 )

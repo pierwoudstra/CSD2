@@ -1,6 +1,7 @@
 import os
 from midiutil.MidiFile import MIDIFile
 
+
 class Text:
     BLUE = "\033[94m"
     RED = "\033[91m"
@@ -44,7 +45,7 @@ def get_bpm():
 
 def get_sound_choice():
     text1 = "\nwhat kind of sounds do you want to hear?\n\n"
-    text2 = "~ type '1' for baile funk 🇧🇷\n~ type '2' for hyperpop 💿\n~ type '3' for balkan traditional 🪗\n\n"
+    text2 = "~ type '1' for baile funk 🇧🇷\n~ type '2' for uk garage 💿\n~ type '3' for balkan traditional 🪗\n\n"
 
     while True:
         value = input(Text.BLUE + Text.UNDERLINE + text1 + Text.END + text2)
@@ -60,8 +61,13 @@ def get_sound_choice():
 
 
 def get_info():
-
-    print("\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n| welcome 2 my " + Text.RED + "RHYTHM GENERATOR" + Text.END + " |\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n")
+    print(
+        "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n| welcome 2 my "
+        + Text.RED
+        + "RHYTHM GENERATOR"
+        + Text.END
+        + " |\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n"
+    )
 
     meter = get_meter()
     bpm = get_bpm()
@@ -70,13 +76,13 @@ def get_info():
     return meter, bpm, sound_choice
 
 
-def save_to_midi( kicks, snares, snare_offset, hihats, openhats, bpm ):
+def save_to_midi(kicks, snares, snare_offset, hihats, openhats, bpm):
+    # following code is mostly taken for Ciska's example
 
     # set the necessary values for MIDI util
-    velocity=100
+    velocity = 100
     track = 0
     channel = 9  # corresponds to channel 10 drums
-
 
     # create the MIDIfile object, to which we can add notes
     mf = MIDIFile(1)
@@ -113,7 +119,7 @@ def save_to_midi( kicks, snares, snare_offset, hihats, openhats, bpm ):
         time = time + (dur / 2)
 
     # reset the time to snare offset in case the snare does not start at the beginning
-    time = snare_offset
+    time = snare_offset / 2
     # add the notes for the snare
     snare_midi_pitch = 38
     for dur in snares:
@@ -124,22 +130,23 @@ def save_to_midi( kicks, snares, snare_offset, hihats, openhats, bpm ):
     # variable to find path to sub folder
     filepath = os.path.abspath("./exports/generated_rhythm.midi")
 
-    with open(filepath,'wb') as outf:
+    with open(filepath, "wb") as outf:
         mf.writeFile(outf)
 
-def ask_midi( kicks, snares, snare_offset, hihats, openhats, bpm ):
+
+def get_midi(kicks, snares, snare_offset, hihats, openhats, bpm):
     text1 = "\ndo you want to save this rhythm as midi?"
     text2 = " y/n\n\n"
-    value = input(Text.BLUE + Text.UNDERLINE + text1 + Text.END + text2)
 
     while True:
-        if value == 'y' or 'Y':
-            save_to_midi( kicks, snares, snare_offset, hihats, openhats, bpm )
+        value = input(Text.BLUE + Text.UNDERLINE + text1 + Text.END + text2)
+
+        if value.lower() == "y":
+            save_to_midi(kicks, snares, snare_offset, hihats, openhats, bpm)
             print("\nyour rhythm has been saved in the exports folder :)")
             break
-        elif value == 'n' or 'N':
+        elif value.lower() == "n":
             print("\nok bye")
             quit()
         else:
             print("please type 'y' or 'n' :) ")
-            ask_midi( kicks, snares, snare_offset, hihats, openhats, bpm )
