@@ -1,45 +1,16 @@
 import simpleaudio as sa
 import time
 import turtle
-import random
 
-def draw_star(color):
-    # draws five point star    
-    turtle.up()
-    turtle.speed(0)
-
-    # determine random position
-    x = random.randint(-225, 225)
-    y = random.randint(-325, 325)
-    
-    # move to random position
-    turtle.goto(x, y)
-    turtle.pendown()
-
-    # draw start
-    turtle.color(color)
-    turtle.begin_fill()
-
-    for _ in range(5):
-        turtle.forward(30)
-        turtle.right(144)
-
-    turtle.end_fill()
-
-
-def draw_leaf(y, color):
-    # source: https://pythonturtle.academy/tutorial-drawing-a-flower-petal-or-a-leaf-with-python-turtle/
-
-    turtle.speed(0)
-    turtle.pencolor(color)
+def draw_leaf(y):
     turtle.up()
     turtle.goto(0,y)
     turtle.down()
-    turtle.fillcolor(color)
+    turtle.fillcolor('green')
     turtle.begin_fill()
-    turtle.circle(100,70)
+    turtle.circle(300,70)
     turtle.left(110)
-    turtle.circle(100,70)
+    turtle.circle(300,70)
     turtle.end_fill()
 
 
@@ -72,17 +43,16 @@ def init_sound(silence):
 
 
 def draw(timestamp, instrument):
-    # draws a leaf for kick and snare & stars for hihats
-    height = (timestamp * 100.0) - 300
+    height = timestamp * 20.0
 
     if instrument == "kick":
-        draw_leaf(height, 'green')
+        draw_leaf(height)
     elif instrument == "snare":
-        draw_leaf(height, 'lightgreen')
+        draw_leaf(height)
     elif instrument == "hihat":
-        draw_star('yellow')
+        draw_leaf(height)
     elif instrument == "openhat":
-        draw_star('orange')
+        draw_leaf(height)
 
 
 def play_sample(instrument):
@@ -103,11 +73,6 @@ def play_array(timestamps):
     # get first timestamp
     current_ts = timestamps.pop(0)
 
-    # draw line
-    turtle.goto(0, -300)
-    turtle.left(90)
-    turtle.forward((timestamps[len(timestamps) - 1]["ts"]) * 100.0)
-
     while True:
         now = time.time() - time_zero
 
@@ -118,7 +83,6 @@ def play_array(timestamps):
             now = time.time() - time_zero
 
         play_sample(current_ts["instrument"])
-
         draw(current_ts["ts"], current_ts["instrument"])
 
         if timestamps:
@@ -129,21 +93,17 @@ def play_array(timestamps):
 
 
 def play_timestamps(timestamps, sound_choice):
-    # initialize visuals
-    turtle.screensize(450,650)
-    turtle.setup(500,700)
-    turtle.bgcolor("dark blue")
-    turtle.pencolor('green')
-    turtle.speed(0)
-    turtle.hideturtle()
-    turtle.pensize(4)
-
     # initialize samples
     global kick
     global snare
     global hihat
     global openhat
     global silence
+
+    # initialize visuals
+    turtle.speed(0)
+    turtle.hideturtle()
+
     kick, snare, hihat, openhat, silence = get_sounds(sound_choice)
 
     # start audio engine
@@ -152,8 +112,5 @@ def play_timestamps(timestamps, sound_choice):
     # play through timestamps
     play_array(timestamps)
 
-    # make sure you can exit visuals with click
-    turtle.Screen().exitonclick()
-
     # sleep at the end to make sure sample plays through
-    time.sleep(1)
+    time.sleep(1.5)
