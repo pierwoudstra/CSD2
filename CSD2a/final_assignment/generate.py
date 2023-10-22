@@ -2,10 +2,11 @@ import random
 
 
 def divide_2s_3s(num):
+    # divides an input number into 2's and 3's
     array = []
 
     while True:
-        if num == 6:
+        if num == 6: # maximum of two 3's
             array.append(3)
             array.append(3)
             break
@@ -19,6 +20,7 @@ def divide_2s_3s(num):
             array.append(2)
             num = num - 2
 
+    # shuffles array
     random.shuffle(array)
 
     return array
@@ -187,8 +189,10 @@ def hihats_to_ts(hihats, openhats, bpm):
 
 
 def sequence_to_timestamps(kicks, snares, snare_offset, hihats, openhats, bpm):
-    # convert kicks and snares to timestamps
+    # convert kicks to timestamps
     kicks_ts = kicks_to_ts(kicks, bpm)
+
+    # convert snares to timestamps
     snares_ts = snares_to_ts(snares, snare_offset, bpm)
 
     # convert hihats to timestamps

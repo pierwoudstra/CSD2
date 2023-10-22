@@ -3,6 +3,7 @@ from midiutil.MidiFile import MIDIFile
 
 
 class Text:
+    # class to represent different text effects
     BLUE = "\033[94m"
     RED = "\033[91m"
     UNDERLINE = "\033[4m"
@@ -10,6 +11,7 @@ class Text:
 
 
 def get_meter():
+    # gets meter, using standard way to troubleshoot input
     text1 = "what do you want the time signature to be?"
     text2 = " (in eighth notes)"
     text3 = "\nput '5' for 5/8, '7' for 7/8, etc... \n\n"
@@ -28,6 +30,7 @@ def get_meter():
 
 
 def get_bpm():
+    # gets bpm, using standard way to troubleshoot input
     text1 = "\nwhat do you want the bpm to be?\n\n"
 
     while True:
@@ -44,8 +47,9 @@ def get_bpm():
 
 
 def get_sound_choice():
+    # gets sound choice, using standard way to troubleshoot input
     text1 = "\nwhat kind of sounds do you want to hear?\n\n"
-    text2 = "~ type '1' for baile funk 🇧🇷\n~ type '2' for uk garage 💿\n~ type '3' for balkan traditional 🪗\n\n"
+    text2 = "~ type '1' for funk carioca 🇧🇷\n~ type '2' for uk garage 💿\n~ type '3' for balkan traditional 🎺\n\n"
 
     while True:
         value = input(Text.BLUE + Text.UNDERLINE + text1 + Text.END + text2)
@@ -61,6 +65,7 @@ def get_sound_choice():
 
 
 def get_info():
+    # title screen
     print(
         "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n| welcome 2 my "
         + Text.RED
@@ -135,6 +140,7 @@ def save_to_midi(kicks, snares, snare_offset, hihats, openhats, bpm):
 
 
 def get_midi(kicks, snares, snare_offset, hihats, openhats, bpm):
+    # asks if user wants to save the rhythm as midi
     text1 = "\ndo you want to save this rhythm as midi?"
     text2 = " y/n\n\n"
 
