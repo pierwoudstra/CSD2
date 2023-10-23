@@ -5,6 +5,7 @@ import time
 def draw_kick():
     print("   ----\n /      \\\n|  kick  |\n \      /\n   ----")
 
+
 def draw_snare():
     print("     ^\n    / \\\n   /   \\\n  /snare\\\n  - - - -")
 
@@ -42,7 +43,7 @@ def init_sound(silence):
 
 
 def draw(timestamp, instrument):
-    # print shape per instrument 
+    # print shape per instrument
     if instrument == "kick":
         draw_kick()
     elif instrument == "snare":

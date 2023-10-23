@@ -6,7 +6,7 @@ def divide_2s_3s(num):
     array = []
 
     while True:
-        if num == 6: # maximum of two 3's
+        if num == 6:  # maximum of two 3's
             array.append(3)
             array.append(3)
             break
