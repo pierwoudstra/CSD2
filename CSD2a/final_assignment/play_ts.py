@@ -3,10 +3,10 @@ import time
 
 
 def draw_kick():
-    print("   ----\n /      \\\n|  kick  |\n \      /\n   ----\n")
+    print("   ----\n /      \\\n|  kick  |\n \      /\n   ----")
 
 def draw_snare():
-    print("     ^\n    / \\\n   /   \\\n  /snare\\\n  - - - -\n")
+    print("     ^\n    / \\\n   /   \\\n  /snare\\\n  - - - -")
 
 
 def draw_star():

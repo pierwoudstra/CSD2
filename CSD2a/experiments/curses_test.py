@@ -3,7 +3,12 @@ import curses
 screen = curses.initscr()
 
 curses.curs_set(0)
-screen.addstr("Hello, I will be cleared in 2 seconds.")
+screen.addstr("   ----\n /      \\\n|  kick  |\n \      /\n   ----")
+screen.refresh()
+curses.napms(2000)
+
+screen.clear()
+screen.addstr("     ^\n    / \\\n   /   \\\n  /snare\\\n  - - - -")
 screen.refresh()
 curses.napms(2000)
 
