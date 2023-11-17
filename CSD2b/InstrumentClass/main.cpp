@@ -3,7 +3,7 @@
 class Instrument {
   public:
 
-    Instrument(std::string initSound = "bop") {
+    Instrument(std::string initSound = "tss") {
       sound = initSound;
     }
 
@@ -28,6 +28,7 @@ class Instrument {
 };
 
 int main() {
+  Instrument hihat;
   Instrument gong = Instrument("gonngg");
   Instrument piano = Instrument("tangg");
 
@@ -35,4 +36,6 @@ int main() {
   piano.play(5);
 
   gong.play();
+
+  hihat.play(3);
 }
