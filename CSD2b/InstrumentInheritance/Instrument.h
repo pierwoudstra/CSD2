@@ -6,11 +6,11 @@
 class Instrument {
 public:
   Instrument(std::string initSound, int initRange);
-  ~Instrument();
   void setSound(std::string newSound);
   void setRange(int newRange);
   std::string getSound();
-  void play(int numOfRepeats);
+  int getRange();
+  void play(int numOfRepeats, int pitch);
 
 protected:
   std::string sound;

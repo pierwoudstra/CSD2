@@ -12,8 +12,15 @@ void Instrument::setRange(int newRange) { range = newRange; }
 
 std::string Instrument::getSound() { return sound; }
 
-void Instrument::play(int numOfRepeats) {
-  for (int i = 0; i < numOfRepeats; i++) {
-    std::cout << getSound() << std::endl;
+int Instrument::getRange() { return range; }
+
+void Instrument::play(int numOfRepeats, int pitch) {
+  if (pitch <= getRange() && pitch >= 0) {
+    for (int i = 0; i < numOfRepeats; i++) {
+      std::cout << getSound() << "! pitch: " << pitch << std::endl;
+    }
+  } else {
+    std::cout << "sorry, please choose a pitch inside the note range"
+              << std::endl;
   }
 }

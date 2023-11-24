@@ -8,7 +8,6 @@ class StringedInstrument : public Instrument {
 public:
   StringedInstrument(std::string initSound, int initRange,
                      std::string initStringMaterial, std::string initExciter);
-  ~StringedInstrument();
 
 private:
   std::string stringMaterial;
