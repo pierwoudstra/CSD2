@@ -4,21 +4,21 @@ class Instrument {
   public:
 
     Instrument(std::string initSound = "tss") {
-      sound = initSound;
+        sound = initSound;
     }
 
     void setSound(std::string newSound){
-      sound = newSound;
+        sound = newSound;
     }
 
     std::string getSound() {
-      return sound;
+        return sound;
     }
 
     void play( int numOfRepeats = 1 ) {
-      for ( int i = 0; i < numOfRepeats; i++ ) {
-        std::cout << getSound() << std::endl;
-      }
+        for ( int i = 0; i < numOfRepeats; i++ ) {
+            std::cout << getSound() << std::endl;
+        }
     }
 
   private:
@@ -26,6 +26,7 @@ class Instrument {
     std::string sound;
 
 };
+
 
 int main() {
   Instrument hihat;
