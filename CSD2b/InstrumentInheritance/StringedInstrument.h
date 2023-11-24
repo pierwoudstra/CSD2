@@ -1,11 +1,18 @@
-#include <iostream>
 #include "Instrument.h"
+#include <iostream>
+
+#ifndef STRINGEDINSTRUMENT_H
+#define STRINGEDINSTRUMENT_H
 
 class StringedInstrument : public Instrument {
-  private:
-    std::string stringMaterial;
-    float bodySize;
+public:
+  StringedInstrument(std::string initSound, int initRange,
+                     std::string initStringMaterial, std::string initExciter);
+  ~StringedInstrument();
 
-  public:
-    StringedInstrument( std::string initSound, int initRange, std::string initStringMaterial, float initBodySize );
+private:
+  std::string stringMaterial;
+  std::string exciter;
 };
+
+#endif // STRINGEDINSTRUMENT_H

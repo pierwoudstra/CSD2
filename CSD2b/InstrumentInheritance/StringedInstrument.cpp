@@ -1,10 +1,14 @@
-#include <iostream>
 #include "StringedInstrument.h"
+#include <iostream>
 
-StringedInstrument::StringedInstrument( std::string initSound, int initRange, std::string initStringMaterial, float initBodySize ) : Instrument ( initSound, initRange ) {
-        sound = initSound;
-        range = initRange;
-        
-        stringMaterial = initStringMaterial;
-        bodySize = initBodySize;
+StringedInstrument::StringedInstrument(std::string initSound, int initRange,
+                                       std::string initStringMaterial,
+                                       std::string initExciter)
+    : Instrument(initSound, initRange) {
+
+  sound = initSound;
+  range = initRange;
+
+  stringMaterial = initStringMaterial;
+  exciter = initExciter;
 }
