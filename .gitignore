@@ -3,3 +3,4 @@ __pycache__
 generated_rhythm.midi
 ./CSD2b/02_InstrumentClass/instrument
 ./CSD2b/03_SineClass/output
+.idea
