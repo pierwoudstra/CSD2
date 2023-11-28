@@ -23,3 +23,5 @@ void Oscillator::setFrequency(float frequency) {
 float Oscillator::getFrequency() { return frequency; }
 
 void Oscillator::setAmplitude(float amplitude) { this->amplitude = amplitude; }
+
+float Oscillator::getAmplitude() { return amplitude; }

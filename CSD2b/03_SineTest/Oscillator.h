@@ -11,6 +11,7 @@ public:
   void setFrequency(float frequency);
   float getFrequency();
   void setAmplitude(float amplitude);
+  float getAmplitude();
 
 protected:
   int sampleRate;
