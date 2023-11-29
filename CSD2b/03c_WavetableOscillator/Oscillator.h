@@ -21,7 +21,7 @@ private:
   float amplitude;
   int sampleRate;
 
-  WaveTable waveTable(std::string waveType);
+  WaveTable *waveTable;
   float phase;
   float sample;
 };

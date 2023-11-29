@@ -1,12 +1,13 @@
 CXX=g++
 CXXFLAGS=-Wall -std=c++1z
-LDFLAGS=
+LDFLAGS=-ljack
 SOURCE= main.o WaveTable.o Oscillator.o writeToFile.o
 TARGET=output
 
 $(TARGET): $(SOURCE)
 	$(CXX) -o $@ $(SOURCE) $(LDFLAGS)
-	rm *.o
+
+plot:
 	./output
 	python3 plot.py output.csv
 

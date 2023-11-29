@@ -1,5 +1,5 @@
-
 #include <iostream>
+#include <math.h>
 #include "WaveTable.h"
 
 #define PI 3.14159265359
