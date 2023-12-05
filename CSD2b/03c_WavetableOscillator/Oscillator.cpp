@@ -1,8 +1,9 @@
+#include "Oscillator.h"
 #include <iostream>
 #include <math.h>
-#include "Oscillator.h"
 
-Oscillator::Oscillator(std::string waveType, float frequency, float amplitude, int sampleRate) {
+Oscillator::Oscillator(std::string waveType, float frequency, float amplitude,
+                       int sampleRate) {
   waveTable = new WaveTable(waveType);
   this->frequency = frequency;
   this->amplitude = amplitude;
@@ -11,26 +12,24 @@ Oscillator::Oscillator(std::string waveType, float frequency, float amplitude, i
   sample = 0;
 }
 
-Oscillator::~Oscillator() {}
-
+Oscillator::~Oscillator() {
+  delete[] waveTable;
+}
 
 // methods for playing oscillator
 
-float Oscillator::getSample() {
-  return sample;
-}
+float Oscillator::getSample() { return sample; }
 
 void Oscillator::tick() {
   // update phase
   phase += frequency / sampleRate;
-  if(phase > 1.0f) {
+  if (phase > 1.0f) {
     phase -= 1.0f;
   }
 
   // update sample
   sample = waveTable->getWaveTableIndex(floor(phase * 1024.0f));
 }
-
 
 // getters & setters
 

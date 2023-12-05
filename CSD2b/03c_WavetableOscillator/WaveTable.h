@@ -9,6 +9,7 @@ public:
   ~WaveTable();
 
   float getWaveTableIndex(int index);
+
 protected:
   constexpr static int tableSize = 1024;
   float waveTable[tableSize];

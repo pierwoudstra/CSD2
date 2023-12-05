@@ -1,6 +1,6 @@
+#include "WaveTable.h"
 #include <iostream>
 #include <math.h>
-#include "WaveTable.h"
 
 #define PI 3.14159265359
 
@@ -14,7 +14,7 @@ WaveTable::WaveTable(std::string waveForm) {
   } else if (waveForm == "saw") {
     // generates saw wave
     for (int i = 0; i < tableSize; i++) {
-      waveTable[i] =  2.0f * ( float(i) / tableSize );
+      waveTable[i] = 2.0f * (float(i) / tableSize);
       if (waveTable[i] > 1.0f) {
         waveTable[i] -= 2.0f;
       }

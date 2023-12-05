@@ -1,6 +1,6 @@
-#include <iostream>
-#include "jack_module.h"
 #include "Oscillator.h"
+#include "jack_module.h"
+#include <iostream>
 
 /*
  * sounding wave-table oscillator using Ciska's
@@ -18,20 +18,24 @@
 class CustomCallback : public AudioCallback {
 public:
   void prepare(int rate) override {
-    sampleRate = (float) rate;
+    sampleRate = (float)rate;
     std::cout << "\nsample rate: " << sampleRate << std::endl;
   }
 
   void process(AudioBuffer buffer) override {
     for (int i = 0; i < buffer.numFrames; ++i) {
       // write sample to buffer at channel 0, amp = 0.25
-      buffer.outputChannels[0][i] = squareOsc.getSample();
-      squareOsc.tick();
+      buffer.outputChannels[0][i] = sinOsc.getSample() * abs(modulator.getSample());
+      modulator.tick();
+      sinOsc.tick();
     }
   }
+
 private:
   float sampleRate = 44100;
-  Oscillator squareOsc = Oscillator("square", 220.0f, 0.9f, sampleRate);
+  Oscillator squareOsc = Oscillator("square", 220.0f, 0.5f, sampleRate);
+  Oscillator sinOsc = Oscillator("sine", 220.0f, 0.7f, sampleRate);
+  Oscillator modulator = Oscillator("saw", 133.0f, 1.0f, sampleRate);
 };
 
 int main() {
