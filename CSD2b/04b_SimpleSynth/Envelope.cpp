@@ -1,7 +1,9 @@
 #include "Envelope.h"
-#include <iostream>
 
-Envelope::Envelope(int sampleRate) {
+Envelope::Envelope(float attack, float decay, bool loop, int sampleRate) {
+  this->attack = attack;
+  this->decay = decay;
+  this->loop = loop;
   this->sampleRate = sampleRate;
   phase = 0.f;
   value = 0.f;
@@ -16,15 +18,23 @@ float Envelope::getValue() {
 void Envelope::tick() {
   phase += 1.f / float(sampleRate);
 
-  if (phase < 0.25f) {
-    value = 4.f * phase;
-  } else if (phase > 0.25f && phase < 1.f) {
-    value = (-1 / 0.75) * phase + (1 / 0.75);
-  } else if (phase > 1.f) {
-    value = 0.f;
-  }
+  if (phase < attack) {
 
-  std::cout << value << std::endl;
+    value = (1.f / attack) * phase;
+
+  } else if (phase > attack && phase < decay) {
+
+    value = (phase - attack) / (attack - decay) + 1.f;
+
+  } else if (phase > 1.f) {
+
+    if (loop) {
+      resetPhase();
+    } else {
+      value = 0.f;
+    }
+
+  }
 }
 
 void Envelope::resetPhase() {

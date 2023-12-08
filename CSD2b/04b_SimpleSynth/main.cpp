@@ -2,6 +2,7 @@
 #include "Envelope.h"
 #include "jack_module.h"
 #include <iostream>
+#include <math.h>
 
 /*
  * sounding wave-table oscillator using Ciska's
@@ -27,24 +28,31 @@ public:
     for (int i = 0; i < buffer.numFrames; ++i) {
 
       // modulate frequency with output of modulator synth
-      sinOsc.setFrequency(220.0f + (modulator.getSample() * 50.0f));
+      sinOsc.setFrequency(220.f + (modulator.getSample() * 50.0f));
+
+      squareOsc.setFrequency(55.f + (freqEnv.getValue() * 700.f));
 
       //
-      float output = sinOsc.getSample() * env.getValue();
+      float hardcoreKick = tanh((squareOsc.getSample() + ( overTone.getSample() * 0.1f )) * ampEnv.getValue() * 70.f) * 0.8f;
 
-      buffer.outputChannels[0][i] = output;
+      buffer.outputChannels[0][i] = hardcoreKick;
       sinOsc.tick();
       modulator.tick();
-      env.tick();
+      ampEnv.tick();
+      freqEnv.tick();
+      squareOsc.tick();
+      overTone.tick();
     }
   }
 
 private:
   float sampleRate = 44100;
-  Oscillator squareOsc = Oscillator("square", 220.0f, 0.5f, sampleRate);
+  Oscillator squareOsc = Oscillator("sine", 220.0f, 0.5f, sampleRate);
+  Oscillator overTone = Oscillator("square", 1100.0f, 0.5f, sampleRate);
   Oscillator sinOsc = Oscillator("sine", 220.0f, 0.7f, sampleRate);
   Oscillator modulator = Oscillator("saw", 133.0f, 1.0f, sampleRate);
-  Envelope env = Envelope(sampleRate);
+  Envelope ampEnv = Envelope(0.05f, 0.6f, true, sampleRate / 3);
+  Envelope freqEnv = Envelope(0.f, 0.07f, true, sampleRate / 3);
 };
 
 int main() {

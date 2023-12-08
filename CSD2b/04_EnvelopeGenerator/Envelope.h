@@ -3,16 +3,20 @@
 
 class Envelope {
 public:
-  Envelope(int sampleRate);
+  Envelope(float attack, float decay, bool loop, int sampleRate);
   ~Envelope();
 
   float getValue();
   void tick();
+  void resetPhase();
 
 private:
+  float attack;
+  float decay;
   int sampleRate;
   float phase;
   float value;
+  bool loop;
 
 };
 
