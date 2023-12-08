@@ -1,4 +1,5 @@
 #include "Oscillator.h"
+#include "Envelope.h"
 #include "jack_module.h"
 #include <iostream>
 
@@ -27,11 +28,14 @@ public:
 
       // modulate frequency with output of modulator synth
       sinOsc.setFrequency(220.0f + (modulator.getSample() * 50.0f));
-      float output = sinOsc.getSample();
+
+      //
+      float output = sinOsc.getSample() * env.getValue();
 
       buffer.outputChannels[0][i] = output;
-      modulator.tick();
       sinOsc.tick();
+      modulator.tick();
+      env.tick();
     }
   }
 
@@ -40,9 +44,11 @@ private:
   Oscillator squareOsc = Oscillator("square", 220.0f, 0.5f, sampleRate);
   Oscillator sinOsc = Oscillator("sine", 220.0f, 0.7f, sampleRate);
   Oscillator modulator = Oscillator("saw", 133.0f, 1.0f, sampleRate);
+  Envelope env = Envelope(sampleRate);
 };
 
 int main() {
+
   auto callback = CustomCallback{};
   auto jackModule = JackModule{callback};
 
