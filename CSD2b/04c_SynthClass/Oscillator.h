@@ -6,7 +6,7 @@
 
 class Oscillator {
 public:
-  Oscillator(std::string waveType, float frequency, float amplitude,
+  Oscillator(float frequency, float amplitude,
              int sampleRate);
   ~Oscillator();
 
@@ -19,7 +19,7 @@ public:
   void setFrequency(float frequency);
   void setAmplitude(float amplitude);
 
-private:
+protected:
   std::string waveType;
   float frequency;
   float amplitude;

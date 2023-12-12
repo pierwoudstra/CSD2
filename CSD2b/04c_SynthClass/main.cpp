@@ -1,5 +1,8 @@
 #include "Envelope.h"
 #include "Oscillator.h"
+#include "Sine.h"
+#include "Saw.h"
+#include "Square.h"
 #include "jack_module.h"
 #include <iostream>
 #include <math.h>
@@ -51,10 +54,10 @@ public:
 
 private:
   float sampleRate = 44100;
-  Oscillator squareOsc = Oscillator("sine", 220.0f, 0.5f, sampleRate);
-  Oscillator overTone = Oscillator("square", 1100.0f, 0.5f, sampleRate);
-  Oscillator sinOsc = Oscillator("sine", 220.0f, 0.7f, sampleRate);
-  Oscillator modulator = Oscillator("saw", 133.0f, 1.0f, sampleRate);
+  Oscillator squareOsc = Square(220.0f, 0.5f, sampleRate);
+  Oscillator overTone = Saw(1100.0f, 0.5f, sampleRate);
+  Oscillator sinOsc = Sine(220.0f, 0.7f, sampleRate);
+  Oscillator modulator = Sine(133.0f, 1.0f, sampleRate);
   Envelope ampEnv = Envelope(0.05f, 0.6f, true, sampleRate);
   Envelope freqEnv = Envelope(0.f, 0.07f, true, sampleRate);
 };

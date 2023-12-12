@@ -1,7 +1,7 @@
 CXX=g++
 CXXFLAGS=-Wall -std=c++1z
 LDFLAGS=-ljack
-SOURCE= main.o Synthesizer.o WaveTable.o Oscillator.o Envelope.o writeToFile.o
+SOURCE= main.o WaveTable.o Oscillator.o Sine.o Square.o Saw.o Envelope.o writeToFile.o
 TARGET=output
 
 $(TARGET): $(SOURCE)
