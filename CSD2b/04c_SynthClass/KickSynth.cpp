@@ -25,6 +25,7 @@ void KickSynth::tick() {
     phase -= 1.0f;
   }
 
+  // pitch envelope
   oscillators[0]->setFrequency(frequency + (envelopes[1]->getValue() * 700.f));
 
   // assign value to output sample

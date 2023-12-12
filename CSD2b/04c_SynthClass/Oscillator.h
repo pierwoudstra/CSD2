@@ -6,7 +6,7 @@
 
 class Oscillator {
 public:
-  Oscillator(float frequency, float amplitude, int sampleRate);
+  Oscillator(float frequency, float amplitude, float sampleRate);
   ~Oscillator();
 
   float getSample();
@@ -22,7 +22,7 @@ protected:
   std::string waveType;
   float frequency;
   float amplitude;
-  int sampleRate;
+  float sampleRate;
 
   WaveTable *waveTable;
   float phase;

@@ -1,5 +1,6 @@
 #include "KickSynth.h"
 #include "DetunedSaw.h"
+#include "FMSynth.h"
 #include "jack_module.h"
 #include "writeToFile.h"
 #include <iostream>
@@ -32,9 +33,10 @@ public:
     for (int channel = 0; channel < numOutputChannels; ++channel) {
       for (int sample = 0; sample < numFrames; ++sample) {
 
-        outputChannels[channel][sample] = kick.getSample() + saw.getSample();
+        outputChannels[channel][sample] = fm.getSample();
         kick.tick();
         saw.tick();
+        fm.tick();
       }
     }
   }
@@ -43,11 +45,12 @@ private:
   float sampleRate = 44100;
   KickSynth kick = KickSynth(0.9f, sampleRate, 20.f, 40.f);
   DetunedSaw saw = DetunedSaw( 0.9f, sampleRate, 60.f, 0.4f );
+  FMSynth fm = FMSynth(0.9f, sampleRate, 64.f, 4.f, 1.f);
 };
 
 int main() {
 
-  DetunedSaw kick = DetunedSaw(0.9f, 44100, 20.f, 0.4f);
+  FMSynth kick = FMSynth(0.9f, 44100, 60.0f, 4.0f, 50.0f);
   // init write to file
   WriteToFile fileWriter("output.csv", true);
 

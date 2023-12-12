@@ -2,7 +2,7 @@
 #include <iostream>
 #include <math.h>
 
-Oscillator::Oscillator(float frequency, float amplitude, int sampleRate) {
+Oscillator::Oscillator(float frequency, float amplitude, float sampleRate) {
   this->frequency = frequency;
   this->amplitude = amplitude;
   this->sampleRate = sampleRate;
@@ -41,7 +41,7 @@ bool Oscillator::isPlaying() { return increment != 0.f; }
 // getters & setters
 
 void Oscillator::setFrequency(float frequency) {
-  if (this->frequency > 0 && this->frequency < sampleRate / 2) {
+  if ( this->frequency > 0.f && this->frequency < (sampleRate / 2) ) {
     this->frequency = frequency;
     increment = frequency / sampleRate;
   }
