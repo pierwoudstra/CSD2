@@ -47,7 +47,7 @@ private:
 
 int main() {
 
-  KickSynth kick = KickSynth(0.9f, 44100, 20.f, 2.f);
+  DetunedSaw kick = DetunedSaw(0.9f, 44100, 20.f, 0.4f);
   // init write to file
   WriteToFile fileWriter("output.csv", true);
 
