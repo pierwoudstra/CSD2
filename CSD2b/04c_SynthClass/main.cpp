@@ -1,5 +1,5 @@
-#include "Oscillator.h"
 #include "Envelope.h"
+#include "Oscillator.h"
 #include "jack_module.h"
 #include <iostream>
 #include <math.h>
@@ -33,9 +33,13 @@ public:
       squareOsc.setFrequency(55.f + (freqEnv.getValue() * 700.f));
 
       //
-      float hardcoreKick = tanh((squareOsc.getSample() + ( overTone.getSample() * 0.1f )) * ampEnv.getValue() * 70.f) * 0.8f;
+      float hardcoreKick =
+          tanh((squareOsc.getSample() + (overTone.getSample() * 0.1f)) *
+               ampEnv.getValue() * 70.f) *
+          0.8f;
 
-      buffer.outputChannels[0][i] = hardcoreKick; //+ buffer.outputChannels[0][i - 1];
+      buffer.outputChannels[0][i] =
+          hardcoreKick; //+ buffer.outputChannels[0][i - 1];
       sinOsc.tick();
       modulator.tick();
       ampEnv.tick();
