@@ -1,14 +1,15 @@
 #include "KickSynth.h"
 
-KickSynth::KickSynth(float amplitude, float sampleRate, float midiNote, float distortion)
+KickSynth::KickSynth(float amplitude, float sampleRate, float midiNote,
+                     float drive)
     : Synth(amplitude, sampleRate) {
   frequency = midiToFrequency(midiNote);
-  this->distortion = distortion;
+  this->drive = drive;
 
   // amplitude envelope
   envelopes[0] = new Envelope(0.05f, 0.6f, false, sampleRate);
   // frequency envelope
-  envelopes[1] = new Envelope(0.f, 0.07f, false, sampleRate);
+  envelopes[1] = new Envelope(0.f, 0.1f, false, sampleRate);
 
   oscillators[0] = new Sine(frequency, amplitude, sampleRate);
   oscillators[1] = NULL;
@@ -24,10 +25,12 @@ void KickSynth::tick() {
     phase -= 1.0f;
   }
 
-  oscillators[0]->setFrequency( frequency + (envelopes[1]->getValue() * 700.f));
+  oscillators[0]->setFrequency(frequency + (envelopes[1]->getValue() * 700.f));
 
   // assign value to output sample
-  sample = tanh( oscillators[0]->getSample() * envelopes[0]->getValue() * distortion) * amplitude;
+  sample =
+      (tanh(oscillators[0]->getSample() * drive * envelopes[0]->getValue()) *
+       amplitude);
 
   // update oscillator and envelope
   oscillators[0]->tick();

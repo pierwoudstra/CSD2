@@ -19,15 +19,15 @@ public:
 
 protected:
   float sampleRate;
-  float phase; // phase refers to phase of amplitude envelope
+  float phase;     // phase refers to phase of amplitude envelope
   float frequency; // frequency in Hz
   float amplitude;
   float increment; // increment is calculated in constructor
-  float sample; // output sample
+  float sample;    // output sample
 
-  Envelope* envelopes[2]; // two envelopes (don't have to be used both)
+  Envelope *envelopes[2]; // two envelopes (don't have to be used both)
 
-  Oscillator* oscillators[3]; // oscillator bank
+  Oscillator *oscillators[3]; // oscillator bank
 
   float midiToFrequency(float midiNote); // returns frequency in Hz
 };

@@ -2,8 +2,7 @@
 #include <iostream>
 #include <math.h>
 
-Oscillator::Oscillator(float frequency, float amplitude,
-                       int sampleRate) {
+Oscillator::Oscillator(float frequency, float amplitude, int sampleRate) {
   this->frequency = frequency;
   this->amplitude = amplitude;
   this->sampleRate = sampleRate;
@@ -12,9 +11,7 @@ Oscillator::Oscillator(float frequency, float amplitude,
   increment = frequency / sampleRate;
 }
 
-Oscillator::~Oscillator() {
-  delete waveTable;
-}
+Oscillator::~Oscillator() { delete waveTable; }
 
 // methods for playing oscillator
 

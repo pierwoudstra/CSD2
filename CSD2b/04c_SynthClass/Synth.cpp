@@ -16,32 +16,24 @@ Synth::~Synth() {
   delete envelopes[1];
 }
 
-void Synth::resetPhase() {
-  phase = 0.f;
-}
+void Synth::resetPhase() { phase = 0.f; }
 
 void Synth::stop() {
   phase = 0.f;
   increment = 0.f;
 }
 
-bool Synth::isPlaying() {
-  return increment != 0.f;
-}
+bool Synth::isPlaying() { return increment != 0.f; }
 
 void Synth::setPitch(float midiNote) {
   frequency = midiToFrequency(midiNote);
   increment = frequency / sampleRate;
 }
 
-void Synth::setAmplitude(float amplitude) {
-  this->amplitude = amplitude;
-}
+void Synth::setAmplitude(float amplitude) { this->amplitude = amplitude; }
 
-float Synth::getSample() {
-  return sample;
-}
+float Synth::getSample() { return sample; }
 
 float Synth::midiToFrequency(float midiNote) {
-  return 440.f * pow(2.f, (midiNote - 69.0f)/12.0f);
+  return 440.f * pow(2.f, (midiNote - 69.0f) / 12.0f);
 }

@@ -1,11 +1,7 @@
-#include "Envelope.h"
-#include "Oscillator.h"
-#include "Sine.h"
-#include "Saw.h"
-#include "Square.h"
-#include "Synth.h"
 #include "KickSynth.h"
+#include "DetunedSaw.h"
 #include "jack_module.h"
+#include "writeToFile.h"
 #include <iostream>
 #include <math.h>
 
@@ -30,23 +26,36 @@ public:
   }
 
   void process(AudioBuffer buffer) override {
-    auto [inputChannels, outputChannels, numInputChannels, numOutputChannels, numFrames] = buffer;
+    auto [inputChannels, outputChannels, numInputChannels, numOutputChannels,
+          numFrames] = buffer;
 
     for (int channel = 0; channel < numOutputChannels; ++channel) {
       for (int sample = 0; sample < numFrames; ++sample) {
 
-        outputChannels[channel][sample] = kick.getSample();
+        outputChannels[channel][sample] = kick.getSample() + saw.getSample();
         kick.tick();
+        saw.tick();
       }
     }
   }
 
 private:
   float sampleRate = 44100;
-  KickSynth kick = KickSynth(0.9f, sampleRate, 30.f, 50.f);
+  KickSynth kick = KickSynth(0.9f, sampleRate, 20.f, 40.f);
+  DetunedSaw saw = DetunedSaw( 0.9f, sampleRate, 60.f, 0.4f );
 };
 
 int main() {
+
+  KickSynth kick = KickSynth(0.9f, 44100, 20.f, 2.f);
+  // init write to file
+  WriteToFile fileWriter("output.csv", true);
+
+  // attempt at amplitude modulation
+  for (int i = 0; i < 44100; i++) {
+    fileWriter.write(std::to_string(kick.getSample()) + "\n");
+    kick.tick();
+  }
 
   auto callback = CustomCallback{};
   auto jackModule = JackModule{callback};

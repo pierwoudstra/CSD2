@@ -6,8 +6,7 @@
 
 class Oscillator {
 public:
-  Oscillator(float frequency, float amplitude,
-             int sampleRate);
+  Oscillator(float frequency, float amplitude, int sampleRate);
   ~Oscillator();
 
   float getSample();
@@ -25,7 +24,7 @@ protected:
   float amplitude;
   int sampleRate;
 
-  WaveTable* waveTable;
+  WaveTable *waveTable;
   float phase;
   float sample;
   float increment;
