@@ -3,6 +3,8 @@
 #include "Sine.h"
 #include "Saw.h"
 #include "Square.h"
+#include "Synth.h"
+#include "KickSynth.h"
 #include "jack_module.h"
 #include <iostream>
 #include <math.h>
@@ -28,38 +30,20 @@ public:
   }
 
   void process(AudioBuffer buffer) override {
-    for (int i = 0; i < buffer.numFrames; ++i) {
+    auto [inputChannels, outputChannels, numInputChannels, numOutputChannels, numFrames] = buffer;
 
-      // modulate frequency with output of modulator synth
-      sinOsc.setFrequency(220.f + (modulator.getSample() * 50.0f));
+    for (int channel = 0; channel < numOutputChannels; ++channel) {
+      for (int sample = 0; sample < numFrames; ++sample) {
 
-      squareOsc.setFrequency(55.f + (freqEnv.getValue() * 700.f));
-
-      //
-      float hardcoreKick =
-          tanh((squareOsc.getSample() + (overTone.getSample() * 0.1f)) *
-               ampEnv.getValue() * 70.f) *
-          0.8f;
-
-      buffer.outputChannels[0][i] =
-          hardcoreKick; //+ buffer.outputChannels[0][i - 1];
-      sinOsc.tick();
-      modulator.tick();
-      ampEnv.tick();
-      freqEnv.tick();
-      squareOsc.tick();
-      overTone.tick();
+        outputChannels[channel][sample] = kick.getSample();
+        kick.tick();
+      }
     }
   }
 
 private:
   float sampleRate = 44100;
-  Oscillator squareOsc = Square(220.0f, 0.5f, sampleRate);
-  Oscillator overTone = Saw(1100.0f, 0.5f, sampleRate);
-  Oscillator sinOsc = Sine(220.0f, 0.7f, sampleRate);
-  Oscillator modulator = Sine(133.0f, 1.0f, sampleRate);
-  Envelope ampEnv = Envelope(0.05f, 0.6f, true, sampleRate);
-  Envelope freqEnv = Envelope(0.f, 0.07f, true, sampleRate);
+  KickSynth kick = KickSynth(0.9f, sampleRate, 30.f, 50.f);
 };
 
 int main() {

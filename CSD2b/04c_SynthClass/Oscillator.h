@@ -25,7 +25,7 @@ protected:
   float amplitude;
   int sampleRate;
 
-  WaveTable *waveTable;
+  WaveTable* waveTable;
   float phase;
   float sample;
   float increment;
