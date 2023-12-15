@@ -28,10 +28,12 @@ void DetunedSaw::tick() {
   oscillators[1]->setFrequency(frequency + midiToFrequency(detuneAmt));
   oscillators[2]->setFrequency(frequency - midiToFrequency(detuneAmt));
 
-  float oscillatorSum = oscillators[0]->getSample() + oscillators[1]->getSample() + oscillators[2]->getSample();
+  float oscillatorSum = oscillators[0]->getSample() +
+                        oscillators[1]->getSample() +
+                        oscillators[2]->getSample();
 
   // assign value to output sample
-  sample = (oscillatorSum / 3.f)  * amplitude * envelopes[0]->getValue();
+  sample = (oscillatorSum / 3.f) * amplitude * envelopes[0]->getValue();
 
   // update oscillators and envelope
   for (int i = 0; i < 3; i++) {

@@ -1,6 +1,8 @@
 #include "FMSynth.h"
+#include <iostream>
 
-FMSynth::FMSynth(float amplitude, float sampleRate, float midiNote, float fmRatio, float fmAmt)
+FMSynth::FMSynth(float amplitude, float sampleRate, float midiNote,
+                 float fmRatio, float fmAmt)
     : Synth(amplitude, sampleRate) {
   frequency = midiToFrequency(midiNote);
   this->fmRatio = fmRatio;
@@ -27,14 +29,15 @@ void FMSynth::tick() {
     phase -= 1.0f;
   }
 
-  // to make sure assigning frequency again to modulator
-  oscillators[1]->setFrequency(frequency * fmRatio);
+  oscillators[1]->setAmplitude(fmAmt);
 
-  // carrier gets modulated
-  oscillators[0]->setFrequency(frequency + (oscillators[1]->getSample() * 20.f) );
+  // modulate the carrier
+  oscillators[0]->setFrequency(
+      frequency +
+      oscillators[1]->getSample() * frequency);
 
   // assign value to output sample
-  sample = oscillators[0]->getSample() * envelopes[0]->getValue();
+  sample = oscillators[0]->getSample();
 
   // update oscillators and envelopes
   oscillators[0]->tick();
@@ -42,3 +45,5 @@ void FMSynth::tick() {
   envelopes[0]->tick();
   envelopes[1]->tick();
 }
+
+float FMSynth::getFrequency() { return frequency; }

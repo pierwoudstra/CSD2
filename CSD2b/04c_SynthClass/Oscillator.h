@@ -16,6 +16,7 @@ public:
   bool isPlaying();
 
   void setFrequency(float frequency);
+  float getFrequency();
   void setAmplitude(float amplitude);
 
 protected:

@@ -12,7 +12,7 @@ with open('./output.csv', 'r') as file:
 # transform list to numpy array
 np_data = np.array(data)
 
-# create samples for x axis
+# create samples for x-axis
 t = np.arange(0, len(data), 1)
 
 # create plot
