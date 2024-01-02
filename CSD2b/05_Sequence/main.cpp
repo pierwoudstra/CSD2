@@ -33,15 +33,28 @@ public:
     for (int channel = 0; channel < numOutputChannels; ++channel) {
       for (int sample = 0; sample < numFrames; ++sample) {
         //
-        outputChannels[channel][sample] = kick.getSample();
-        kick.tick();
-        saw.tick();
-        fm.tick();
+
+        outputChannels[channel][sample] = kick.getSample() + saw.getSample();
+
+        if (counter % int(sampleRate / 2) < sampleRate / 4) {
+          kick.resetPhase();
+          fm.resetPhase();
+        }
+        if (counter % int(sampleRate / 4) < (sampleRate / 8) + sampleRate / 16) {
+          saw.resetPhase();
+        } else {
+          kick.tick();
+          saw.tick();
+          fm.tick();
+        }
+
+        counter++;
       }
     }
   }
 
 private:
+  int counter = 0;
   float sampleRate = 44100;
   KickSynth kick = KickSynth(0.9f, sampleRate, 20.f, 40.f);
   DetunedSaw saw = DetunedSaw(0.9f, sampleRate, 60.f, 0.4f);

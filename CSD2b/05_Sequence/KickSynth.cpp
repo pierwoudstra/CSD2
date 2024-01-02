@@ -7,9 +7,9 @@ KickSynth::KickSynth(float amplitude, float sampleRate, float midiNote,
   this->drive = drive;
 
   // amplitude envelope
-  envelopes[0] = new Envelope(0.05f, 0.6f, true, sampleRate);
+  envelopes[0] = new Envelope(0.05f, 0.6f, false, sampleRate);
   // frequency envelope
-  envelopes[1] = new Envelope(0.f, 0.1f, true, sampleRate);
+  envelopes[1] = new Envelope(0.f, 0.1f, false, sampleRate);
 
   oscillators[0] = new Sine(frequency, amplitude, sampleRate);
   oscillators[1] = NULL;
@@ -37,4 +37,10 @@ void KickSynth::tick() {
   oscillators[0]->tick();
   envelopes[0]->tick();
   envelopes[1]->tick();
+}
+
+void KickSynth::resetPhase() {
+  phase = 0.f;
+  envelopes[0]->resetPhase();
+  envelopes[1]->resetPhase();
 }
