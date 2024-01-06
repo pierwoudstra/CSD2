@@ -9,7 +9,7 @@ FMSynth::FMSynth(float amplitude, float sampleRate, float midiNote,
   this->fmAmt = fmAmt;
 
   // amplitude envelope
-  envelopes[0] = new Envelope(0.1f, 0.9f, false, sampleRate);
+  envelopes[0] = new Envelope(0.3f, 2.f, false, sampleRate);
   // fm-amount envelope
   envelopes[1] = new Envelope(0.01f, 0.6f, false, sampleRate);
 
@@ -29,6 +29,7 @@ void FMSynth::tick() {
     phase -= 1.0f;
   }
 
+  oscillators[1]->setFrequency(frequency * fmRatio);
   oscillators[1]->setAmplitude(fmAmt);
 
   // modulate the carrier

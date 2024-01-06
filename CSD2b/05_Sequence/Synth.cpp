@@ -29,7 +29,6 @@ void Synth::stop() {
 bool Synth::isPlaying() { return increment != 0.f; }
 
 void Synth::setPitch(float midiNote) {
-  std::cout << frequency << std::endl;
   frequency = midiToFrequency(midiNote);
   increment = frequency / sampleRate;
 }

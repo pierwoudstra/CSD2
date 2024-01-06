@@ -7,9 +7,9 @@ KickSynth::KickSynth(float amplitude, float sampleRate, float midiNote,
   this->drive = drive;
 
   // amplitude envelope
-  envelopes[0] = new Envelope(0.03f, 0.35f, false, sampleRate);
+  envelopes[0] = new Envelope(0.05f, 0.5f, false, sampleRate);
   // frequency envelope
-  envelopes[1] = new Envelope(0.f, 0.07f, false, sampleRate);
+  envelopes[1] = new Envelope(0.01f, 0.09f, false, sampleRate);
 
   oscillators[0] = new Sine(frequency, amplitude, sampleRate);
   oscillators[1] = NULL;

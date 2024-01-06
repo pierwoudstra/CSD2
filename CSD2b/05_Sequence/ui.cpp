@@ -3,12 +3,12 @@
 std::string UI::retrieveUserInput(std::string selectionOptions[],
                                   int numOptions) {
   // show user the allowed options
-  std::cout << "Please enter your selection. You can choose from: ";
+  std::cout << "please enter your selection. you can choose from: \n\n";
   for (int i = 0; i < numOptions - 1; i++) {
     std::cout << selectionOptions[i] << ", ";
   }
   // print last option outside forloop to end with an .
-  std::cout << selectionOptions[numOptions - 1] << "." << std::endl;
+  std::cout << selectionOptions[numOptions - 1] << ".\n" << std::endl;
   // retrieve and return choice
   std::string selection = "";
   std::cin >> selection;
