@@ -11,10 +11,10 @@ DetunedSaw::DetunedSaw(float amplitude, float sampleRate, float midiNote,
   envelopes[1] = NULL;
 
   oscillators[0] = new Saw(frequency, amplitude, sampleRate);
-  oscillators[1] =
-      new Saw(frequency + (midiToFrequency(detuneAmt) / 10.f), amplitude, sampleRate);
-  oscillators[2] =
-      new Saw(frequency - (midiToFrequency(detuneAmt) / 10.f), amplitude, sampleRate);
+  oscillators[1] = new Saw(frequency + (midiToFrequency(detuneAmt) / 10.f),
+                           amplitude, sampleRate);
+  oscillators[2] = new Saw(frequency - (midiToFrequency(detuneAmt) / 10.f),
+                           amplitude, sampleRate);
 }
 
 DetunedSaw::~DetunedSaw() {}

@@ -1,4 +1,5 @@
 #include "Callback.h"
+#include "ui.h"
 
 /*
  * sounding sequence using Marc & Ciska's
@@ -13,21 +14,21 @@
  * jackd -d coreaudio
  */
 
-  int main() {
+int main() {
 
-    auto callback = CustomCallback{};
-    auto jackModule = JackModule{callback};
+  auto callback = CustomCallback{};
+  auto jackModule = JackModule{callback};
 
-    jackModule.init(0, 1);
+  jackModule.init(0, 1);
 
-    bool running = true;
-    while (running) {
-      switch (std::cin.get()) {
-      case 'q':
-        running = false;
-      }
+  bool running = true;
+  while (running) {
+    switch (std::cin.get()) {
+    case 'q':
+      running = false;
     }
-
-    // end the program
-    return 0;
   }
+
+  // end the program
+  return 0;
+}
