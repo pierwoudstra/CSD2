@@ -15,6 +15,7 @@ CustomCallback::CustomCallback() {
   int numSynthSelection = console_ui.retrieveUserSelection(synthOptions,2);
   std::cout << "\e[0;104m" << "\e[1;97m" << "\nenjoy :)\n" << "\e[1;96m" << std::endl;
 
+  // selecting correct melody
   if (numSongSelection == 0) {
     songChoice = "ode-to-joy";
   } else if (numSongSelection == 1) {
@@ -23,6 +24,7 @@ CustomCallback::CustomCallback() {
     songChoice = "titanic";
   }
 
+  // selecting correct synthesizer
   if (numSynthSelection == 0) {
     synthChoice = "fm-synth";
   } else {
@@ -36,6 +38,7 @@ CustomCallback::~CustomCallback() {}
 void CustomCallback::updatePitch(Melody &melody, DetunedSaw &saw, FMSynth &fm) {
   float note;
 
+  // checking song choice & deciding which melody to play
   if (songChoice == "ode-to-joy") {
     note = melody.getBeethovenNote();
   } else if (songChoice == "tetris") {

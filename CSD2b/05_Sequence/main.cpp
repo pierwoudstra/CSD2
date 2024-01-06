@@ -2,7 +2,7 @@
 
 /*
  * sounding sequence using Marc & Ciska's
- * code but with own classes
+ * code but with own classes & synth designs
  */
 
 /*
@@ -14,6 +14,8 @@
  */
 
 int main() {
+
+  // most of the workings are in the Callback.h file
 
   auto callback = CustomCallback{};
   auto jackModule = JackModule{callback};
