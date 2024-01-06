@@ -32,9 +32,8 @@ void FMSynth::tick() {
   oscillators[1]->setAmplitude(fmAmt);
 
   // modulate the carrier
-  oscillators[0]->setFrequency(
-      frequency +
-      oscillators[1]->getSample() * frequency);
+  oscillators[0]->setFrequency(frequency +
+                               oscillators[1]->getSample() * frequency);
 
   // assign value to output sample
   sample = oscillators[0]->getSample();
