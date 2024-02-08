@@ -1,7 +1,3 @@
-//
-// Created by pirko on 06/02/2024.
-//
-
 #include "CircBuffer.h"
 
 CircBuffer::CircBuffer(int size) {

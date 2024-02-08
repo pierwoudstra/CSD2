@@ -1,15 +1,14 @@
 #ifndef INC_01B_EFFECTCLASS_EFFECTCLASS_H
 #define INC_01B_EFFECTCLASS_EFFECTCLASS_H
 
-class EffectClass {
+class Effect {
 public:
-  EffectClass(float dryWetAmt = 0.5);
-  ~EffectClass();
+  Effect(float dryWetAmt);
+  ~Effect();
 
   void setDryWet(float dryWetAmt);
-  virtual float processFrame(float input);
 
-public:
+protected:
   float input;
   float wetOutput;
   float output;

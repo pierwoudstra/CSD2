@@ -1,13 +1,13 @@
-#include "EffectClass.h"
+#include "Effect.h"
 
-EffectClass::EffectClass(float dryWetAmt = 0.5) {
+Effect::Effect(float dryWetAmt) {
   this->dryWetAmt = dryWetAmt;
   output = ((1 - dryWetAmt) * input) + (dryWetAmt * wetOutput);
 }
 
-EffectClass::~EffectClass() {}
+Effect::~Effect() {}
 
-void EffectClass::setDryWet(float dryWetAmt) {
+void Effect::setDryWet(float dryWetAmt) {
   this->dryWetAmt = dryWetAmt;
   output = ((1 - dryWetAmt) * input) + (dryWetAmt * wetOutput);
 }
