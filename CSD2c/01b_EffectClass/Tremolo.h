@@ -1,5 +1,6 @@
 #include "Effect.h"
 #include "sine.h"
+#include <iostream>
 
 #ifndef INC_01B_EFFECTCLASS_TREMOLO_H
 #define INC_01B_EFFECTCLASS_TREMOLO_H
@@ -9,7 +10,7 @@ public:
   Tremolo(float dryWetAmt, float frequency, float modDepth);
   ~Tremolo();
 
-  void prepare(float sampleRate);
+  void prepare(float sampleRate); // initializes lfo sample-rate
   float processFrame(float input);
 
   void setModDepth();
