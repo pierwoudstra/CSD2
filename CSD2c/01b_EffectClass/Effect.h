@@ -7,8 +7,11 @@ public:
   ~Effect();
 
   void setDryWet(float dryWetAmt);
+  virtual void prepare(float sampleRate);
+  virtual float processFrame(float input);
 
 protected:
+  float sampleRate;
   float input;
   float wetOutput;
   float output;
