@@ -4,7 +4,7 @@ LDFLAGS=-ljack
 # the cpp files from the current project to include
 SRC_PROJECT = main.cpp Effect.cpp
 # the directory to the folder with the shared modules
-SHAREDCODE_PATH = ../SharedCode/
+SHAREDCODE_PATH = ../sharedCode/
 # the modules to include
 MODULES = oscillators audio
 TARGET = example
