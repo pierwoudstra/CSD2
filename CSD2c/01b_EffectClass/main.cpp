@@ -1,5 +1,5 @@
 #include "Effect.h"
+#include "Tremolo.h"
 
 int main() {
-  Effect effect = Effect(0.5f);
 }
