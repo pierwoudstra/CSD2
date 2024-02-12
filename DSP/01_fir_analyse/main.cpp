@@ -1,5 +1,6 @@
 #include "writeToFile.h"
 #include <math.h>
+#include <iostream>
 
 #define SAMPLE_RATE 48000
 #define PI 3.14159265359
@@ -33,9 +34,12 @@ int main() {
 
   float signal;
 
-  // attempt at amplitude modulation
-  for (int i = 0; i < SAMPLE_RATE / 2; i++) {
-    signal = sine(i, 12000);
-    fileWriter.write(std::to_string( filter.process(signal)) + "\n");
+  // iterate per 100 Hz
+  for (int j = 0; j < 24000; j += 100) {
+    std::cout << j << std::endl;
+    for (int i = 0; i < SAMPLE_RATE / 10; i++) {
+      signal = sine(i, j);
+      fileWriter.write(std::to_string( filter.process(signal)) + "\n");
+    }
   }
 }

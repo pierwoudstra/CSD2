@@ -1,7 +1,7 @@
 CXX=g++
 CXXFLAGS=-Wall -std=c++1z
 SOURCE= main.o writeToFile.o
-TARGET=output
+TARGET=./output
 
 $(TARGET): $(SOURCE)
 	$(CXX) -o $@ $(SOURCE) $(LDFLAGS)
