@@ -2,9 +2,9 @@
 
 Tremolo::Tremolo(float dryWetAmt, float frequency, float modDepth)
     : Effect(dryWetAmt) {
-  lfo = Sine(frequency);
   this->frequency = frequency;
   this->modDepth = modDepth;
+  lfo = Sine(frequency);
 }
 
 Tremolo::~Tremolo() {}
@@ -19,5 +19,7 @@ float Tremolo::processFrame(float input) {
   modSignal *= modDepth; // apply mod-depth
   modSignal += 1.f - modDepth;
 
-  return input * modSignal;
+  wetOutput = input * modSignal;
+  // make sure return value uses the dry/wet amount
+  return ((1 - dryWetAmt) * input) + (dryWetAmt * wetOutput);
 }

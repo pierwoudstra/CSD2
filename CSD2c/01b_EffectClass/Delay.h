@@ -9,6 +9,9 @@ public:
   Delay(float dryWetAmt, float delayTime);
   ~Delay();
 
+  void prepare(float sampleRate);
+  float processFrame(float input);
+
 private:
   float delayTime; // delay time in seconds
   CircBuffer buffer;
