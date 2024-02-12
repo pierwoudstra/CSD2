@@ -1,24 +1,19 @@
-//
-// Created by pirko on 09/02/2024.
-//
-
 #include "Delay.h"
 
-Delay::Delay(float dryWetAmt, float delayTime) {
+Delay::Delay(float dryWetAmt, float delayTime)
+    : Effect(dryWetAmt), buffer(sampleRate * delayTime) {
   this->delayTime = delayTime;
-
-  buffer = CircBuffer(sampleRate * delayTime);
-
-  // fill buffer with zeroes
-  for (int i = 0; i < delayTime * sampleRate; i++) {
-    buffer.write(0.f);
-  }
 }
 
 Delay::~Delay(){}
 
 void Delay::prepare(float sampleRate) {
   this->sampleRate = sampleRate;
+  buffer = CircBuffer(sampleRate * delayTime);
+
+  for (int i = 0; i < delayTime * sampleRate; i++) {
+    buffer.write(0.f);
+  }
 }
 
 float Delay::processFrame(float input) {
