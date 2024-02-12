@@ -7,7 +7,6 @@ int main() {
 
   CircBuffer circBuffer = CircBuffer(bufSize);
 
-
   std::cout << "writing values" << std::endl;
 
   for (int i = 0; i < bufSize; i++) {

@@ -11,6 +11,8 @@ public:
   // read & increment read head & wrap
   float read();
 
+  void setReadHead(int readHead);
+
 private:
   float* buffer;
   int readHead;
