@@ -6,11 +6,12 @@
 
 class Delay : public Effect {
 public:
-  Delay(float dryWetAmt, float delayTime);
+  Delay(float wet, float delayTime);
   ~Delay();
 
-  void prepare(float sampleRate);
-  float processFrame(float input);
+  // overridden virtual methods
+  void prepare(float sampleRate) override;
+  float applyEffect(float input) override;
 
 private:
   float delayTime; // delay time in seconds

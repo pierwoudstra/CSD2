@@ -1,7 +1,7 @@
 #include "Delay.h"
 
-Delay::Delay(float dryWetAmt, float delayTime)
-    : Effect(dryWetAmt), buffer(sampleRate * delayTime * 2) {
+Delay::Delay(float wet, float delayTime)
+    : Effect(wet), buffer(sampleRate * delayTime * 2) {
   this->delayTime = delayTime;
 }
 
@@ -16,9 +16,8 @@ void Delay::prepare(float sampleRate) {
   }
 }
 
-float Delay::processFrame(float input) {
+float Delay::applyEffect(float input) {
   buffer.write(input);
   buffer.setReadHead(-(delayTime * sampleRate));
-  wetOutput = buffer.read();
-  return ((1 - dryWetAmt) * input) + (dryWetAmt * wetOutput);;
+  return buffer.read();
 }

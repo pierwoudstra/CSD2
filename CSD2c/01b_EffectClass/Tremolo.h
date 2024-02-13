@@ -7,11 +7,12 @@
 
 class Tremolo : public Effect {
 public:
-  Tremolo(float dryWetAmt, float frequency, float modDepth);
+  Tremolo(float wet, float frequency, float modDepth);
   ~Tremolo();
 
-  void prepare(float sampleRate); // initializes lfo sample-rate
-  float processFrame(float input);
+  // overridden virtual methods
+  void prepare(float sampleRate) override; // initializes lfo sample-rate
+  float applyEffect(float input) override; // the effect
 
   void setModDepth();
 

@@ -3,19 +3,24 @@
 
 class Effect {
 public:
-  Effect(float dryWetAmt);
-  ~Effect();
+  Effect(float wet);
+  virtual ~Effect();
 
-  void setDryWet(float dryWetAmt);
-  virtual void prepare(float sampleRate) = 0;
-  virtual float processFrame(float input) = 0;
+  void setDryWet(float wet);
+  float processFrame(float input);
+
+  // virtual methods
+  virtual void prepare(float sampleRate);
+  virtual float applyEffect(float input) = 0;
 
 protected:
   float sampleRate = 44100.f;
   float input;
-  float wetOutput;
-  float output;
-  float dryWetAmt; // value from 0 to 1
+  float output; // wet output
+
+private:
+  float wet; // value from 0 to 1
+  float dry; // 1 - wet
 };
 
 #endif // INC_01B_EFFECTCLASS_EFFECTCLASS_H
