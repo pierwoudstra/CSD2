@@ -11,7 +11,7 @@ public:
   virtual float processFrame(float input) = 0;
 
 protected:
-  float sampleRate;
+  float sampleRate = 44100.f;
   float input;
   float wetOutput;
   float output;
