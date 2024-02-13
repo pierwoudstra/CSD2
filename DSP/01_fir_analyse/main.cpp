@@ -1,4 +1,5 @@
 #include "writeToFile.h"
+#include "Delay.h"
 #include <math.h>
 #include <iostream>
 
@@ -12,21 +13,26 @@ float sine(int time, float freq) {
 class FIR {
 public:
   FIR(){
-    buffer = 0.f;
+    prev = 0.f;
+    prevPrev = 0.f;
   }
 
   float process(float input) {
-    output = 0.5f * input + 0.5f * buffer;
-    buffer = input;
+    output = (0.5f * input) - (0.5 * prevPrev);
+    prevPrev = prev;
+    prev = input;
     return output;
   }
 
 private:
   float output;
-  float buffer;
+  float prev;
+  // kan met static float
+  float prevPrev;
 };
 
 int main() {
+  Delay delay = Delay(0.f, 5, 5, 1.f);
   FIR filter;
 
   // init write to file
@@ -35,9 +41,9 @@ int main() {
   float signal;
 
   // iterate per 100 Hz
-  for (int j = 0; j < 24000; j += 100) {
+  for (int j = 0; j < 24000; j += 240) {
     std::cout << j << std::endl;
-    for (int i = 0; i < SAMPLE_RATE / 10; i++) {
+    for (int i = 0; i < 24000; i++) {
       signal = sine(i, j);
       fileWriter.write(std::to_string( filter.process(signal)) + "\n");
     }
