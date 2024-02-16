@@ -1,16 +1,22 @@
-//
-// Created by pirko on 16/02/2024.
-//
+#include "effect.h"
 
 #ifndef INC_02_WAVESHAPER_WAVESHAPER_H
 #define INC_02_WAVESHAPER_WAVESHAPER_H
 
+class Waveshaper : public Effect {
+public:
+  enum WaveshapeType { SOFT = 0, HARD, DIGITAL, SINE };
 
+  Waveshaper(float dryWet = 1.f,
+             WaveshapeType waveshapeType = WaveshapeType::SOFT,
+             float drive = 2.f);
+  ~Waveshaper();
 
-class Waveshaper {
+  void applyEffect(const float &input, float &output) override;
 
+private:
+  WaveshapeType waveshapeType;
+  float drive;
 };
 
-
-
-#endif //INC_02_WAVESHAPER_WAVESHAPER_H
+#endif // INC_02_WAVESHAPER_WAVESHAPER_H

@@ -32,7 +32,7 @@ private:
 };
 
 int main() {
-  Delay delay = Delay(0.f, 5, 5, 1.f);
+  Delay delay = Delay(0.1f, 1, 1, 0.5f);
   FIR filter;
 
   // init write to file
@@ -45,7 +45,7 @@ int main() {
     std::cout << j << std::endl;
     for (int i = 0; i < 24000; i++) {
       signal = sine(i, j);
-      fileWriter.write(std::to_string( filter.process(signal)) + "\n");
+      fileWriter.write(std::to_string( delay.processFrame(signal)) + "\n");
     }
   }
 }
