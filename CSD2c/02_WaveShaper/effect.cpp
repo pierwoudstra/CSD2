@@ -9,12 +9,11 @@ Effect::~Effect() {}
 
 // process frame
 void Effect::processFrame(const float &input, float &output) {
-  // TODO - add bypass functionality
-  applyEffect(input, output);
-  if (!bypass) {
-    output = input * wetDry + output * dryWet;
-  } else {
+  if (bypass) {
     output = input;
+  } else {
+    applyEffect(input, output);
+    output = input * wetDry + output * dryWet;
   }
   // cache output samples
   m_sample = output;
