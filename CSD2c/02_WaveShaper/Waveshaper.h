@@ -14,6 +14,10 @@ public:
 
   void applyEffect(const float &input, float &output) override;
 
+  // setters
+  void setDrive(float drive);
+  void setWaveshapeType(WaveshapeType waveshapeType);
+
 private:
   WaveshapeType waveshapeType;
   float drive;

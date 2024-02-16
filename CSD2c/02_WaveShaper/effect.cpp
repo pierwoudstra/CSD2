@@ -1,7 +1,9 @@
 #include "effect.h"
-#include <iostream>
 
-Effect::Effect(float dryWet) { setDryWet(dryWet); }
+Effect::Effect(float dryWet) {
+  setDryWet(dryWet);
+  setBypass(false);
+}
 
 Effect::~Effect() {}
 
@@ -9,7 +11,11 @@ Effect::~Effect() {}
 void Effect::processFrame(const float &input, float &output) {
   // TODO - add bypass functionality
   applyEffect(input, output);
-  output = input * wetDry + output * dryWet;
+  if (!bypass) {
+    output = input * wetDry + output * dryWet;
+  } else {
+    output = input;
+  }
   // cache output samples
   m_sample = output;
 }
@@ -24,4 +30,8 @@ void Effect::setDryWet(float dryWet) {
   this->dryWet = dryWet;
   // cache 1.0 - dryWet used to calculate mix of dry wet signal
   wetDry = 1.0f - dryWet;
+}
+
+void Effect::setBypass(bool bypass) {
+  this->bypass = bypass;
 }

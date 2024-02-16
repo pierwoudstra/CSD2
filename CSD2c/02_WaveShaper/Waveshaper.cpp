@@ -32,3 +32,12 @@ void Waveshaper::applyEffect(const float &input, float &output) {
   }
   }
 }
+
+// setters
+void Waveshaper::setDrive(float drive) {
+  this->drive = drive;
+}
+
+void Waveshaper::setWaveshapeType(Waveshaper::WaveshapeType waveshapeType) {
+  this->waveshapeType = waveshapeType;
+}
