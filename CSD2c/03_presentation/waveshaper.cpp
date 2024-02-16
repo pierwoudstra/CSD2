@@ -14,12 +14,15 @@ Waveshaper::~Waveshaper() {}
 void Waveshaper::applyEffect(const float &input, float &output) {
   switch (waveshapeType) {
   case WaveshapeType::SOFT: {
+    // subtle clipping
     output = tanh(input * drive) / tanh(drive);
   }
   case WaveshapeType::HARD: {
+    // hard clipping
     output = tanh(5 * input * drive) / tanh(5 * drive);
   }
   case WaveshapeType::DIGITAL: {
+    // basic digital clipping
     output = input * drive;
     if (output > 1) {
       output = 1.f;
@@ -34,9 +37,7 @@ void Waveshaper::applyEffect(const float &input, float &output) {
 }
 
 // setters
-void Waveshaper::setDrive(float drive) {
-  this->drive = drive;
-}
+void Waveshaper::setDrive(float drive) { this->drive = drive; }
 
 void Waveshaper::setWaveshapeType(Waveshaper::WaveshapeType waveshapeType) {
   this->waveshapeType = waveshapeType;

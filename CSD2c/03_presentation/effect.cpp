@@ -9,6 +9,7 @@ Effect::~Effect() {}
 
 // process frame
 void Effect::processFrame(const float &input, float &output) {
+  // using bypass to determine signal
   if (bypass) {
     output = input;
   } else {
@@ -31,6 +32,4 @@ void Effect::setDryWet(float dryWet) {
   wetDry = 1.0f - dryWet;
 }
 
-void Effect::setBypass(bool bypass) {
-  this->bypass = bypass;
-}
+void Effect::setBypass(bool bypass) { this->bypass = bypass; }

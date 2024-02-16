@@ -5,6 +5,7 @@
 
 class Waveshaper : public Effect {
 public:
+  // enum to determine type of wave-shaping
   enum WaveshapeType { SOFT = 0, HARD, DIGITAL, SINE };
 
   Waveshaper(float dryWet = 1.f,
@@ -20,7 +21,7 @@ public:
 
 private:
   WaveshapeType waveshapeType;
-  float drive;
+  float drive; // from 1 till ∞
 };
 
 #endif // INC_02_WAVESHAPER_WAVESHAPER_H
