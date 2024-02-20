@@ -6,6 +6,7 @@
 #include "tremolo.h"
 #include "ui.h"
 #include "waveshaper.h"
+#include "PitchShifter.h"
 
 class CustomCallback : public AudioCallback {
 public:
@@ -18,6 +19,7 @@ private:
   Delay delay = Delay(0.7f, 2048, 2048, 0.5f);
   Waveshaper waveshaper = Waveshaper(1.f, Waveshaper::WaveshapeType::DIGITAL, 2.f);
   UI ui;
+  PitchShifter pitchShifter = PitchShifter(1.f, 2.f);
 
   int tremoloOn;
   int waveshaperOn;
