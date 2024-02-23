@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
   AudioToFile audioToFile;
   audioToFile.write(callback);
 #else
-  jackModule.init(1, 1);
+  jackModule.init(1, 2);
 
   bool running = true;
   while (running) {
