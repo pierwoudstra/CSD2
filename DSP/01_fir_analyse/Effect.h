@@ -1,27 +1,39 @@
-#ifndef INC_01B_EFFECTCLASS_EFFECTCLASS_H
-#define INC_01B_EFFECTCLASS_EFFECTCLASS_H
+#pragma once
 
 class Effect {
 public:
-  Effect(float wet);
+  // drywet: drywet balance
+  // drywet == 0:     dry
+  // 0 < drywet < 1:  mix
+  // drywet == 1:     wet
+  // default is wet
+  Effect(float dryWet = 1.0);
   virtual ~Effect();
 
-  void setDryWet(float wet);
-  float processFrame(float input);
+  // not pure virtual, since not all subclasses require the samplerate
+  virtual void prepare(float samplerate) {}
+  // process frame
+  void processFrame(const float &input, float &output);
+  // returns the last outputted sample
+  float getSample();
 
-  // virtual methods
-  virtual void prepare(float sampleRate){};
+  // setters
+  void setDryWet(float dryWet);
+  void setBypass(bool bypass);
 
 protected:
-  virtual float applyEffect(float input) = 0;
-
-  float sampleRate = 44100.f;
-  float input;
-  float output; // wet output
+  // pure virtual method
+  virtual void applyEffect(const float &input, float &output) = 0;
 
 private:
-  float wet; // value from 0 to 1
-  float dry; // 1 - wet
+  bool bypass;
+  // balance between dry and wet signal
+  float dryWet;
+  float wetDry; // = 1 - dryWet
+  // cache last sample
+  float m_sample;
+  /*
+   * NOTE: other possible extra base class functionality:
+   * • bypass
+   */
 };
-
-#endif // INC_01B_EFFECTCLASS_EFFECTCLASS_H
