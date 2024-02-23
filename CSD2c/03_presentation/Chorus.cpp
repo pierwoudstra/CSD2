@@ -24,9 +24,21 @@ void Chorus::prepare(float samplerate) {
 }
 
 void Chorus::applyEffect(const float &input, float &output) {
+  // normalize modulation signal
   float modSignal = lfo->genNextSample() + 1.f;
-  modSignal /= 2;
+  modSignal *= 0.5f;
   modSignal *= modDepth;
+
+  // adjust delay according to modulation signal
   delay->setNumDelaySamples(modSignal * samplerate);
   delay->applyEffect(input, output);
+}
+
+void Chorus::setModFrequency(float modFreq) {
+  this->modFreq = modFreq;
+  lfo->setFrequency(modFreq);
+}
+
+void Chorus::setModDepth(float modDepth){
+  this->modDepth = modDepth;
 }

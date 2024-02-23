@@ -46,7 +46,7 @@ int main() {
   for (int i = 0; i < 24000; i++) {
     signal = abs(sine(i, 100));
     delay.processFrame(signal, output);
-    output = signal - output + (0.99 * prevOutput);
+    output = signal - output + (0.995 * prevOutput);
     prevOutput = output;
     fileWriter.write(std::to_string(output) + "\n");
   }
