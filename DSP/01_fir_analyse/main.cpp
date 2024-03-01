@@ -13,7 +13,15 @@ float sine(int time, float freq) {
 int main() {
 
   Biquad filter;
-  filter.setCoefficient(0.5);
+  filter.setCoefficients(
+      -1.996174898187567,
+      0.9979155096954627,
+      0.00043515287697386376,
+      0.0008703057539477275,
+      0.00043515287697386376
+
+
+      );
 
   // init write to file
   WriteToFile fileWriter("output.csv", true);
@@ -22,9 +30,9 @@ int main() {
   float output;
 
   // iterate per 100 Hz
-  for (int j = 0; j < 24000; j += 240) {
+  for (int j = 0; j < 24000; j += 100) {
     std::cout << j << std::endl;
-    for (int i = 0; i < 24000; i++) {
+    for (int i = 0; i < 100; i++) {
       signal = sine(i, j);
       output = filter.process(signal);
       fileWriter.write(std::to_string(output) + "\n");

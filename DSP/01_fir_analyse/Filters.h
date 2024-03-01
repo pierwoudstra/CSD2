@@ -181,12 +181,12 @@ struct Biquad : Filter {
     return output;
   }
 
-  void setCoefficient(double coefficient) {
-    a1 = coefficient;
-    a2 = coefficient;
-    b1 = coefficient;
-    b2 = coefficient;
-    b3 = coefficient;
+  void setCoefficients(double a1, double a2, double b1, double b2, double b3) {
+    this->a1 = a1;
+    this->a2 = a2;
+    this->b1 = b1;
+    this->b2 = b2;
+    this->b3 = b3;
   }
 
 private:
