@@ -1,6 +1,6 @@
 CXX=g++
 CXXFLAGS=-Wall -std=c++1z
-SOURCE= main.o writeToFile.o effect.o delay.o
+SOURCE= main.o writeToFile.o
 TARGET=./output
 
 $(TARGET): $(SOURCE)
