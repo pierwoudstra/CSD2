@@ -30,7 +30,7 @@ void Chorus::applyEffect(const float &input, float &output) {
   modSignal *= modDepth;
 
   // adjust delay according to modulation signal
-  delay->setNumDelaySamples(modSignal * samplerate);
+  delay->setNumDelaySamples(modSignal * (0.007 * samplerate));
   delay->applyEffect(input, output);
 }
 

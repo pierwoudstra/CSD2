@@ -10,6 +10,12 @@ float sine(int time, float freq) {
   return sin(2 * PI * freq * time / SAMPLE_RATE);
 }
 
+float toDb(float input) {
+  float absValue = abs(input);
+  float db = 20 * log10(absValue);
+  return db;
+}
+
 int main() {
 
   Biquad filter;

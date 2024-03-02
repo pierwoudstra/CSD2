@@ -22,8 +22,8 @@ private:
       Waveshaper(1.f, Waveshaper::WaveshapeType::DIGITAL, 2.f);
   PitchShifter pitchShifter = PitchShifter(0.5f, 1.3f);
   PitchShifter pitchShifter2 = PitchShifter(0.5f, 1.3f);
-  Chorus chorus = Chorus(0.5f, 1.f, 0.5f, samplerate);
-  Chorus chorus2 = Chorus(0.5f, 0.7f, 0.5f, samplerate);
+  Chorus chorus = Chorus(0.2f, 1.f, 0.5f, samplerate);
+  Chorus chorus2 = Chorus(0.2f, 0.7f, 0.5f, samplerate);
 
 };
 
