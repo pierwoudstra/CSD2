@@ -201,3 +201,22 @@ private:
   double a1{0.0};
   double a2{0.0};
 };
+
+struct Allpass : Filter {
+  double process(double input) override {
+    double output = (a * input) + prevInput - (a * prevOutput);
+    prevInput = input;
+    prevOutput = output;
+    return output;
+  }
+
+  void setCoefficient(double a) {
+    this->a = a;
+  }
+
+private:
+  double prevInput{0.0};
+  double prevOutput{0.0};
+
+  double a{0.0};
+};
