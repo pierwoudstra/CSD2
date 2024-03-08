@@ -6,7 +6,7 @@ Chorus::Chorus(float dryWet, float modFreq, float modDepth, float samplerate) : 
   this->modDepth = modDepth;
   this->samplerate = samplerate;
   lfo = new Sine(modFreq, samplerate);
-  delay = new Delay(0.f, 1, samplerate, 0.5f);
+  delay = new Delay(0, 1, 400, 0.5f);
   setDryWet(dryWet);
 }
 
@@ -29,8 +29,15 @@ void Chorus::applyEffect(const float &input, float &output) {
   modSignal *= 0.5f;
   modSignal *= modDepth;
 
+  // for some reason the modulation signal sometimes goes above 8
+  // maybe something in the sine wave-table?
+
+  if (modSignal > 0.99) {
+    modSignal = 0.99f;
+  }
+  
   // adjust delay according to modulation signal
-  delay->setNumDelaySamples(modSignal * (0.007 * samplerate));
+  delay->setNumDelaySamples( int(modSignal * (0.007 * samplerate)) );
   delay->applyEffect(input, output);
 }
 
