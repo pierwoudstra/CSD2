@@ -1,0 +1,14 @@
+verwondering - vervreemding - speelsheid
+soort ET object die terug wil naar thuisplaneet
+
+must:
+	toeschouwer heeft gevoel dat kamera geluid kan beinvloeden
+should:
+	rotatie (richting) verandert effect
+could:
+	beeld (helderheid) heeft invloed op effect
+	desnoods met light input van OSC app
+	threshold optie, hoe lang je blijft kijken
+would:
+	zoom beïnvloedt effecten
+	kamera feedback herkennen
