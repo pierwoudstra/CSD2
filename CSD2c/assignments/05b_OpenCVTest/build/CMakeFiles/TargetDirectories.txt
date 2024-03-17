@@ -1,0 +1,3 @@
+/Users/pirko/Documents/hku/jaar2/csd/CSD2c/assignments/05b_OpenCVTest/build/CMakeFiles/MyProject.dir
+/Users/pirko/Documents/hku/jaar2/csd/CSD2c/assignments/05b_OpenCVTest/build/CMakeFiles/edit_cache.dir
+/Users/pirko/Documents/hku/jaar2/csd/CSD2c/assignments/05b_OpenCVTest/build/CMakeFiles/rebuild_cache.dir
