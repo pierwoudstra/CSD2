@@ -1,4 +1,4 @@
-#include "bitcrusher.h"
+#include "BitCrusher.h"
 #include <cmath>
 
 BitCrusher::BitCrusher(double bitDepth, float dryWet) :

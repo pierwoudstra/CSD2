@@ -4,6 +4,7 @@
 #include "Effects/PitchShifter.h"
 #include "Effects/Tremolo.h"
 #include "Effects/Waveshaper.h"
+#include "Effects/BitCrusher.h"
 
 #ifndef FINAL_ASSIGNMENT_EFFECTCONTROLLER_H
 #define FINAL_ASSIGNMENT_EFFECTCONTROLLER_H

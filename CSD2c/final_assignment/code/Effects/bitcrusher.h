@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "effect.h"
+#include "Effect.h"
 
 class BitCrusher : public Effect 
 {
