@@ -2,6 +2,7 @@
 
 #include "Callback.h"
 #include "EffectController.h"
+#include "OpenCV.cpp"
 
 int main() {
 
