@@ -2,8 +2,7 @@
 
 #include "Callback.h"
 #include "EffectController.h"
-#include "OpenCV.cpp"
-
+#include "osc_server.h"
 int main() {
 
   auto callback = CustomCallback{};
