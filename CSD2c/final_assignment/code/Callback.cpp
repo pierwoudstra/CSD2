@@ -27,8 +27,11 @@ void CustomCallback::process(AudioBuffer buffer) {
         numFrames] = buffer;
   for (int channel = 0u; channel < numInputChannels; channel++) {
     for (int i = 0u; i < numFrames; i++) {
+      // set audio output
       outputChannels[channel][i] = sine.genNextSample();
+
       if (frameIndex >= noteDelayFactor * samplerate) {
+        // use melody to update pitch
         updatePitch(melody, sine);
         frameIndex = 0;
       } else {
