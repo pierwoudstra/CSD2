@@ -40,33 +40,12 @@ class localOSC : public OSC
   string msgpath=path;
 
     cout << "path: " << msgpath << endl;
-    if(!msgpath.compare("/sound")){
-      string paramname=(char *)argv[0];
-      int int1 = argv[1]->i;
+    if(!msgpath.compare("/ZIGSIM/pir/compass")){
+      double x = argv[0]->f;
       int int2 = argv[2]->i;
       cout << "Message: " <<
-        paramname << " " <<
-        int1 << " " <<
+        x << " " <<
         int2 << " " << endl;
-    } // if
-    if(!msgpath.compare("/tactile")){
-      int int1 = argv[0]->i;
-      int int2 = argv[1]->i;
-      cout << "Message: " <<
-        int1 << " " <<
-        int2 << " " << endl;
-    }
-    if(!msgpath.compare("/box/setstatus")){
-      int row = argv[0]->i;
-      int col = argv[1]->i;
-      int status = argv[2]->i;
-      cout << "Message: " << row << " " << col << " " << status << endl;
-    } // if
-    if(!msgpath.compare("/note-on")){
-      int channel = argv[0]->i;
-      int pitch = argv[1]->i;
-      int velocity = argv[2]->i;
-      cout << "Message: " << channel << " " << pitch << " " << velocity << endl;
     } // if
 
     return 0;
@@ -79,14 +58,14 @@ int main()
 {
 int done = 0;
 localOSC osc;
-string serverport="7777";
+string serverport="7775";
 
   cout << serverport << endl;
 
   osc.init(serverport);
 
   cout << "init" << endl;
-  osc.set_callback("/sound","siii");
+  osc.set_callback("/ZIGSIM/pir/compass","di");
 
   osc.start();
   cout << "Listening on port " << serverport << endl;
