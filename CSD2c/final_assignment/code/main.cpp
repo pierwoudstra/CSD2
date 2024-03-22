@@ -1,3 +1,11 @@
+/*
+ * todo:
+ * - test osc threading
+ * - test effect controller
+ * - change way effects react to osc
+ * - maybe add another osc parameter
+*/
+
 #include <iostream>
 #include <thread>
 
