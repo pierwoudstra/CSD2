@@ -54,8 +54,7 @@ public:
     return 0;
   } // realcallback()
 
-  void runServer(int initServerport) {
-    serverport = initServerport;
+  void runServer() {
 
     localOSC osc;
     string serverport="7777";
@@ -69,11 +68,6 @@ public:
 
     osc.start();
     cout << "Listening on port " << serverport << endl;
-
-    while (!done)
-    {
-      usleep(1000);
-    }
   }
 
 };
