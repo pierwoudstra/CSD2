@@ -1,8 +1,15 @@
+/*
+ * todo:
+ * - test osc threading
+ * - test effect controller
+ * - change way effects react to osc
+ * - maybe add another osc parameter
+*/
+
 #include <iostream>
 #include <thread>
 
 #include "Callback.h"
-#include "EffectController.h"
 #include "osc_server.h"
 int main() {
 
@@ -10,15 +17,21 @@ int main() {
   auto jackModule = JackModule{callback};
   localOSC osc;
 
-  // TODO:
-  // EffectController effectController(callback);
-  // UIController uiController(effectChain);
-
   jackModule.init(1, 2);
 
-  
+  std::thread oscServerThread([&osc]() { osc.runServer(); });
+  std::thread getOscThread([&osc]() { osc.getOscValue(); });
 
-  osc.runServer();
+  int oscValue;
+
+  // if osc-input changes, change osc-value variable
+  while (true) {
+      if (oscValue != osc.getOscValue()) {
+        oscValue = osc.getOscValue();
+        std::cout << "printing from main: " << oscValue << std::endl;
+      }
+      usleep(1000);
+  }
 
   bool running = true;
   while (running) {
@@ -27,10 +40,12 @@ int main() {
       running = false;
       break;
     case 'w':
-      std::cout << "printing from main: " << osc.getOscValue() << std::endl;
       break;
     }
   }
+
+  oscServerThread.join();
+  getOscThread.join();
 
   return 0;
 }
