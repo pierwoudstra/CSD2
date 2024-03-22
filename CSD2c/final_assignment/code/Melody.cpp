@@ -1,4 +1,4 @@
-#include "melody.h"
+#include "Melody.h"
 
 // Melody Constructor
 Melody::Melody() {
