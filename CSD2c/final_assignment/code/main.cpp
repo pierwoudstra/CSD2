@@ -1,4 +1,5 @@
 #include <iostream>
+#include <thread>
 
 #include "Callback.h"
 #include "EffectController.h"
@@ -15,6 +16,8 @@ int main() {
 
   jackModule.init(1, 2);
 
+  
+
   osc.runServer();
 
   bool running = true;
@@ -22,6 +25,10 @@ int main() {
     switch (std::cin.get()) {
     case 'q':
       running = false;
+      break;
+    case 'w':
+      std::cout << "printing from main: " << osc.getOscValue() << std::endl;
+      break;
     }
   }
 

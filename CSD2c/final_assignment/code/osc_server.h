@@ -31,6 +31,8 @@
 
 #include "osc.h"
 
+#include <atomic>
+
 // subclass OSC into a local class so we can provide our own callback
 class localOSC : public OSC {
 public:
@@ -43,23 +45,25 @@ public:
       string paramname = (char *)argv[0];
       int int1 = argv[1]->i;
       int int2 = argv[2]->i;
-      cout << "Message: " << paramname << " " << int1 << " " << int2 << " "
-           << endl;
+
+      // assign incoming value to OSC field
+      oscValue = int1;
+
+      /* cout << "Message: " << paramname << " " << int1 << " " << int2 << " "
+           << endl; */
     } // if
 
     return 0;
   } // realcallback()
+
 
   void runServer() {
     int done = 0;
     localOSC osc;
     string serverport = "7777";
 
-    cout << serverport << endl;
-
     osc.init(serverport);
 
-    cout << "init" << endl;
     osc.set_callback("/sound", "siii");
 
     osc.start();
@@ -69,4 +73,10 @@ public:
       usleep(1000);
     }
   }
+
+  int getOscValue() {
+      return oscValue.load();
+  }
+
+  std::atomic<int> oscValue = 0;
 };
