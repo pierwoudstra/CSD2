@@ -4,6 +4,7 @@
 void CustomCallback::prepare(int rate) {
   samplerate = (float)rate;
   std::cout << "\nsamplerate: " << samplerate << "\n";
+  effects.prepare(samplerate);
 }
 
 double CustomCallback::mtof(float mPitch) {
@@ -28,7 +29,7 @@ void CustomCallback::process(AudioBuffer buffer) {
   for (int channel = 0u; channel < numInputChannels; channel++) {
     for (int i = 0u; i < numFrames; i++) {
       // set audio output
-      outputChannels[channel][i] = sine.genNextSample();
+      effects.processFrame(sine.genNextSample(), outputChannels[channel][i]);
 
       if (frameIndex >= noteDelayFactor * samplerate) {
         // use melody to update pitch

@@ -5,6 +5,7 @@
 #include "jack_module.h"
 #include "oscillator.h"
 #include "sine.h"
+#include "EffectController.h"
 
 class CustomCallback : public AudioCallback {
 public:
@@ -14,6 +15,7 @@ public:
   void updatePitch(Melody &melody, Oscillator &myFastSine);
 
 private:
+  EffectController effects;
   float samplerate = 44100;
   int frameIndex = 0;
   double noteDelayFactor = 0.5;

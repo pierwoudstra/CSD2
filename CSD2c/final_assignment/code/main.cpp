@@ -2,7 +2,6 @@
 #include <thread>
 
 #include "Callback.h"
-#include "EffectController.h"
 #include "osc_server.h"
 int main() {
 
