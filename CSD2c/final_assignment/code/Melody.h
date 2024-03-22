@@ -4,20 +4,18 @@
 
 #define NUM_NOTES 100
 
-class Melody
-{
-    public:
-        // constructor and deconstructor
-        Melody();
-        ~Melody();
+class Melody {
+public:
+  // constructor and deconstructor
+  Melody();
+  ~Melody();
 
-        // setters and getters
-        float getNote();
-        // ChatGPT used to generate generate random melody function
-        void generateRandomMelody();
+  // setters and getters
+  float getNote();
+  // ChatGPT used to generate generate random melody function
+  void generateRandomMelody();
 
-    protected:
-        float melody[NUM_NOTES];
-        int index;
-
+protected:
+  float melody[NUM_NOTES];
+  int index;
 };
