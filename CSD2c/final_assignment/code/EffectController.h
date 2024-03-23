@@ -1,5 +1,7 @@
 // control effects based on incoming osc values
 
+#include <iostream>
+
 #include "Effects/BitCrusher.h"
 #include "Effects/Chorus.h"
 #include "Effects/Delay.h"

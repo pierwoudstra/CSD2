@@ -12,15 +12,16 @@ void EffectController::prepare(float samplerate) {
 }
 
 void EffectController::processFrame(const float &input, float &output) {
+  float sample = 0;
   setEffectValue();
-  tremolo.processFrame(input, output);
-  delay.processFrame(output, output);
-  waveshaper.processFrame(output, output);
-  pitchShifter.processFrame(output, output);
-  pitchShifter2.processFrame(output, output);
-  chorus.processFrame(output, output);
-  chorus2.processFrame(output, output);
-  bitCrusher.processFrame(output, output);
+  tremolo.processFrame(input, sample);
+  delay.processFrame(sample, sample);
+  waveshaper.processFrame(sample, sample);
+  pitchShifter.processFrame(sample, sample);
+  pitchShifter2.processFrame(sample, sample);
+  chorus.processFrame(sample, sample);
+  chorus2.processFrame(sample, sample);
+  bitCrusher.processFrame(sample, output);
 }
 
 void EffectController::setCompassValue(int compassValue) {

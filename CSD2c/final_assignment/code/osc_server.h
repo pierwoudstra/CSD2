@@ -40,7 +40,7 @@ public:
                    int argc) {
     string msgpath = path;
 
-    cout << "path: " << msgpath << endl;
+    // cout << "path: " << msgpath << endl;
     if (!msgpath.compare("/sound")) {
       string paramname = (char *)argv[0];
       int int1 = argv[1]->i;
@@ -49,8 +49,7 @@ public:
       // assign incoming value to OSC field
       oscValue = int1;
 
-      /* cout << "Message: " << paramname << " " << int1 << " " << int2 << " "
-           << endl; */
+      cout << "Message: " << paramname << " " << int1 << " " << int2 << " " << endl;
     } // if
 
     return 0;
@@ -73,7 +72,7 @@ public:
     }
   }
 
-  int getOscValue() { return oscValue.load(); }
+  int getOscValue() { return oscValue; }
 
-  std::atomic<int> oscValue = 0;
+  atomic<int> oscValue = 0;
 };

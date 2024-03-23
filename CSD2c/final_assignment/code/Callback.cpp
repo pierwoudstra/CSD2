@@ -28,8 +28,12 @@ void CustomCallback::process(AudioBuffer buffer) {
         numFrames] = buffer;
   for (int channel = 0u; channel < numInputChannels; channel++) {
     for (int i = 0u; i < numFrames; i++) {
+
       // set audio output
-      effects.processFrame(sine.genNextSample(), outputChannels[channel][i]);
+      effects.setCompassValue(100);
+      float sample = sine.genNextSample();
+      outputChannels[channel][i] = sample;
+      //      effects.processFrame(sample, outputChannels[channel][i]);
 
       if (frameIndex >= noteDelayFactor * samplerate) {
         // use melody to update pitch
