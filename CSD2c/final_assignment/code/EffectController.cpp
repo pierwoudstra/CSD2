@@ -2,7 +2,7 @@
 
 EffectController::EffectController() {
   std::cout << "EffectController Constructor" << std::endl;
-  setEffectValue(dryWet);
+  setEffectValue(0.f);
 }
 
 EffectController::~EffectController() {}
@@ -26,11 +26,11 @@ void EffectController::processFrame(const float &input, float &output) {
 void EffectController::setDryWet(float compassValue) {
   dryWet = (float(compassValue / 360.f));
   std::cout << "DryWet: " << dryWet << std::endl;
-  waveshaper.setDryWet(1.f);
-  bitCrusher.setDryWet(1.f);
-  pitchShifter.setDryWet(1.f);
-  pitchShifter2.setDryWet(1.f);
-  delay.setDryWet(1.f);
+  waveshaper.setDryWet(0.f);
+  bitCrusher.setDryWet(0.f);
+  pitchShifter.setDryWet(0.f);
+  pitchShifter2.setDryWet(0.f);
+  delay.setDryWet(0.f);
 }
 
 void EffectController::setEffectValue(float oscValue) {

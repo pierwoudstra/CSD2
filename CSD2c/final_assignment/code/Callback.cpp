@@ -38,7 +38,7 @@ void CustomCallback::process(AudioBuffer buffer) {
 
       // set audio output
       float sample = sine.genNextSample();
-      outputChannels[channel][i] = sample;
+//      outputChannels[channel][i] = sample;
       effects.processFrame(sample, outputChannels[channel][i]);
 
       if (frameIndex >= noteDelayFactor * samplerate) {
@@ -49,6 +49,7 @@ void CustomCallback::process(AudioBuffer buffer) {
         // Increment the frame index.
         frameIndex++;
       }
+
     }
   }
 }
