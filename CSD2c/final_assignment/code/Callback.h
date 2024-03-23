@@ -13,8 +13,10 @@ public:
   void process(AudioBuffer buffer) override;
   double mtof(float mPitch);
   void updatePitch(Melody &melody, Oscillator &myFastSine);
+  void setOsc(int oscValue);
 
 private:
+  int oscValue = 0;
   EffectController effects;
   float samplerate = 44100;
   int frameIndex = 0;

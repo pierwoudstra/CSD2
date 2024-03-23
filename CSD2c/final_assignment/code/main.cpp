@@ -1,7 +1,7 @@
 /*
  * todo:
- * - test osc threading
- * - test effect controller
+ * - find way to use OSC value in callback
+ * - fix effect controller class (rn no output)
  * - change way effects react to osc
  * - maybe add another osc parameter
  */
@@ -16,7 +16,7 @@ int main() {
 
   auto callback = CustomCallback{};
   auto jackModule = JackModule{callback};
-  localOSC osc;
+  localOSC osc = localOSC{callback};
 
   jackModule.init(1, 2);
 

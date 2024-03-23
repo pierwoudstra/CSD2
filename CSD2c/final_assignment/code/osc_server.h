@@ -30,12 +30,17 @@
  **********************************************************************/
 
 #include "osc.h"
+#include "Callback.h"
 
 #include <atomic>
 
 // subclass OSC into a local class so we can provide our own callback
 class localOSC : public OSC {
 public:
+  localOSC(CustomCallback &callback) {
+    this->callback = callback;
+  }
+
   int realcallback(const char *path, const char *types, lo_arg **argv,
                    int argc) {
     string msgpath = path;
@@ -47,7 +52,7 @@ public:
       int int2 = argv[2]->i;
 
       // assign incoming value to OSC field
-      oscValue = int1;
+      callback.setOsc(int1);
 
       cout << "Message: " << paramname << " " << int1 << " " << int2 << " " << endl;
     } // if
@@ -57,7 +62,7 @@ public:
 
   void runServer() {
     int done = 0;
-    localOSC osc;
+    localOSC osc = localOSC{callback};
     string serverport = "7777";
 
     osc.init(serverport);
@@ -74,5 +79,8 @@ public:
 
   int getOscValue() { return oscValue; }
 
+private:
   atomic<int> oscValue = 0;
+  CustomCallback callback;
+
 };

@@ -11,6 +11,11 @@ double CustomCallback::mtof(float mPitch) {
   return 440.0 * pow(2.0, (mPitch - 69.0f) / 12.0f);
 }
 
+void CustomCallback::setOsc(int oscValue) {
+  this->oscValue = oscValue;
+  std::cout << oscValue << std::endl;
+}
+
 void CustomCallback::updatePitch(Melody &melody, Oscillator &myFastSine) {
   // Get the current note from the melody.
   float note = melody.getNote();
