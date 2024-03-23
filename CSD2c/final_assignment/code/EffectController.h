@@ -24,10 +24,10 @@ public:
   void setDryWet(float compassValue);
   void setEffectValue(float dryWet);
 
+  float dryWet = 0.f;
+
 private:
-  float dryWet = 0; // value from 0 - 360
   float samplerate = 44100;
-  Tremolo tremolo = Tremolo(6, 1);
   Delay delay = Delay(0.7f, 2048, 2048, 0.5f);
   Waveshaper waveshaper =
       Waveshaper(1.f, Waveshaper::WaveshapeType::DIGITAL, 2.f);
@@ -35,7 +35,7 @@ private:
   PitchShifter pitchShifter2 = PitchShifter(0.5f, 1.3f);
   Chorus chorus = Chorus(0.2f, 0.9f, 0.5f, samplerate);
   Chorus chorus2 = Chorus(0.2f, 0.7f, 0.5f, samplerate);
-  BitCrusher bitCrusher = BitCrusher(4.0, 1.0);
+  BitCrusher bitCrusher = BitCrusher(4.0, 1.f);
 };
 
 #endif // FINAL_ASSIGNMENT_EFFECTCONTROLLER_H

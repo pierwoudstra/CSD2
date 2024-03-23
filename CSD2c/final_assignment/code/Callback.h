@@ -16,7 +16,7 @@ public:
   void setOsc(float oscValue);
 
 private:
-  int oscValue = 0;
+  float oscValue = 0.f;
   EffectController effects;
   float samplerate = 44100;
   int frameIndex = 0;

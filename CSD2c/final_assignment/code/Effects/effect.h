@@ -21,6 +21,8 @@ public:
   void setDryWet(float dryWet);
   void setBypass(bool bypass);
 
+  float dryWet;
+
 protected:
   // pure virtual method
   virtual void applyEffect(const float &input, float &output) = 0;
@@ -28,7 +30,6 @@ protected:
 private:
   bool bypass;
   // balance between dry and wet signal
-  float dryWet;
   float wetDry; // = 1 - dryWet
   // cache last sample
   float m_sample;

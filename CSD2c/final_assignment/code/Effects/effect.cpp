@@ -1,4 +1,5 @@
 #include "Effect.h"
+#include <iostream>
 
 Effect::Effect(float dryWet) {
   setDryWet(dryWet);
@@ -14,7 +15,8 @@ void Effect::processFrame(const float &input, float &output) {
     output = input;
   } else {
     applyEffect(input, output);
-    output = input * wetDry + output * dryWet;
+//    std::cout << "from fx baseclass: " << dryWet << std::endl;
+    output = input * float(wetDry) + output * float(dryWet);
   }
   // cache output samples
   m_sample = output;
@@ -24,12 +26,12 @@ void Effect::processFrame(const float &input, float &output) {
 float Effect::getSample() { return m_sample; }
 
 void Effect::setDryWet(float dryWet) {
-  if (dryWet < 0 || dryWet > 1) {
+  if (dryWet < 0.f || dryWet > 1.f) {
     throw "Effect::setDryWet - dryWet value is not in range [0, 1]";
   }
   this->dryWet = dryWet;
   // cache 1.0 - dryWet used to calculate mix of dry wet signal
-  wetDry = 1.0f - dryWet;
+  wetDry = float(1.0f - dryWet);
 }
 
 void Effect::setBypass(bool bypass) { this->bypass = bypass; }

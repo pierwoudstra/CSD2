@@ -29,17 +29,15 @@
  *
  **********************************************************************/
 
-#include "osc.h"
 #include "Callback.h"
+#include "osc.h"
 
 #include <atomic>
 
 // subclass OSC into a local class so we can provide our own callback
 class localOSC : public OSC {
 public:
-  localOSC(CustomCallback &callback) {
-    this->callback = callback;
-  }
+  localOSC(CustomCallback &callback) { this->callback = callback; }
 
   int realcallback(const char *path, const char *types, lo_arg **argv,
                    int argc) {
@@ -48,13 +46,13 @@ public:
     // cout << "path: " << msgpath << endl;
     if (!msgpath.compare("/sound")) {
       string paramname = (char *)argv[0];
-      float float1 = argv[1]->i;
+      float float1 = argv[1]->f;
+      cout << float1 << endl;
       int int2 = argv[2]->i;
 
       // assign incoming value to OSC field
       callback.setOsc(float1);
 
-//      cout << "Message: " << paramname << " " << int1 << " " << int2 << " " << endl;
     } // if
 
     return 0;
@@ -67,7 +65,7 @@ public:
 
     osc.init(serverport);
 
-    osc.set_callback("/sound", "siii");
+    osc.set_callback("/sound", "sfii");
 
     osc.start();
     cout << "Listening on port " << serverport << endl;
@@ -82,5 +80,4 @@ public:
 private:
   atomic<int> oscValue = 0;
   CustomCallback callback;
-
 };
