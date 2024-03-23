@@ -20,8 +20,7 @@ int main() {
 
   jackModule.init(1, 2);
 
-  std::thread oscServerThread([&osc]() { osc.runServer(); });
-  std::thread getOscThread([&osc]() { osc.getOscValue(); });
+  osc.runServer();
 
   bool running = true;
   while (running) {
@@ -33,9 +32,6 @@ int main() {
       break;
     }
   }
-
-  oscServerThread.join();
-  getOscThread.join();
 
   return 0;
 }
