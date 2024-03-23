@@ -13,7 +13,7 @@ double CustomCallback::mtof(float mPitch) {
 
 void CustomCallback::setOsc(int oscValue) {
   this->oscValue = oscValue;
-  std::cout << oscValue << std::endl;
+  std::cout << "printing from callback: " << oscValue << std::endl;
 }
 
 void CustomCallback::updatePitch(Melody &melody, Oscillator &myFastSine) {
