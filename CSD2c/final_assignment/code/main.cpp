@@ -1,7 +1,6 @@
 /*
  * todo:
- * - find way to use OSC value in callback
- * - fix effect controller class (rn no output)
+ * - fix dry/wet amount not having influence
  * - change way effects react to osc
  * - maybe add another osc parameter
  */
