@@ -1,6 +1,11 @@
 #include "EffectController.h"
 
-EffectController::EffectController() { setEffectValue(); }
+EffectController::EffectController()
+{
+    std::cout << "EffectController Constructor" << std::endl;
+    setEffectValue(dryWet);
+}
+
 EffectController::~EffectController() {}
 
 void EffectController::prepare(float samplerate) {
@@ -12,30 +17,31 @@ void EffectController::prepare(float samplerate) {
 }
 
 void EffectController::processFrame(const float &input, float &output) {
-  float sample = 0;
-  setEffectValue();
-  tremolo.processFrame(input, sample);
-  delay.processFrame(sample, sample);
-  waveshaper.processFrame(sample, sample);
-  pitchShifter.processFrame(sample, sample);
-  pitchShifter2.processFrame(sample, sample);
-  chorus.processFrame(sample, sample);
-  chorus2.processFrame(sample, sample);
-  bitCrusher.processFrame(sample, output);
+    float sample = 0;
+    tremolo.processFrame(input, sample);
+    waveshaper.processFrame(sample, sample);
+    bitCrusher.processFrame(sample, sample);
+    pitchShifter.processFrame(sample, sample);
+    pitchShifter2.processFrame(sample, sample);
+    delay.processFrame(sample, output);
+    // chorus.processFrame(sample, sample);
+    // chorus2.processFrame(sample, output);
 }
 
-void EffectController::setCompassValue(int compassValue) {
-  this->compassValue = compassValue;
-  setEffectValue();
+
+void EffectController::setDryWet(float compassValue) {
+    dryWet = (float(compassValue / 180.f));
 }
 
-void EffectController::setEffectValue() {
-  tremolo.setDryWet(float(compassValue / 360.f));
-  delay.setDryWet(float(compassValue / 360.f));
-  waveshaper.setDryWet(float(compassValue / 360.f));
-  pitchShifter.setDryWet(float(compassValue / 360.f));
-  pitchShifter2.setDryWet(float(compassValue / 360.f));
-  chorus.setDryWet(float(compassValue / 360.f));
-  chorus2.setDryWet(float(compassValue / 360.f));
-  bitCrusher.setDryWet(float(compassValue / 360.f));
+void EffectController::setEffectValue(float oscValue) {;
+    dryWet = (float(oscValue / 360.f));
+    std::cout << "DryWet: " << dryWet << std::endl;
+    tremolo.setDryWet(dryWet);
+  delay.setDryWet(dryWet);
+  waveshaper.setDryWet(dryWet);
+  pitchShifter.setDryWet(dryWet);
+  pitchShifter2.setDryWet(dryWet);
+  chorus.setDryWet(dryWet);
+  chorus2.setDryWet(dryWet);
+  bitCrusher.setDryWet(dryWet);
 }

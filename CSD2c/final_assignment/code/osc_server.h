@@ -48,13 +48,13 @@ public:
     // cout << "path: " << msgpath << endl;
     if (!msgpath.compare("/sound")) {
       string paramname = (char *)argv[0];
-      int int1 = argv[1]->i;
+      float float1 = argv[1]->i;
       int int2 = argv[2]->i;
 
       // assign incoming value to OSC field
-      callback.setOsc(int1);
+      callback.setOsc(float1);
 
-      cout << "Message: " << paramname << " " << int1 << " " << int2 << " " << endl;
+//      cout << "Message: " << paramname << " " << int1 << " " << int2 << " " << endl;
     } // if
 
     return 0;

@@ -1,7 +1,9 @@
 CXX= g++ -g
-CXXFLAGS = -Wall -std=c++1z
+CXXFLAGS = -Wall -std=c++1z -I/opt/homebrew/Cellar/liblo/0.32/include
 
-LDFLAGS=-ljack -llo
+
+LDFLAGS = -ljack -llo -L/opt/homebrew/lib
+
 
 
 # the cpp files from the current project to include

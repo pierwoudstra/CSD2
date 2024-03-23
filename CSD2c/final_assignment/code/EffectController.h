@@ -21,12 +21,11 @@ public:
   void prepare(float samplerate);
   void processFrame(const float &input, float &output);
 
-  void setCompassValue(int compassValue);
-  void setEffectValue();
+  void setDryWet(float compassValue);
+  void setEffectValue(float dryWet);
 
 private:
-  int compassValue = 0; // value from 0 - 360
-
+  float dryWet = 0; // value from 0 - 360
   float samplerate = 44100;
   Tremolo tremolo = Tremolo(6, 1);
   Delay delay = Delay(0.7f, 2048, 2048, 0.5f);

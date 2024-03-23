@@ -13,7 +13,7 @@ public:
   void process(AudioBuffer buffer) override;
   double mtof(float mPitch);
   void updatePitch(Melody &melody, Oscillator &myFastSine);
-  void setOsc(int oscValue);
+  void setOsc(float oscValue);
 
 private:
   int oscValue = 0;

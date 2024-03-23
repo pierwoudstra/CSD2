@@ -11,9 +11,11 @@ double CustomCallback::mtof(float mPitch) {
   return 440.0 * pow(2.0, (mPitch - 69.0f) / 12.0f);
 }
 
-void CustomCallback::setOsc(int oscValue) {
+void CustomCallback::setOsc(float oscValue) {
   this->oscValue = oscValue;
-  std::cout << "printing from callback: " << oscValue << std::endl;
+//            std::cout << "oscValue: " << oscValue << std::endl;
+//      effects.setDryWet(oscValue);
+    effects.setEffectValue(oscValue);
 }
 
 void CustomCallback::updatePitch(Melody &melody, Oscillator &myFastSine) {
@@ -35,10 +37,9 @@ void CustomCallback::process(AudioBuffer buffer) {
     for (int i = 0u; i < numFrames; i++) {
 
       // set audio output
-      effects.setCompassValue(100);
       float sample = sine.genNextSample();
       outputChannels[channel][i] = sample;
-      //      effects.processFrame(sample, outputChannels[channel][i]);
+            effects.processFrame(sample, outputChannels[channel][i]);
 
       if (frameIndex >= noteDelayFactor * samplerate) {
         // use melody to update pitch
