@@ -1,11 +1,11 @@
 #ifndef CALLBACK_H
 #define CALLBACK_H
 
+#include "EffectController.h"
 #include "Melody.h"
 #include "jack_module.h"
 #include "oscillator.h"
 #include "sine.h"
-#include "EffectController.h"
 
 class CustomCallback : public AudioCallback {
 public:

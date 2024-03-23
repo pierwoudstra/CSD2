@@ -23,7 +23,7 @@ public:
   void setEffectValue();
 
 private:
-  int compassValue = 0; //value from 0 - 360
+  int compassValue = 0; // value from 0 - 360
 
   float samplerate = 44100;
   Tremolo tremolo = Tremolo(6, 1);

@@ -4,7 +4,7 @@
  * - test effect controller
  * - change way effects react to osc
  * - maybe add another osc parameter
-*/
+ */
 
 #include <iostream>
 #include <thread>
@@ -26,11 +26,11 @@ int main() {
 
   // if osc-input changes, change osc-value variable
   while (true) {
-      if (oscValue != osc.getOscValue()) {
-        oscValue = osc.getOscValue();
-        std::cout << "printing from main: " << oscValue << std::endl;
-      }
-      usleep(1000);
+    if (oscValue != osc.getOscValue()) {
+      oscValue = osc.getOscValue();
+      std::cout << "printing from main: " << oscValue << std::endl;
+    }
+    usleep(1000);
   }
 
   bool running = true;

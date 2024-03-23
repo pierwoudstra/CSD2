@@ -7,7 +7,8 @@
 
 class Chorus : public Effect {
 public:
-  Chorus(float dryWet = 0.5f, float modFreq = 0.5f, float modDepth = 0.5f, float samplerate = 44100);
+  Chorus(float dryWet = 0.5f, float modFreq = 0.5f, float modDepth = 0.5f,
+         float samplerate = 44100);
   ~Chorus();
 
   void prepare(float samplerate) override;
@@ -15,6 +16,7 @@ public:
 
   void setModFrequency(float modFreq);
   void setModDepth(float modDepth);
+
 private:
   Oscillator *lfo;
   Delay *delay;

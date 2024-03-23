@@ -1,8 +1,6 @@
 #include "EffectController.h"
 
-EffectController::EffectController() {
-  setEffectValue();
-}
+EffectController::EffectController() { setEffectValue(); }
 EffectController::~EffectController() {}
 
 void EffectController::prepare(float samplerate) {
@@ -31,7 +29,7 @@ void EffectController::setCompassValue(int compassValue) {
 }
 
 void EffectController::setEffectValue() {
-  tremolo.setDryWet( float(compassValue / 360.f) );
+  tremolo.setDryWet(float(compassValue / 360.f));
   delay.setDryWet(float(compassValue / 360.f));
   waveshaper.setDryWet(float(compassValue / 360.f));
   pitchShifter.setDryWet(float(compassValue / 360.f));

@@ -2,7 +2,8 @@
 #include "sine.h"
 #include <iostream>
 
-Chorus::Chorus(float dryWet, float modFreq, float modDepth, float samplerate) : Effect() {
+Chorus::Chorus(float dryWet, float modFreq, float modDepth, float samplerate)
+    : Effect() {
   this->modDepth = modDepth;
   this->samplerate = samplerate;
   lfo = new Sine(modFreq, samplerate);
@@ -19,9 +20,7 @@ Chorus::~Chorus() {
   delay = nullptr;
 }
 
-void Chorus::prepare(float samplerate) {
-  lfo->prepare(samplerate);
-}
+void Chorus::prepare(float samplerate) { lfo->prepare(samplerate); }
 
 void Chorus::applyEffect(const float &input, float &output) {
   // normalize modulation signal
@@ -37,7 +36,7 @@ void Chorus::applyEffect(const float &input, float &output) {
   }
 
   // adjust delay according to modulation signal
-  delay->setNumDelaySamples( int(modSignal * (0.007 * samplerate)) );
+  delay->setNumDelaySamples(int(modSignal * (0.007 * samplerate)));
   delay->applyEffect(input, output);
 }
 
@@ -46,6 +45,4 @@ void Chorus::setModFrequency(float modFreq) {
   lfo->setFrequency(modFreq);
 }
 
-void Chorus::setModDepth(float modDepth){
-  this->modDepth = modDepth;
-}
+void Chorus::setModDepth(float modDepth) { this->modDepth = modDepth; }

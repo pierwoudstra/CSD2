@@ -56,7 +56,6 @@ public:
     return 0;
   } // realcallback()
 
-
   void runServer() {
     int done = 0;
     localOSC osc;
@@ -74,9 +73,7 @@ public:
     }
   }
 
-  int getOscValue() {
-      return oscValue.load();
-  }
+  int getOscValue() { return oscValue.load(); }
 
   std::atomic<int> oscValue = 0;
 };
