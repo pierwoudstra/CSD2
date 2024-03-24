@@ -1,6 +1,8 @@
 #pragma once
 #include "Effect.h"
 
+// Delay class by Ciska
+
 typedef unsigned int uint;
 
 class Delay : public Effect {

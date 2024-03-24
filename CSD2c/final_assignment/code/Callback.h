@@ -1,9 +1,9 @@
 #ifndef CALLBACK_H
 #define CALLBACK_H
 
-#include "Effects/Effect.h"
 #include "Effects/BitCrusher.h"
 #include "Effects/Delay.h"
+#include "Effects/Effect.h"
 #include "Effects/PitchShifter.h"
 #include "Effects/Tremolo.h"
 #include "Effects/Waveshaper.h"

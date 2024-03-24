@@ -17,7 +17,7 @@ void CustomCallback::initEffects() {
   bitCrusher = new BitCrusher(4.0, 1.f);
   waveshaper = new Waveshaper(1.f, Waveshaper::WaveshapeType::DIGITAL, 2.f);
   delay = new Delay(0.8f, 2048, 2048, 1.f);
-  tremolo = new Tremolo (10.0f, 1.0f, Tremolo::WaveformType::SINE, 44100);
+  tremolo = new Tremolo(10.0f, 1.0f, Tremolo::WaveformType::SINE, 44100);
 }
 
 void CustomCallback::setOsc(float compass, float gravityX, float gravityY) {
@@ -32,7 +32,7 @@ void CustomCallback::setOsc(float compass, float gravityX, float gravityY) {
   pitchShifter->setPitch((pitch));
 
   // map compass to feedback
-  feedback =  float((compass) / 360.f);
+  feedback = float((compass) / 360.f);
   std::cout << "setFeedback: " << feedback << std::endl;
   delay->setFeedback(feedback);
 
@@ -42,13 +42,13 @@ void CustomCallback::setOsc(float compass, float gravityX, float gravityY) {
   bitCrusher->setQuantizedBitDepth(QuantizedBitDepth);
 
   // map gravityY to NumDelaySamples
-  NumDelaySamples = (float((gravityY+0.01) * samplerate/100.f));
+  NumDelaySamples = (float((gravityY + 0.01) * samplerate / 100.f));
   std::cout << "setNumDelaySamples: " << NumDelaySamples << std::endl;
   waveshaper->setDryWet(gravityY);
   delay->setNumDelaySamples(NumDelaySamples);
 
   // map gravityY to modFreq
-  modFreq = (float((gravityY) * 50.f));
+  modFreq = (float((gravityY)*50.f));
   std::cout << "modFrequency: " << modFreq << std::endl;
   tremolo->setModFreq(modFreq);
 }
@@ -82,12 +82,15 @@ void CustomCallback::process(AudioBuffer buffer) {
       waveshaper->processFrame(sample, sample);
       delay->processFrame(sample, outputChannels[channel][i]);
 
-//      if (frameIndex >= noteDelayFactor * samplerate) {
-//        updatePitch(melody, sine);
-//        frameIndex = 0;
-//      } else {
-//        frameIndex++;
-//      }
+#if 0
+// option to play random melody
+      if (frameIndex >= noteDelayFactor * samplerate) {
+        updatePitch(melody, sine);
+        frameIndex = 0;
+      } else {
+        frameIndex++;
+      }
+#endif
     }
   }
 }

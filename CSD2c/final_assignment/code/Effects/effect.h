@@ -1,5 +1,7 @@
 #pragma once
 
+// Effect baseclass by Ciska
+
 class Effect {
 public:
   // drywet: drywet balance
