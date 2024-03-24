@@ -82,12 +82,12 @@ void CustomCallback::process(AudioBuffer buffer) {
       waveshaper->processFrame(sample, sample);
       delay->processFrame(sample, outputChannels[channel][i]);
 
-      if (frameIndex >= noteDelayFactor * samplerate) {
-        updatePitch(melody, sine);
-        frameIndex = 0;
-      } else {
-        frameIndex++;
-      }
+//      if (frameIndex >= noteDelayFactor * samplerate) {
+//        updatePitch(melody, sine);
+//        frameIndex = 0;
+//      } else {
+//        frameIndex++;
+//      }
     }
   }
 }
