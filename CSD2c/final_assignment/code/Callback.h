@@ -22,7 +22,6 @@ public:
   double mtof(float mPitch);
   void updatePitch(Melody &melody, Oscillator &myFastSine);
   void setOsc(float oscValue);
-  void setDryWet(float compassValue);
 
 private:
   float oscValue = 0.f;

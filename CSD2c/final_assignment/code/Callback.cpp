@@ -24,8 +24,10 @@ double CustomCallback::mtof(float mPitch) {
 
 void CustomCallback::setOsc(float oscValue) {
   std::cout << "osc value changed" << std::endl;
-  this->oscValue = oscValue;
-  setDryWet(oscValue);
+  dryWet = (double((oscValue + 180.f) / 360.f));
+  std::cout << "CustomCallback::setDryWet: " << dryWet << std::endl;
+  waveshaper->setDryWet(dryWet);
+  delay->setDryWet(dryWet);
 }
 
 void CustomCallback::updatePitch(Melody &melody, Oscillator &myFastSine) {
@@ -38,17 +40,6 @@ void CustomCallback::updatePitch(Melody &melody, Oscillator &myFastSine) {
   // Log the note and its frequency.
   std::cout << "next note: " << note << ", has frequency " << freq << std::endl;
   sine.setFrequency(freq);
-}
-
-void CustomCallback::setDryWet(float compassValue) {
-  dryWet = (double((compassValue) / 360.f));
-  std::cout << "CustomCallback::setDryWet: " << dryWet << std::endl;
-  waveshaper->setDryWet(dryWet);
-  delay->setDryWet(dryWet);
-
-  //  bitCrusher.setQuantizedBitDepth(dryWet);
-  //  pitchShifter.setDryWet(dryWet);
-  //  pitchShifter2.setDryWet(dryWet);
 }
 
 void CustomCallback::process(AudioBuffer buffer) {
