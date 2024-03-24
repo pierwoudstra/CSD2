@@ -1,17 +1,21 @@
 #include "Callback.h"
 #include <iostream>
 
-void CustomCallback::prepare(int rate) {
-  samplerate = (float)rate;
-    this->samplerate = samplerate;
-    std::cout << "\nsamplerate: " << samplerate << "\n";
-//    chorus.prepare(samplerate);
-//    chorus2.prepare(samplerate);
+CustomCallback::~CustomCallback() {
+  delete waveshaper;
+  delete delay;
 }
 
-void CustomCallback::innitEffects()
-{
-    waveshaper = new Waveshaper(1.f, Waveshaper::WaveshapeType::DIGITAL, 2.f);
+void CustomCallback::prepare(int rate) {
+  samplerate = (float)rate;
+  std::cout << "\nsamplerate: " << samplerate << "\n";
+  //    chorus.prepare(samplerate);
+  //    chorus2.prepare(samplerate);
+}
+
+void CustomCallback::initEffects() {
+  waveshaper = new Waveshaper(1.f, Waveshaper::WaveshapeType::DIGITAL, 2.f);
+  delay = new Delay(0.8f, 2048, 2048, 1.f);
 }
 
 double CustomCallback::mtof(float mPitch) {
@@ -37,33 +41,33 @@ void CustomCallback::updatePitch(Melody &melody, Oscillator &myFastSine) {
 }
 
 void CustomCallback::setDryWet(float compassValue) {
-    dryWet = (double((compassValue + 180.f) / 360.f));
-  std::cout << "DryWet: " << dryWet << std::endl;
-    if (waveshaper != nullptr) { // Check if waveshaper is not null
-        waveshaper->setDryWet(dryWet);
-    } else {
-        std::cerr << "Error: Waveshaper is not initialized properly" << std::endl;
-    }
-//  bitCrusher.setQuantizedBitDepth(dryWet);
-//    pitchShifter.setDryWet(dryWet);
-//    pitchShifter2.setDryWet(dryWet);
-//    delay.setDryWet(dryWet);
+  dryWet = (double((compassValue) / 360.f));
+  std::cout << "CustomCallback::setDryWet: " << dryWet << std::endl;
+  waveshaper->setDryWet(dryWet);
+  delay->setDryWet(dryWet);
+
+  //  bitCrusher.setQuantizedBitDepth(dryWet);
+  //  pitchShifter.setDryWet(dryWet);
+  //  pitchShifter2.setDryWet(dryWet);
 }
 
 void CustomCallback::process(AudioBuffer buffer) {
   auto [inputChannels, outputChannels, numInputChannels, numOutputChannels,
         numFrames] = buffer;
+
   for (int channel = 0u; channel < numInputChannels; channel++) {
     for (int i = 0u; i < numFrames; i++) {
 
       // set audio output
-        float sample = sine.genNextSample();
-//      outputChannels[channel][i] = sample;
-        waveshaper->processFrame(sample, outputChannels[channel][i]);
-//      bitCrusher.processFrame(sample, outputChannels[channel][i]);
-//      pitchShifter.processFrame(sample, sample);
-//      pitchShifter2.processFrame(sample, sample);
-//        delay.processFrame(sample, outputChannels[channel][i]);
+      float sample = sine.genNextSample();
+      waveshaper->processFrame(sample, sample);
+      delay->processFrame(sample, outputChannels[channel][i]);
+      // pitchShifter.processFrame(sample, outputChannels[channel][i]);
+
+      // bitCrusher.processFrame(sample, outputChannels[channel][i]);
+      // pitchShifter.processFrame(sample, sample);
+      // pitchShifter2.processFrame(sample, sample);
+
       if (frameIndex >= noteDelayFactor * samplerate) {
         // use melody to update pitch
         updatePitch(melody, sine);
@@ -72,7 +76,6 @@ void CustomCallback::process(AudioBuffer buffer) {
         // Increment the frame index.
         frameIndex++;
       }
-
     }
   }
 }

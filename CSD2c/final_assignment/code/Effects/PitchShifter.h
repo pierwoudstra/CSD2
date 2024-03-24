@@ -17,6 +17,7 @@ public:
   ~PitchShifter();
 
   void applyEffect(const float &input, float &output) override;
+  void setPitch(float shift);
 
 private:
   float *buffer;

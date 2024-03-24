@@ -12,18 +12,19 @@
 #include "osc_server.h"
 
 int main() {
-      std::cout << "starting program" << std::endl;
+  std::cout << "starting program" << std::endl;
 
-    auto callback = CustomCallback{};
-    std::cout << "starting Jack" << std::endl;
+  auto callback = CustomCallback{};
+  std::cout << "starting Jack" << std::endl;
 
-    auto jackModule = JackModule{callback};
+  auto jackModule = JackModule{callback};
 
-    std::cout << "starting osc" << std::endl;
+  std::cout << "starting osc" << std::endl;
 
-    localOSC osc = localOSC{callback};
+  // call effect constructors
+  callback.initEffects();
 
-    callback.innitEffects();
+  localOSC osc = localOSC{callback};
 
   jackModule.init(1, 2);
 

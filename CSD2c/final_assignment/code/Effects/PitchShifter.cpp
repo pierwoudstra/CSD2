@@ -67,3 +67,7 @@ void PitchShifter::applyEffect(const float &input, float &output) {
 
   output = sum;
 }
+
+void PitchShifter::setPitch(float shift) {
+  this->shift = shift;
+}
