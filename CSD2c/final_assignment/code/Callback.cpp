@@ -9,8 +9,6 @@ CustomCallback::~CustomCallback() {
 void CustomCallback::prepare(int rate) {
   samplerate = (float)rate;
   std::cout << "\nsamplerate: " << samplerate << "\n";
-  //    chorus.prepare(samplerate);
-  //    chorus2.prepare(samplerate);
 }
 
 void CustomCallback::initEffects() {
@@ -18,13 +16,9 @@ void CustomCallback::initEffects() {
   delay = new Delay(0.8f, 2048, 2048, 1.f);
 }
 
-double CustomCallback::mtof(float mPitch) {
-  return 440.0 * pow(2.0, (mPitch - 69.0f) / 12.0f);
-}
 
-void CustomCallback::setOsc(float oscValue) {
+void CustomCallback::setOsc(float oscValue, float oscValue2) {
   std::cout << "osc value changed" << std::endl;
-
   // map dry/wet from 0 - 360 to 0 - 1 - 0
   dryWet = (double((oscValue) / 360.f));
 
@@ -38,7 +32,7 @@ void CustomCallback::updatePitch(Melody &melody, Oscillator &myFastSine) {
   float note = melody.getNote();
 
   // Convert the note to frequency.
-  double freq = mtof(note);
+  double freq = 440.0 * pow(2.0, (note - 69.0f) / 12.0f);
 
   // Log the note and its frequency.
   std::cout << "next note: " << note << ", has frequency " << freq << std::endl;

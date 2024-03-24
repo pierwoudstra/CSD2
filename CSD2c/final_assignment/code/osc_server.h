@@ -51,7 +51,7 @@ public:
       cout << float1 << " - " << float2 << endl;
 
       // assign incoming value to OSC field
-      callback.setOsc(float1);
+      callback.setOsc(float1, float2);
 
     } // if
 

@@ -19,27 +19,24 @@ public:
   void prepare(int rate) override;
   void process(AudioBuffer buffer) override;
   void initEffects();
-  double mtof(float mPitch);
   void updatePitch(Melody &melody, Oscillator &myFastSine);
-  void setOsc(float oscValue);
+  void setOsc(float oscValue, float oscValue2);
 
 private:
   float oscValue = 0.f;
+  float oscValue2 = 0.f;
   float samplerate = 44100;
   int frameIndex = 0;
   double noteDelayFactor = 0.5;
-  Melody melody;
   float dryWet = 1.f;
+  Melody melody;
+  Sine sine = Sine(400, samplerate);
 
   // effects:
-  Sine sine = Sine(400, samplerate);
-  //  Delay delay = Delay(0.7f, 2048, 2048, 0.f);
   Waveshaper* waveshaper;
-  Delay* delay;
   //  PitchShifter pitchShifter2 = PitchShifter(0.f, 1.3f);
-  //  Chorus chorus = Chorus(0.f, 0.9f, 0.5f, samplerate);
-  //  Chorus chorus2 = Chorus(0.f, 0.7f, 0.5f, samplerate);
   //  BitCrusher bitCrusher = BitCrusher(4.0, 1.f);
+  Delay* delay;
 };
 
 #endif // CALLBACK_H
