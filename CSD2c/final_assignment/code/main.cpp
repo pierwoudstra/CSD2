@@ -1,8 +1,8 @@
 /*
- * todo:
- * - fix dry/wet amount not having influence
- * - change way effects react to osc
- * - maybe add another osc parameter
+ * OSC EFFECT CONTROLLER
+ * by Roman-James & Pier
+ * using Ciska's delay & effect baseclass
+ * using Marc's wrapper for liblo
  */
 
 #include <iostream>
@@ -13,21 +13,18 @@
 
 int main() {
   std::cout << "starting program" << std::endl;
-
   auto callback = CustomCallback{};
-  std::cout << "starting Jack" << std::endl;
-
   auto jackModule = JackModule{callback};
-
-  std::cout << "starting osc" << std::endl;
 
   // call effect constructors
   callback.initEffects();
 
   localOSC osc = localOSC{callback};
 
+  std::cout << "starting Jack" << std::endl;
   jackModule.init(1, 2);
 
+  std::cout << "starting OSC server" << std::endl;
   osc.runServer();
 
   bool running = true;

@@ -36,10 +36,10 @@ private:
   Sine sine = Sine(400, samplerate);
 
   // effects:
-    PitchShifter* pitchShifter;
-    BitCrusher* bitCrusher;
-    Waveshaper* waveshaper;
-    Delay* delay;
+  PitchShifter *pitchShifter;
+  BitCrusher *bitCrusher;
+  Waveshaper *waveshaper;
+  Delay *delay;
 };
 
 #endif // CALLBACK_H

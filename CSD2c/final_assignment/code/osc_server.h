@@ -49,9 +49,6 @@ public:
       float compass = argv[1]->f;
       float gravityX = argv[2]->f;
       float gravityY = argv[3]->f;
-//      cout << "float1: " << float1 << endl;
-//      cout << "float2: " << float2 << endl;
-//      cout << "float3: " << float3 << endl;
 
       // assign incoming value to OSC field
       callback.setOsc(compass, gravityX, gravityY);
@@ -68,6 +65,7 @@ public:
 
     osc.init(serverport);
 
+    // expecting a string and three floats
     osc.set_callback("/sound", "sfff");
 
     osc.start();

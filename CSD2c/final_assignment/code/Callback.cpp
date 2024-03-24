@@ -12,29 +12,30 @@ void CustomCallback::prepare(int rate) {
 }
 
 void CustomCallback::initEffects() {
-    pitchShifter = new PitchShifter(0.f, 1.3f);
-    bitCrusher = new BitCrusher(4.0, 1.f);
-    waveshaper = new Waveshaper(1.f, Waveshaper::WaveshapeType::DIGITAL, 2.f);
-    delay = new Delay(0.8f, 2048, 2048, 1.f);
+  pitchShifter = new PitchShifter(0.f, 1.3f);
+  bitCrusher = new BitCrusher(4.0, 1.f);
+  waveshaper = new Waveshaper(1.f, Waveshaper::WaveshapeType::DIGITAL, 2.f);
+  delay = new Delay(0.8f, 2048, 2048, 1.f);
 }
 
-
 void CustomCallback::setOsc(float compass, float gravityX, float gravityY) {
-  // map compass from 0 - 360 to dryWet 0 - 1 - 0
+  // map compass value to dry/wet value
   dryWet = (float((compass) / 360.f));
   std::cout << "setDryWet: " << dryWet << std::endl;
   waveshaper->setDryWet(dryWet);
   delay->setDryWet(dryWet);
 
+  // map compass to pitch
   pitch = (float((compass) / 360.f));
   std::cout << "setPitch: " << dryWet << std::endl;
   pitchShifter->setPitch((pitch));
 
+  // map x value to bit depth
   QuantizedBitDepth = gravityX;
   std::cout << "setQuantizedBitDepth: " << QuantizedBitDepth << std::endl;
   bitCrusher->setQuantizedBitDepth(QuantizedBitDepth);
 
-    // map gravityY from -1 - 1 to QuantizedBitDepth 0 - 20
+  // map gravityY from -1 - 1 to QuantizedBitDepth 0 - 20
   feedback = gravityY;
   std::cout << "setFeedback: " << feedback << std::endl;
   delay->setFeedback(feedback);
@@ -59,8 +60,10 @@ void CustomCallback::process(AudioBuffer buffer) {
   for (int channel = 0u; channel < numInputChannels; channel++) {
     for (int i = 0u; i < numFrames; i++) {
 
-      // set audio output
+      // set audio input
       float sample = sine.genNextSample();
+
+      // process using effects
       bitCrusher->processFrame(sample, sample);
       waveshaper->processFrame(sample, sample);
       pitchShifter->processFrame(sample, sample);
