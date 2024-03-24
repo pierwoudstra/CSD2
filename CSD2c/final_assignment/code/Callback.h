@@ -31,6 +31,7 @@ private:
   float dryWet;
   double QuantizedBitDepth;
   float feedback;
+  float pitch;
   Melody melody;
   Sine sine = Sine(400, samplerate);
 

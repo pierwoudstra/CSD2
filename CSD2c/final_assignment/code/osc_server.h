@@ -46,15 +46,15 @@ public:
     // cout << "path: " << msgpath << endl;
     if (!msgpath.compare("/sound")) {
       string paramname = (char *)argv[0];
-      float float1 = argv[1]->f;
-      float float2 = argv[2]->f;
-      float float3 = argv[3]->f;
+      float compass = argv[1]->f;
+      float gravityX = argv[2]->f;
+      float gravityY = argv[3]->f;
 //      cout << "float1: " << float1 << endl;
 //      cout << "float2: " << float2 << endl;
 //      cout << "float3: " << float3 << endl;
 
       // assign incoming value to OSC field
-      callback.setOsc(float1, float2, float3);
+      callback.setOsc(compass, gravityX, gravityY);
 
     } // if
 
