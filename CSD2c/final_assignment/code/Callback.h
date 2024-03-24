@@ -1,10 +1,9 @@
 #ifndef CALLBACK_H
 #define CALLBACK_H
 
-#include "Effects/BitCrusher.h"
-#include "Effects/Chorus.h"
-#include "Effects/Delay.h"
 #include "Effects/Effect.h"
+#include "Effects/BitCrusher.h"
+#include "Effects/Delay.h"
 #include "Effects/PitchShifter.h"
 #include "Effects/Tremolo.h"
 #include "Effects/Waveshaper.h"
@@ -23,8 +22,6 @@ public:
   void setOsc(float compass, float gravityX, float gravityY);
 
 private:
-  float oscValue = 0.f;
-  float oscValue2 = 0.f;
   float samplerate = 44100;
   int frameIndex = 0;
   double noteDelayFactor = 0.5;
@@ -32,6 +29,8 @@ private:
   double QuantizedBitDepth;
   float feedback;
   float pitch;
+  float NumDelaySamples;
+  float modFreq;
   Melody melody;
   Sine sine = Sine(400, samplerate);
 
@@ -40,6 +39,7 @@ private:
   BitCrusher *bitCrusher;
   Waveshaper *waveshaper;
   Delay *delay;
+  Tremolo *tremolo;
 };
 
 #endif // CALLBACK_H

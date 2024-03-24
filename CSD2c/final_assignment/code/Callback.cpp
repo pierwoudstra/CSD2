@@ -9,6 +9,7 @@ CustomCallback::~CustomCallback() {
 void CustomCallback::prepare(int rate) {
   samplerate = (float)rate;
   std::cout << "\nsamplerate: " << samplerate << "\n";
+  tremolo->prepare(samplerate);
 }
 
 void CustomCallback::initEffects() {
@@ -16,6 +17,7 @@ void CustomCallback::initEffects() {
   bitCrusher = new BitCrusher(4.0, 1.f);
   waveshaper = new Waveshaper(1.f, Waveshaper::WaveshapeType::DIGITAL, 2.f);
   delay = new Delay(0.8f, 2048, 2048, 1.f);
+  tremolo = new Tremolo (10.0f, 1.0f, Tremolo::WaveformType::SINE, 44100);
 }
 
 void CustomCallback::setOsc(float compass, float gravityX, float gravityY) {
@@ -30,15 +32,26 @@ void CustomCallback::setOsc(float compass, float gravityX, float gravityY) {
   std::cout << "setPitch: " << dryWet << std::endl;
   pitchShifter->setPitch((pitch));
 
-  // map x value to bit depth
+  // map compass to feedback
+  feedback =  float((compass) / 360.f);
+  std::cout << "setFeedback: " << feedback << std::endl;
+  delay->setFeedback(feedback);
+
+  // map gravityX to bitDepth
   QuantizedBitDepth = gravityX;
   std::cout << "setQuantizedBitDepth: " << QuantizedBitDepth << std::endl;
   bitCrusher->setQuantizedBitDepth(QuantizedBitDepth);
 
-  // map gravityY from -1 - 1 to QuantizedBitDepth 0 - 20
-  feedback = gravityY;
-  std::cout << "setFeedback: " << feedback << std::endl;
-  delay->setFeedback(feedback);
+  // map gravityY to NumDelaySamples
+  NumDelaySamples = (float((gravityY*-1) * samplerate/100.f));
+  std::cout << "setNumDelaySamples: " << NumDelaySamples << std::endl;
+  delay->setNumDelaySamples(NumDelaySamples);
+
+  // map gravityY to modFreq
+  modFreq = (float((gravityY) * 50.f));
+  std::cout << "modFrequency: " << modFreq << std::endl;
+  tremolo->setModFreq(modFreq);
+
 }
 
 void CustomCallback::updatePitch(Melody &melody, Oscillator &myFastSine) {
@@ -64,9 +77,10 @@ void CustomCallback::process(AudioBuffer buffer) {
       float sample = sine.genNextSample();
 
       // process using effects
-      bitCrusher->processFrame(sample, sample);
-      waveshaper->processFrame(sample, sample);
       pitchShifter->processFrame(sample, sample);
+      bitCrusher->processFrame(sample, sample);
+      tremolo->processFrame(sample, sample);
+      waveshaper->processFrame(sample, sample);
       delay->processFrame(sample, outputChannels[channel][i]);
 
       if (frameIndex >= noteDelayFactor * samplerate) {
