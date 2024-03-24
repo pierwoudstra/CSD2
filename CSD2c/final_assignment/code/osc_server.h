@@ -47,8 +47,8 @@ public:
     if (!msgpath.compare("/sound")) {
       string paramname = (char *)argv[0];
       float float1 = argv[1]->f;
-      cout << float1 << endl;
-      int int2 = argv[2]->i;
+      float float2 = argv[2]->f;
+      cout << float1 << " - " << float2 << endl;
 
       // assign incoming value to OSC field
       callback.setOsc(float1);
@@ -65,7 +65,7 @@ public:
 
     osc.init(serverport);
 
-    osc.set_callback("/sound", "sfii");
+    osc.set_callback("/sound", "sffi");
 
     osc.start();
     cout << "Listening on port " << serverport << endl;

@@ -24,7 +24,10 @@ double CustomCallback::mtof(float mPitch) {
 
 void CustomCallback::setOsc(float oscValue) {
   std::cout << "osc value changed" << std::endl;
-  dryWet = (double((oscValue + 180.f) / 360.f));
+
+  // map dry/wet from 0 - 360 to 0 - 1 - 0
+  dryWet = (double((oscValue) / 360.f));
+
   std::cout << "CustomCallback::setDryWet: " << dryWet << std::endl;
   waveshaper->setDryWet(dryWet);
   delay->setDryWet(dryWet);
