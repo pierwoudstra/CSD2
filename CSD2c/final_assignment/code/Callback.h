@@ -20,7 +20,7 @@ public:
   void process(AudioBuffer buffer) override;
   void initEffects();
   void updatePitch(Melody &melody, Oscillator &myFastSine);
-  void setOsc(float oscValue, float oscValue2);
+  void setOsc(float compass, float gravityX, float gravityY);
 
 private:
   float oscValue = 0.f;
@@ -28,7 +28,9 @@ private:
   float samplerate = 44100;
   int frameIndex = 0;
   double noteDelayFactor = 0.5;
-  float dryWet = 1.f;
+  float dryWet;
+  double QuantizedBitDepth;
+  float feedback;
   Melody melody;
   Sine sine = Sine(400, samplerate);
 

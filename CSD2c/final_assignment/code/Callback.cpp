@@ -19,14 +19,22 @@ void CustomCallback::initEffects() {
 }
 
 
-void CustomCallback::setOsc(float oscValue, float oscValue2) {
-  std::cout << "osc value changed" << std::endl;
-  // map dry/wet from 0 - 360 to 0 - 1 - 0
-  dryWet = (double((oscValue) / 360.f));
-
+void CustomCallback::setOsc(float compass, float gravityX, float gravityY) {
+  // map compass from 0 - 360 to dryWet 0 - 1 - 0
+  dryWet = (float((compass) / 360.f));
   std::cout << "CustomCallback::setDryWet: " << dryWet << std::endl;
   waveshaper->setDryWet(dryWet);
   delay->setDryWet(dryWet);
+
+  // map gravityX from -1 - 0 to feedback 0 - 1
+  feedback = (float((gravityX + 1) / 2.f));
+  std::cout << "CustomCallback::setFeedback: " << feedback << std::endl;
+  delay->setFeedback(feedback);
+
+    // map gravityY from -1 - 0 to QuantizedBitDepth 0 - 20
+  QuantizedBitDepth = (double((gravityY + 1) * 10.f));
+  std::cout << "CustomCallback::setQuantizedBitDepth: " << QuantizedBitDepth << std::endl;
+  bitCrusher->setQuantizedBitDepth(QuantizedBitDepth);
 }
 
 void CustomCallback::updatePitch(Melody &melody, Oscillator &myFastSine) {
@@ -56,11 +64,9 @@ void CustomCallback::process(AudioBuffer buffer) {
       delay->processFrame(sample, outputChannels[channel][i]);
 
       if (frameIndex >= noteDelayFactor * samplerate) {
-        // use melody to update pitch
         updatePitch(melody, sine);
         frameIndex = 0;
       } else {
-        // Increment the frame index.
         frameIndex++;
       }
     }

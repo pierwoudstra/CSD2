@@ -48,10 +48,13 @@ public:
       string paramname = (char *)argv[0];
       float float1 = argv[1]->f;
       float float2 = argv[2]->f;
-      cout << float1 << " - " << float2 << endl;
+      float float3 = argv[3]->f;
+//      cout << "float1: " << float1 << endl;
+//      cout << "float2: " << float2 << endl;
+//      cout << "float3: " << float3 << endl;
 
       // assign incoming value to OSC field
-      callback.setOsc(float1, float2);
+      callback.setOsc(float1, float2, float3);
 
     } // if
 
@@ -65,7 +68,7 @@ public:
 
     osc.init(serverport);
 
-    osc.set_callback("/sound", "sffi");
+    osc.set_callback("/sound", "sfff");
 
     osc.start();
     cout << "Listening on port " << serverport << endl;
