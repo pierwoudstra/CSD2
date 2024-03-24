@@ -3,8 +3,10 @@
 
 void CustomCallback::prepare(int rate) {
   samplerate = (float)rate;
-  std::cout << "\nsamplerate: " << samplerate << "\n";
-  effects.prepare(samplerate);
+    this->samplerate = samplerate;
+    std::cout << "\nsamplerate: " << samplerate << "\n";
+    chorus.prepare(samplerate);
+    chorus2.prepare(samplerate);
 }
 
 double CustomCallback::mtof(float mPitch) {
@@ -14,8 +16,7 @@ double CustomCallback::mtof(float mPitch) {
 void CustomCallback::setOsc(float oscValue) {
   std::cout << "osc value changed" << std::endl;
   this->oscValue = oscValue;
-  effects.setEffectValue(oscValue);
-  std::cout << "from setOsc method: " << effects.dryWet << std::endl;
+  setDryWet(oscValue);
 }
 
 void CustomCallback::updatePitch(Melody &melody, Oscillator &myFastSine) {
@@ -30,6 +31,16 @@ void CustomCallback::updatePitch(Melody &melody, Oscillator &myFastSine) {
   sine.setFrequency(freq);
 }
 
+void CustomCallback::setDryWet(float compassValue) {
+    dryWet = (float((compassValue + 180.f) / 360.f));
+//  std::cout << "DryWet: " << dryWet << std::endl;
+    waveshaper.setDryWet(dryWet);
+  bitCrusher.setDryWet(dryWet);
+    pitchShifter.setDryWet(dryWet);
+    pitchShifter2.setDryWet(dryWet);
+    delay.setDryWet(dryWet);
+}
+
 void CustomCallback::process(AudioBuffer buffer) {
   auto [inputChannels, outputChannels, numInputChannels, numOutputChannels,
         numFrames] = buffer;
@@ -37,10 +48,13 @@ void CustomCallback::process(AudioBuffer buffer) {
     for (int i = 0u; i < numFrames; i++) {
 
       // set audio output
-      float sample = sine.genNextSample();
+        float sample = sine.genNextSample();
 //      outputChannels[channel][i] = sample;
-      effects.processFrame(sample, outputChannels[channel][i]);
-
+        waveshaper.processFrame(sample, sample);
+      bitCrusher.processFrame(sample, sample);
+      pitchShifter.processFrame(sample, sample);
+      pitchShifter2.processFrame(sample, sample);
+        delay.processFrame(sample, outputChannels[channel][i]);
       if (frameIndex >= noteDelayFactor * samplerate) {
         // use melody to update pitch
         updatePitch(melody, sine);

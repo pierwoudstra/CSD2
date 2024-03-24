@@ -29,6 +29,7 @@ void Effect::setDryWet(float dryWet) {
   if (dryWet < 0.f || dryWet > 1.f) {
     throw "Effect::setDryWet - dryWet value is not in range [0, 1]";
   }
+  std::cout << "drywet: " << dryWet << std::endl;
   this->dryWet = dryWet;
   // cache 1.0 - dryWet used to calculate mix of dry wet signal
   wetDry = float(1.0f - dryWet);
