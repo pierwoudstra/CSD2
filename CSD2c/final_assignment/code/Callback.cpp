@@ -21,10 +21,9 @@ void CustomCallback::initEffects() {
 }
 
 void CustomCallback::setOsc(float compass, float gravityX, float gravityY) {
-  // map compass value to dry/wet value
+  // map compass to dryWet
   dryWet = (float((compass) / 360.f));
   std::cout << "setDryWet: " << dryWet << std::endl;
-  waveshaper->setDryWet(dryWet);
   delay->setDryWet(dryWet);
 
   // map compass to pitch
@@ -43,15 +42,15 @@ void CustomCallback::setOsc(float compass, float gravityX, float gravityY) {
   bitCrusher->setQuantizedBitDepth(QuantizedBitDepth);
 
   // map gravityY to NumDelaySamples
-  NumDelaySamples = (float((gravityY*-1) * samplerate/100.f));
+  NumDelaySamples = (float((gravityY+0.01) * samplerate/100.f));
   std::cout << "setNumDelaySamples: " << NumDelaySamples << std::endl;
+  waveshaper->setDryWet(gravityY);
   delay->setNumDelaySamples(NumDelaySamples);
 
   // map gravityY to modFreq
   modFreq = (float((gravityY) * 50.f));
   std::cout << "modFrequency: " << modFreq << std::endl;
   tremolo->setModFreq(modFreq);
-
 }
 
 void CustomCallback::updatePitch(Melody &melody, Oscillator &myFastSine) {
