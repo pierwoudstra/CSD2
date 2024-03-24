@@ -12,8 +12,10 @@ void CustomCallback::prepare(int rate) {
 }
 
 void CustomCallback::initEffects() {
-  waveshaper = new Waveshaper(1.f, Waveshaper::WaveshapeType::DIGITAL, 2.f);
-  delay = new Delay(0.8f, 2048, 2048, 1.f);
+    pitchShifter = new PitchShifter(0.f, 1.3f);
+    bitCrusher = new BitCrusher(4.0, 1.f);
+    waveshaper = new Waveshaper(1.f, Waveshaper::WaveshapeType::DIGITAL, 2.f);
+    delay = new Delay(0.8f, 2048, 2048, 1.f);
 }
 
 
@@ -48,13 +50,10 @@ void CustomCallback::process(AudioBuffer buffer) {
 
       // set audio output
       float sample = sine.genNextSample();
+      pitchShifter->processFrame(sample, sample);
+      bitCrusher->processFrame(sample, sample);
       waveshaper->processFrame(sample, sample);
       delay->processFrame(sample, outputChannels[channel][i]);
-      // pitchShifter.processFrame(sample, outputChannels[channel][i]);
-
-      // bitCrusher.processFrame(sample, outputChannels[channel][i]);
-      // pitchShifter.processFrame(sample, sample);
-      // pitchShifter2.processFrame(sample, sample);
 
       if (frameIndex >= noteDelayFactor * samplerate) {
         // use melody to update pitch
