@@ -3,7 +3,7 @@
 
 BitCrusher::BitCrusher(double bitDepth, float dryWet)
     : Effect(dryWet), bitDepth(bitDepth) {
-  std::cout << "BitCrusher Constructor" << std::endl;
+//  std::cout << "BitCrusher Constructor" << std::endl;
   setQuantizedBitDepth(bitDepth);
 };
 
@@ -16,6 +16,8 @@ void BitCrusher::applyEffect(const float &input, float &output) {
 }
 
 void BitCrusher::setQuantizedBitDepth(double bitDepth) {
-  quantizationLevel = 2.0 / (pow(2.0, bitDepth) - 1.0);
+        std::cout << "bitDepth: " << bitDepth << std::endl;
+
+    quantizationLevel = 2.0 / (pow(2.0, bitDepth) - 1.0);
   // std::cout << "quantizationLevel: " << quantizationLevel << std::endl;
 }

@@ -32,13 +32,13 @@ void CustomCallback::updatePitch(Melody &melody, Oscillator &myFastSine) {
 }
 
 void CustomCallback::setDryWet(float compassValue) {
-    dryWet = (float((compassValue + 180.f) / 360.f));
+    dryWet = (double((compassValue + 180.f) / 10.f));
 //  std::cout << "DryWet: " << dryWet << std::endl;
-    waveshaper.setDryWet(dryWet);
-  bitCrusher.setDryWet(dryWet);
-    pitchShifter.setDryWet(dryWet);
-    pitchShifter2.setDryWet(dryWet);
-    delay.setDryWet(dryWet);
+//    waveshaper.setDryWet(dryWet);
+  bitCrusher.setQuantizedBitDepth(dryWet);
+//    pitchShifter.setDryWet(dryWet);
+//    pitchShifter2.setDryWet(dryWet);
+//    delay.setDryWet(dryWet);
 }
 
 void CustomCallback::process(AudioBuffer buffer) {
@@ -50,11 +50,11 @@ void CustomCallback::process(AudioBuffer buffer) {
       // set audio output
         float sample = sine.genNextSample();
 //      outputChannels[channel][i] = sample;
-        waveshaper.processFrame(sample, sample);
-      bitCrusher.processFrame(sample, sample);
-      pitchShifter.processFrame(sample, sample);
-      pitchShifter2.processFrame(sample, sample);
-        delay.processFrame(sample, outputChannels[channel][i]);
+//        waveshaper.processFrame(sample, sample);
+      bitCrusher.processFrame(sample, outputChannels[channel][i]);
+//      pitchShifter.processFrame(sample, sample);
+//      pitchShifter2.processFrame(sample, sample);
+//        delay.processFrame(sample, outputChannels[channel][i]);
       if (frameIndex >= noteDelayFactor * samplerate) {
         // use melody to update pitch
         updatePitch(melody, sine);

@@ -2,7 +2,9 @@
 #include <iostream>
 
 Effect::Effect(float dryWet) {
-  setDryWet(dryWet);
+    std::cout << "effect Constructor" << std::endl;
+
+    setDryWet(dryWet);
   setBypass(false);
 }
 
