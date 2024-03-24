@@ -1,4 +1,5 @@
 #include "Waveshaper.h"
+#include <iostream>
 #include <math.h>
 
 Waveshaper::Waveshaper(float dryWet, Waveshaper::WaveshapeType waveshapeType,
@@ -12,8 +13,8 @@ Waveshaper::Waveshaper(float dryWet, Waveshaper::WaveshapeType waveshapeType,
 Waveshaper::~Waveshaper() {}
 
 void Waveshaper::applyEffect(const float &input, float &output) {
-  switch (waveshapeType) {
-  case WaveshapeType::SOFT: {
+    switch (waveshapeType) {
+      case WaveshapeType::SOFT: {
     // subtle clipping
     output = tanh(input * drive) / tanh(drive);
   }
@@ -37,7 +38,10 @@ void Waveshaper::applyEffect(const float &input, float &output) {
 }
 
 // setters
-void Waveshaper::setDrive(float drive) { this->drive = drive; }
+void Waveshaper::setDrive(float drive)
+{
+    this->drive = drive;
+}
 
 void Waveshaper::setWaveshapeType(Waveshaper::WaveshapeType waveshapeType) {
   this->waveshapeType = waveshapeType;

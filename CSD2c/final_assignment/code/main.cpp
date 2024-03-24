@@ -15,7 +15,6 @@ int main() {
       std::cout << "starting program" << std::endl;
 
     auto callback = CustomCallback{};
-
     std::cout << "starting Jack" << std::endl;
 
     auto jackModule = JackModule{callback};
@@ -23,6 +22,8 @@ int main() {
     std::cout << "starting osc" << std::endl;
 
     localOSC osc = localOSC{callback};
+
+    callback.innitEffects();
 
   jackModule.init(1, 2);
 
