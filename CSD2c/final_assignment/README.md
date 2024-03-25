@@ -30,22 +30,22 @@ Onze aansturing begint bij de telefoon-app _ZIG SIM_. Hier worden de **compass**
 
 ### Pier schatting urenoverzicht
 
-- OSC werkend krijgen: 10 uur
-- Bug fixing: 10 uur
-- Concept brainstormen: 3 uur
-- Bestaande effecten aanpassen: 5 uur
+- OSC werkend krijgen: _10 uur_
+- Bug fixing: _10 uur_
+- Concept brainstormen: _3 uur_
+- Bestaande effecten aanpassen: _5 uur_
 
-Totale tijdsbesteding: 28 uur
+Totale tijdsbesteding: **28 uur**
 
 ### Roman-James schatting urenoverzicht
 
-- Concept brainstormen: 3 uur
-- openCV: 5 uur
-- OSC naar effecten mappen: 10 uur
-- Bug fixing: 10 uur
-- OSC naar visuals mappen: 2 uur
+- Concept brainstormen: _3 uur_
+- openCV: _5 uur_
+- OSC naar effecten mappen: _10 uur_
+- Bug fixing: _10 uur_
+- OSC naar visuals mappen: _2 uur_
 
-Totale tijdsbesteding: 30 uur
+Totale tijdsbesteding: **30 uur**
 
 ## Reflectie
 
