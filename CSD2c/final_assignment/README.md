@@ -12,7 +12,7 @@ De basis van de onconventionele aansturing is dat in plaats van dat het geluid h
 
 ### Aansturing
 
-Onze aansturing begint bij de telefoon-app _ZIG SIM_. Hier worden de **compass**-, **gravity-X**- en **gravity-Y**-waarden van de telefoon via OSC naar een Max-patch gestuurd. Deze Max-patch schaalt de inkomende OSC-berichten en stuurt deze berichten door naar het OSC-object in ons C++ project. Ten slotte worden deze inkomende berichten gemapTo naar verschillende parameters van onze effecten. Bovendien worden er OSC-berichten gestuurd naar het programma _Resolume_ om de video-effecten daar aan te sturen.
+Onze aansturing begint bij de telefoon-app _ZIG SIM_. Hier worden de **compass**-, **gravity-X**- en **gravity-Y**-waarden van de telefoon via OSC naar een Max-patch gestuurd. Deze Max-patch schaalt de inkomende OSC-berichten en stuurt deze berichten door naar het OSC-object in ons C++ project. Ten slotte worden deze inkomende berichten gemapt naar verschillende parameters van onze effecten. Bovendien worden er OSC-berichten gestuurd naar het programma _Resolume_ om de video-effecten daar aan te sturen.
 
 ### Class diagram
 
