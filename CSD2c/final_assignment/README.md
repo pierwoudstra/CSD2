@@ -1,6 +1,6 @@
 # Alien camera
 
-Vervremende interactie door onconventionele aansturing
+Vervremende interactie door onconventionele aansturing.
 
 ## Conceptueel ontwerp
 
