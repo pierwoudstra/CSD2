@@ -2,8 +2,11 @@
 #include <iostream>
 
 CustomCallback::~CustomCallback() {
+  delete pitchShifter;
+  delete bitCrusher;
   delete waveshaper;
   delete delay;
+  delete tremolo;
 }
 
 void CustomCallback::prepare(int rate) {
