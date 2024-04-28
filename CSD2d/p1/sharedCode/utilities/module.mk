@@ -1,0 +1,1 @@
+SRC_MODULES += $(patsubst %,utilities/%, bufferDebugger.cpp)
