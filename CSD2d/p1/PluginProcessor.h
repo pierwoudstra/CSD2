@@ -45,5 +45,12 @@ public:
 
 private:
   //==============================================================================
+  std::atomic<float> setDryWet(float wetSignal, float drySignal, float dryWetValue);
+
+  std::atomic<float> *pitch;
+  std::atomic<float> *dryWet;
+
+  PitchShifter pitchShifter;
+  juce::AudioProcessorValueTreeState Params;
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AudioPluginAudioProcessor)
 };

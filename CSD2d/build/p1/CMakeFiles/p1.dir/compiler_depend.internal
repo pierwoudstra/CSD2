@@ -643,6 +643,7 @@ p1/CMakeFiles/p1.dir/PluginEditor.cpp.o
  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/memory
  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/mutex
  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/new
+ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/numbers
  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/numeric
  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/optional
  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/ostream
@@ -1260,6 +1261,9 @@ p1/CMakeFiles/p1.dir/PluginEditor.cpp.o
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_gui_basics/windows/juce_TopLevelWindow.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_gui_basics/windows/juce_VBlankAttachment.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_gui_basics/windows/juce_WindowUtils.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/Effect.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/MoogLadder.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/PitchShifter.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/PluginEditor.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/PluginProcessor.h
 
@@ -1905,6 +1909,7 @@ p1/CMakeFiles/p1.dir/PluginProcessor.cpp.o
  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/memory
  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/mutex
  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/new
+ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/numbers
  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/numeric
  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/optional
  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/ostream
@@ -2522,6 +2527,9 @@ p1/CMakeFiles/p1.dir/PluginProcessor.cpp.o
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_gui_basics/windows/juce_TopLevelWindow.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_gui_basics/windows/juce_VBlankAttachment.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_gui_basics/windows/juce_WindowUtils.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/Effect.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/MoogLadder.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/PitchShifter.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/PluginEditor.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/PluginProcessor.h
 

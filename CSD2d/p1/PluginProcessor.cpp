@@ -11,7 +11,29 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
 #endif
               .withOutput("Output", juce::AudioChannelSet::stereo(), true)
 #endif
-      ) {
+              ),
+      Params(*this, nullptr, "Parameters",
+             {
+                 std::make_unique<juce::AudioParameterFloat>(
+                     juce::ParameterID{"uPitch", 1}, "Pitch", 0.1, 5.0,
+                     1),
+                 std::make_unique<juce::AudioParameterFloat>(
+                     juce::ParameterID{"uDryWet", 1}, "Dry/Wet", 0.0, 1.0,
+                     0.5),
+             })
+{
+
+  // Use the parameter ID to return a pointer to our parameter data
+  pitch = Params.getRawParameterValue("uPitch");
+  dryWet = Params.getRawParameterValue("uDryWet");
+
+  // for each input channel emplace one filter
+  for(auto i = 0; i < getBusesLayout().getNumChannels(true, 0); ++i){
+
+    pitchShifter.setPitch(1.f);
+
+  }
+
 }
 
 AudioPluginAudioProcessor::~AudioPluginAudioProcessor() {}
@@ -106,6 +128,10 @@ bool AudioPluginAudioProcessor::isBusesLayoutSupported(
 #endif
 }
 
+std::atomic<float> AudioPluginAudioProcessor::setDryWet(float wetSignal, float drySignal, float dryWetValue) {
+  return drySignal * (1.f - dryWetValue) + (wetSignal * dryWetValue);
+}
+
 void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
                                              juce::MidiBuffer &midiMessages) {
   juce::ignoreUnused(midiMessages);
@@ -114,25 +140,29 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
   auto totalNumInputChannels = getTotalNumInputChannels();
   auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-  // In case we have more outputs than inputs, this code clears any output
-  // channels that didn't contain input data, (because these aren't
-  // guaranteed to be empty - they may contain garbage).
-  // This is here to avoid people getting screaming feedback
-  // when they first compile a plugin, but obviously you don't need to keep
-  // this code if your algorithm always overwrites all the output channels.
+  // initialise output sample
+  float output = 0.f;
+
+  pitchShifter.setPitch( *pitch );
+
   for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     buffer.clear(i, 0, buffer.getNumSamples());
 
-  // This is the place where you'd normally do the guts of your plugin's
-  // audio processing...
-  // Make sure to reset the state if your inner loop is processing
-  // the samples and the outer loop is handling the channels.
-  // Alternatively, you can process the samples with the channels
-  // interleaved by keeping the same state.
   for (int channel = 0; channel < totalNumInputChannels; ++channel) {
     auto *channelData = buffer.getWritePointer(channel);
     juce::ignoreUnused(channelData);
-    // ..do something to the data...
+
+    for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
+
+      // edit input signal with effect
+      pitchShifter.processFrame(channelData[sample], output);
+
+      // combine input & output for working dry/wet balance
+      output = setDryWet(output, channelData[sample], *dryWet);
+
+      channelData[sample] = output;
+
+    }
   }
 }
 
@@ -152,14 +182,17 @@ void AudioPluginAudioProcessor::getStateInformation(
   // You could do that either as raw data, or use the XML or ValueTree classes
   // as intermediaries to make it easy to save and load complex data.
   juce::ignoreUnused(destData);
+  auto state = Params.copyState();
 }
 
 void AudioPluginAudioProcessor::setStateInformation(const void *data,
                                                     int sizeInBytes) {
-  // You should use this method to restore your parameters from this memory
-  // block, whose contents will have been created by the getStateInformation()
-  // call.
-  juce::ignoreUnused(data, sizeInBytes);
+  // You should use this method to restore your parameters from this memory block,
+  // whose contents will have been created by the getStateInformation() call.
+  std::unique_ptr<juce::XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+  if (xmlState.get() != nullptr)
+    if (xmlState->hasTagName (Params.state.getType()))
+      Params.replaceState (juce::ValueTree::fromXml (*xmlState));
 }
 
 //==============================================================================

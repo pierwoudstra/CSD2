@@ -1,4 +1,7 @@
+// using Daan's Moog Ladder filter!
+#include "MoogLadder.h"
 #include "Effect.h"
+#include <cmath>
 
 // idea for most of this code from YT channel:
 // YetAnotherElectronicsChannel
@@ -14,6 +17,21 @@
 class PitchShifter : public Effect {
 public:
   PitchShifter(float dryWet = 1.f, float shift = 2.f) {
+
+    // initializing the filter
+    filter = MoogLadder();
+    filter.prepare(44100);
+    filter.setCoefficients(MoogLadder::makeHiPass12());
+    filter.setCriticalFrequency(300.0);
+    filter.setResonance(0);
+
+    // initializing the filter
+    lowPass = MoogLadder();
+    filter.prepare(44100);
+    lowPass.setCoefficients(MoogLadder::makeLoPass24());
+    lowPass.setCriticalFrequency(22000.0);
+    lowPass.setResonance(0);
+
     setDryWet(dryWet);
     this->shift = shift;
 
@@ -27,14 +45,15 @@ public:
 
   void applyEffect(const float &input, float &output) override {
 
-    // should filter input for better effect
+    // using Daan's filter to high-pass the input
+    auto filteredInput = float( filter.process( double(input) ) );
 
     // write to circular buffer
-    buffer[writeHead] = input;
+    buffer[writeHead] = filteredInput;
 
     // read fractional readHead and generate 0 and 180 degree readHead in
     // integer form
-    int readHeadInt1 = int(readHead);
+    int readHeadInt1 = std::round(readHead);
     int readHeadInt2 = 0;
     if (readHeadInt1 >= bufSize / 2) {
       readHeadInt2 = readHeadInt1 - (bufSize / 2);
@@ -43,15 +62,15 @@ public:
     }
 
     // read the two samples
-    float sample1 = (float)buffer[readHeadInt1];
-    float sample2 = (float)buffer[readHeadInt2];
+    auto sample1 = (float)buffer[readHeadInt1];
+    auto sample2 = (float)buffer[readHeadInt2];
 
     // check if first readHead starts overlap with write head?
     // if yes -> do crossFade to second readHead
     if (overlap >= (writeHead - readHeadInt1) &&
         (writeHead - readHeadInt1) >= 0 && shift != 1.f) {
       int rel = writeHead - readHeadInt1;
-      crossFade = ((float)rel) / ((float)overlap);
+      crossFade = float(((float)rel) / ((float)overlap));
     } else if (writeHead - readHeadInt1 == 0) {
       crossFade = 0.f;
     }
@@ -61,13 +80,13 @@ public:
     if (overlap >= (writeHead - readHeadInt2) &&
         (writeHead - readHeadInt2) >= 0 && shift != 1.f) {
       int rel = writeHead - readHeadInt2;
-      crossFade = 1.f - ((float)rel) / ((float)overlap);
+      crossFade = 1.f - float(((float)rel) / ((float)overlap));
     } else if (writeHead - readHeadInt2 == 0) {
       crossFade = 1.f;
     }
 
     // do cross-fading and sum
-    float sum = (sample1 * crossFade + sample2 * (1.f - crossFade));
+    float sum = (sample1 * crossFade) + (sample2 * (1.f - crossFade));
 
     // increment fractional readHead and writeHead
     readHead += shift;
@@ -77,11 +96,16 @@ public:
     if (int(readHead) >= bufSize)
       readHead = 0.f;
 
-    output = sum;
+    double filteredOutput = lowPass.process( double(sum) );
+
+    output = float(filteredOutput);
   }
-  void setPitch(float shift) { this->shift = shift; };
+  void setPitch(float shift) { this->shift = shift; }
 
 private:
+  MoogLadder filter;
+  MoogLadder lowPass;
+
   float *buffer;
   int writeHead;
   float readHead;
