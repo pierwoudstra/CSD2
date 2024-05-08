@@ -1261,11 +1261,18 @@ p1/CMakeFiles/p1.dir/PluginEditor.cpp.o
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_gui_basics/windows/juce_TopLevelWindow.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_gui_basics/windows/juce_VBlankAttachment.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_gui_basics/windows/juce_WindowUtils.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/BitCrusher.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/Effect.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/MoogLadder.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/PitchShifter.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/PluginEditor.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/PluginProcessor.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/Tremolo.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/sharedCode/oscillators/fastSine.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/sharedCode/oscillators/oscillator.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/sharedCode/oscillators/saw.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/sharedCode/oscillators/sine.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/sharedCode/oscillators/square.h
 
 p1/CMakeFiles/p1.dir/PluginProcessor.cpp.o
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/PluginProcessor.cpp
@@ -2527,11 +2534,18 @@ p1/CMakeFiles/p1.dir/PluginProcessor.cpp.o
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_gui_basics/windows/juce_TopLevelWindow.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_gui_basics/windows/juce_VBlankAttachment.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_gui_basics/windows/juce_WindowUtils.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/BitCrusher.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/Effect.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/MoogLadder.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/PitchShifter.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/PluginEditor.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/PluginProcessor.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/Tremolo.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/sharedCode/oscillators/fastSine.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/sharedCode/oscillators/oscillator.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/sharedCode/oscillators/saw.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/sharedCode/oscillators/sine.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/sharedCode/oscillators/square.h
 
 p1/CMakeFiles/p1.dir/__/JUCE/modules/juce_audio_basics/juce_audio_basics.mm.o
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_audio_basics/juce_audio_basics.mm
