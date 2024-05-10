@@ -777,14 +777,9 @@ p1/CMakeFiles/p1.dir/PluginEditor.cpp.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/__bsd_locale_defaults.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/cstdarg \
   /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/PitchShifter.h \
-  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/MoogLadder.h \
-  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1/numbers \
   /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/Tremolo.h \
-  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/sharedCode/oscillators/fastSine.h \
-  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/sharedCode/oscillators/oscillator.h \
-  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/sharedCode/oscillators/saw.h \
-  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/sharedCode/oscillators/sine.h \
-  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/sharedCode/oscillators/square.h \
+  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/Sine.h \
+  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/Oscillator.h \
   /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_audio_processors/juce_audio_processors.h \
   /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_gui_basics/juce_gui_basics.h \
   /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_graphics/juce_graphics.h \
