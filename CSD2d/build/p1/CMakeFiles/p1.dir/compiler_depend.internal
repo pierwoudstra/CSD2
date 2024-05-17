@@ -1261,6 +1261,7 @@ p1/CMakeFiles/p1.dir/PluginEditor.cpp.o
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_gui_basics/windows/juce_VBlankAttachment.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_gui_basics/windows/juce_WindowUtils.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/BitCrusher.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/DownwardCompressor.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/Effect.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/Oscillator.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/PitchShifter.h
@@ -2529,6 +2530,7 @@ p1/CMakeFiles/p1.dir/PluginProcessor.cpp.o
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_gui_basics/windows/juce_VBlankAttachment.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/JUCE/modules/juce_gui_basics/windows/juce_WindowUtils.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/BitCrusher.h
+ /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/DownwardCompressor.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/Effect.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/Oscillator.h
  /Users/pirko/Documents/hku/jaar2/csd/CSD2d/p1/PitchShifter.h
