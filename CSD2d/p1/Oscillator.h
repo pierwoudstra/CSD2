@@ -4,17 +4,28 @@
 class Oscillator {
 public:
   // constructor & deconstructor
-  Oscillator(int sampleRate, float frequency, float amplitude);
-  ~Oscillator();
+  Oscillator(float sampleRate, float frequency, float amplitude) {
+    this->sampleRate = sampleRate;
+    this->frequency = frequency;
+    this->amplitude = amplitude;
+
+    phase = 0.0f;
+  }
+
+  ~Oscillator() {}
 
   // getters & setters
-  void setFrequency(float frequency);
-  float getFrequency();
-  void setAmplitude(float amplitude);
-  float getAmplitude();
+  void setFrequency(float frequency) {
+    if (this->frequency > 0 && this->frequency < sampleRate / 2) {
+      this->frequency = frequency;
+    }
+  }
+  float getFrequency() { return frequency; }
+  void setAmplitude(float amplitude) { this->amplitude = amplitude; }
+  float getAmplitude() { return amplitude; }
 
 protected:
-  int sampleRate;
+  float sampleRate;
   float frequency;
   float amplitude;
   float phase;

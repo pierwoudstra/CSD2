@@ -6,7 +6,6 @@
 
 class Effect {
 public:
-
   // drywet: drywet balance
   // drywet == 0:     dry
   // 0 < drywet < 1:  mix

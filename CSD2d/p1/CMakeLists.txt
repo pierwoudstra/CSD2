@@ -38,21 +38,21 @@ project(P1 VERSION 0.0.1)
 # Check the readme at `docs/CMake API.md` in the JUCE repo for the full list.
 
 juce_add_plugin(p1
-    VERSION 0.0.1                               # Set this if the plugin version is different to the project version
-    # ICON_BIG ...                              # ICON_* arguments specify a path to an image file to use as an icon for the Standalone
-    # ICON_SMALL ...
-    COMPANY_NAME pirko                          # Specify the name of the plugin's author
-    IS_SYNTH FALSE                              # Is this a synth or an effect?
-    NEEDS_MIDI_INPUT FALSE                      # Does the plugin need midi input?
-    NEEDS_MIDI_OUTPUT FALSE                     # Does the plugin need midi output?
-    IS_MIDI_EFFECT FALSE                        # Is this plugin a MIDI effect?
-    # EDITOR_WANTS_KEYBOARD_FOCUS TRUE/FALSE    # Does the editor need keyboard focus?
-    COPY_PLUGIN_AFTER_BUILD TRUE                # Should the plugin be installed to a default location after building?
-    PLUGIN_MANUFACTURER_CODE PW28               # A four-character manufacturer id with at least one upper-case character
-    PLUGIN_CODE pwp1                            # A unique four-character plugin id with exactly one upper-case character
-                                                # GarageBand 10.3 requires the first letter to be upper-case, and the remaining letters to be lower-case
-    FORMATS AU VST3 Standalone                  # The formats to build. Other valid formats are: AAX Unity VST AU AUv3
-    PRODUCT_NAME "p!")        # The name of the final executable, which can differ from the target name
+        VERSION 0.0.1                               # Set this if the plugin version is different to the project version
+        # ICON_BIG ...                              # ICON_* arguments specify a path to an image file to use as an icon for the Standalone
+        # ICON_SMALL ...
+        COMPANY_NAME pirko                          # Specify the name of the plugin's author
+        IS_SYNTH FALSE                              # Is this a synth or an effect?
+        NEEDS_MIDI_INPUT FALSE                      # Does the plugin need midi input?
+        NEEDS_MIDI_OUTPUT FALSE                     # Does the plugin need midi output?
+        IS_MIDI_EFFECT FALSE                        # Is this plugin a MIDI effect?
+        # EDITOR_WANTS_KEYBOARD_FOCUS TRUE/FALSE    # Does the editor need keyboard focus?
+        COPY_PLUGIN_AFTER_BUILD TRUE                # Should the plugin be installed to a default location after building?
+        PLUGIN_MANUFACTURER_CODE PW28               # A four-character manufacturer id with at least one upper-case character
+        PLUGIN_CODE pwp1                            # A unique four-character plugin id with exactly one upper-case character
+        # GarageBand 10.3 requires the first letter to be upper-case, and the remaining letters to be lower-case
+        FORMATS AU VST3 Standalone                  # The formats to build. Other valid formats are: AAX Unity VST AU AUv3
+        PRODUCT_NAME "p!")        # The name of the final executable, which can differ from the target name
 
 # `juce_generate_juce_header` will create a JuceHeader.h for a given target, which will be generated
 # into your build tree. This should be included with `#include <JuceHeader.h>`. The include path for
@@ -68,7 +68,7 @@ juce_add_plugin(p1
 # CMake command.
 
 target_sources(p1
-    PRIVATE
+        PRIVATE
         PluginEditor.cpp
         PluginProcessor.cpp)
 
@@ -80,7 +80,7 @@ target_sources(p1
 # definitions, pick unique names that are unlikely to collide! This is a standard CMake command.
 
 target_compile_definitions(p1
-    PUBLIC
+        PUBLIC
         # JUCE_WEB_BROWSER and JUCE_USE_CURL would be on by default, but you might not need them.
         JUCE_WEB_BROWSER=0  # If you remove this, add `NEEDS_WEB_BROWSER TRUE` to the `juce_add_plugin` call
         JUCE_USE_CURL=0     # If you remove this, add `NEEDS_CURL TRUE` to the `juce_add_plugin` call
@@ -103,10 +103,10 @@ target_compile_definitions(p1
 # here too. This is a standard CMake command.
 
 target_link_libraries(p1
-    PRIVATE
+        PRIVATE
         # AudioPluginData           # If we'd created a binary data target, we'd link to it here
         juce::juce_audio_utils
-    PUBLIC
+        PUBLIC
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags
         juce::juce_recommended_warning_flags)

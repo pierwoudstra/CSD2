@@ -1,6 +1,9 @@
 #pragma once
 
+#include "BitCrusher.h"
+#include "DownwardCompressor.h"
 #include "PitchShifter.h"
+#include "Tremolo.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
 
@@ -45,12 +48,23 @@ public:
 
 private:
   //==============================================================================
-  std::atomic<float> setDryWet(float wetSignal, float drySignal, float dryWetValue);
+  static std::atomic<float> setDryWet(float wetSignal, float drySignal,
+                                      float dryWetValue);
 
+  // controllable fields
   std::atomic<float> *pitch;
+  std::atomic<float> *bitDepth;
+  std::atomic<float> *modFreq;
+  std::atomic<float> *modDepth;
+  std::atomic<float> *saturation;
   std::atomic<float> *dryWet;
 
-  PitchShifter pitchShifter;
+  // effects
+  std::vector<PitchShifter> pitchShifter;
+  std::vector<BitCrusher> bitCrusher;
+  std::vector<Tremolo> tremolo;
+  std::vector<DownwardCompressor> compressor;
+
   juce::AudioProcessorValueTreeState Params;
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AudioPluginAudioProcessor)
 };

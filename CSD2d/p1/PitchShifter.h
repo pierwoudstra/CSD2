@@ -1,5 +1,4 @@
 // using Daan's Moog Ladder filter!
-#include "MoogLadder.h"
 #include "Effect.h"
 #include <cmath>
 
@@ -17,22 +16,21 @@
 class PitchShifter : public Effect {
 public:
   PitchShifter(float dryWet = 1.f, float shift = 2.f) {
+    //
+    //    // initializing the filter
+    //    filter = MoogLadder();
+    //    filter.prepare(44100);
+    //    filter.setCoefficients(MoogLadder::makeHiPass12());
+    //    filter.setCriticalFrequency(300.0);
+    //    filter.setResonance(0);
+    //
+    //    // initializing the filter
+    //    lowPass = MoogLadder();
+    //    filter.prepare(44100);
+    //    lowPass.setCoefficients(MoogLadder::makeLoPass24());
+    //    lowPass.setCriticalFrequency(22000.0);
+    //    lowPass.setResonance(0);
 
-    // initializing the filter
-    filter = MoogLadder();
-    filter.prepare(44100);
-    filter.setCoefficients(MoogLadder::makeHiPass12());
-    filter.setCriticalFrequency(300.0);
-    filter.setResonance(0);
-
-    // initializing the filter
-    lowPass = MoogLadder();
-    filter.prepare(44100);
-    lowPass.setCoefficients(MoogLadder::makeLoPass24());
-    lowPass.setCriticalFrequency(22000.0);
-    lowPass.setResonance(0);
-
-    setDryWet(dryWet);
     this->shift = shift;
 
     writeHead = 0;
@@ -40,16 +38,27 @@ public:
 
     crossFade = 1.f;
     buffer = new float[bufSize];
+    for (int i = 0; i < bufSize; i++) {
+      buffer[i] = 0.f;
+    }
   }
-  ~PitchShifter() {}
+  ~PitchShifter() {
+    //    delete buffer;
+  }
+
+  // calculating semitones to playback speed
+  float semitoneToSpeed(float semitones) {
+    // 2.f^(semitones / 12.f)
+    return std::pow(2.f, (semitones / 12.f));
+  }
 
   void applyEffect(const float &input, float &output) override {
 
     // using Daan's filter to high-pass the input
-    auto filteredInput = float( filter.process( double(input) ) );
+    // auto filteredInput = float(filter.process(double(input)));
 
     // write to circular buffer
-    buffer[writeHead] = filteredInput;
+    buffer[writeHead] = input;
 
     // read fractional readHead and generate 0 and 180 degree readHead in
     // integer form
@@ -68,7 +77,7 @@ public:
     // check if first readHead starts overlap with write head?
     // if yes -> do crossFade to second readHead
     if (overlap >= (writeHead - readHeadInt1) &&
-        (writeHead - readHeadInt1) >= 0 && shift != 1.f) {
+        (writeHead - readHeadInt1) >= 0 && semitoneToSpeed(shift) != 1.f) {
       int rel = writeHead - readHeadInt1;
       crossFade = float(((float)rel) / ((float)overlap));
     } else if (writeHead - readHeadInt1 == 0) {
@@ -78,7 +87,7 @@ public:
     // check if second readHead starts overlap with write head?
     // if yes -> do crossFade to first readHead
     if (overlap >= (writeHead - readHeadInt2) &&
-        (writeHead - readHeadInt2) >= 0 && shift != 1.f) {
+        (writeHead - readHeadInt2) >= 0 && semitoneToSpeed(shift) != 1.f) {
       int rel = writeHead - readHeadInt2;
       crossFade = 1.f - float(((float)rel) / ((float)overlap));
     } else if (writeHead - readHeadInt2 == 0) {
@@ -89,22 +98,23 @@ public:
     float sum = (sample1 * crossFade) + (sample2 * (1.f - crossFade));
 
     // increment fractional readHead and writeHead
-    readHead += shift;
+    readHead += semitoneToSpeed(shift);
     writeHead++;
     if (writeHead == bufSize)
       writeHead = 0;
     if (int(readHead) >= bufSize)
       readHead = 0.f;
 
-    double filteredOutput = lowPass.process( double(sum) );
+    //     double filteredOutput = lowPass.process(double(sum));
 
-    output = float(filteredOutput);
+    output = float(sum);
   }
+
   void setPitch(float shift) { this->shift = shift; }
 
 private:
-  MoogLadder filter;
-  MoogLadder lowPass;
+  //  MoogLadder filter;
+  //  MoogLadder lowPass;
 
   float *buffer;
   int writeHead;

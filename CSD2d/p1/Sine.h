@@ -1,17 +1,32 @@
 #include "Oscillator.h"
+#include <cmath>
+
+#define PI 3.14159265359
 
 #ifndef SINE_H
 #define SINE_H
 
 class Sine : public Oscillator {
 public:
-  Sine(int sampleRate, float frequency, float amplitude);
-  ~Sine();
+  Sine(float sampleRate, float frequency, float amplitude)
+      : Oscillator(sampleRate, frequency, amplitude) {
+    this->sampleRate = sampleRate;
+    this->frequency = frequency;
+    this->amplitude = amplitude;
+
+    phase = 0.0f;
+    sample = 0.0f;
+  }
+  ~Sine() {}
 
   // returns current sample
-  float getSample();
+  float getSample() { return sample; }
   // increments phase
-  void tick();
+  void tick() {
+    // increment phase inside sine function
+    phase += frequency / sampleRate;
+    sample = amplitude * sin(PI * 2 * phase);
+  }
 
 private:
   float sample;

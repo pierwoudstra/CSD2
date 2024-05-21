@@ -15,25 +15,45 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
       Params(*this, nullptr, "Parameters",
              {
                  std::make_unique<juce::AudioParameterFloat>(
-                     juce::ParameterID{"uPitch", 1}, "Pitch", 0.1, 5.0,
-                     1),
+                     juce::ParameterID{"detuneKnob", 1}, "detune", -1, 1, 0),
                  std::make_unique<juce::AudioParameterFloat>(
-                     juce::ParameterID{"uDryWet", 1}, "Dry/Wet", 0.0, 1.0,
-                     0.5),
-             })
-{
+                     juce::ParameterID{"bitDepthKnob", 1}, "bit-depth",
+                     juce::NormalisableRange<float>(4.f, 16.f, 0.001f, 0.2f),
+                     16.f),
+                 std::make_unique<juce::AudioParameterFloat>(
+                     juce::ParameterID{"modFreqKnob", 1}, "frequency", 1.f,
+                     30.f, 5.f),
+                 std::make_unique<juce::AudioParameterFloat>(
+                     juce::ParameterID{"modDepthKnob", 1}, "mod-depth", 0.f,
+                     1.f, 0.5f),
+                 std::make_unique<juce::AudioParameterFloat>(
+                     juce::ParameterID{"saturationKnob", 1}, "saturation", 1.f,
+                     50.f, 1.f),
+                 std::make_unique<juce::AudioParameterFloat>(
+                     juce::ParameterID{"dryWetKnob", 1}, "dry/wet", 0.f, 1.f,
+                     0.5f),
+             }) {
 
   // Use the parameter ID to return a pointer to our parameter data
-  pitch = Params.getRawParameterValue("uPitch");
-  dryWet = Params.getRawParameterValue("uDryWet");
+  pitch = Params.getRawParameterValue("detuneKnob");
+  bitDepth = Params.getRawParameterValue("bitDepthKnob");
+  modFreq = Params.getRawParameterValue("modFreqKnob");
+  modDepth = Params.getRawParameterValue("modDepthKnob");
+  saturation = Params.getRawParameterValue("saturationKnob");
+  dryWet = Params.getRawParameterValue("dryWetKnob");
 
-  // for each input channel emplace one filter
-  for(auto i = 0; i < getBusesLayout().getNumChannels(true, 0); ++i){
+  // for each input channel emplace one effect
+  for (auto i = 0; i < getBusesLayout().getNumChannels(true, 0); ++i) {
+    bitCrusher.emplace_back();
+    pitchShifter.emplace_back();
+    tremolo.emplace_back();
+    compressor.emplace_back();
 
-    pitchShifter.setPitch(1.f);
-
+    bitCrusher[i].setQuantizedBitDepth(16.f);
+    pitchShifter[i].setPitch(1.f);
+    tremolo[i].setFrequency(5.f);
+    tremolo[i].setModDepth(0.5f);
   }
-
 }
 
 AudioPluginAudioProcessor::~AudioPluginAudioProcessor() {}
@@ -128,7 +148,10 @@ bool AudioPluginAudioProcessor::isBusesLayoutSupported(
 #endif
 }
 
-std::atomic<float> AudioPluginAudioProcessor::setDryWet(float wetSignal, float drySignal, float dryWetValue) {
+// function that controls dry wet
+std::atomic<float> AudioPluginAudioProcessor::setDryWet(float wetSignal,
+                                                        float drySignal,
+                                                        float dryWetValue) {
   return drySignal * (1.f - dryWetValue) + (wetSignal * dryWetValue);
 }
 
@@ -140,39 +163,53 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
   auto totalNumInputChannels = getTotalNumInputChannels();
   auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-  // initialise output sample
-  float output = 0.f;
-
-  pitchShifter.setPitch( *pitch );
-
   for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     buffer.clear(i, 0, buffer.getNumSamples());
 
   for (int channel = 0; channel < totalNumInputChannels; ++channel) {
-    auto *channelData = buffer.getWritePointer(channel);
-    juce::ignoreUnused(channelData);
+
+    float output[totalNumOutputChannels];
+
+    for (int i = 0; i < totalNumOutputChannels; i++)
+      output[i] = 0.f;
+
+    // input data
+    const float *inputData = buffer.getReadPointer(channel);
+
+    // output data
+    float *outputData = buffer.getWritePointer(channel);
+
+    juce::ignoreUnused(outputData);
 
     for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
 
+      // edit parameters
+      pitchShifter[channel].setPitch(*pitch);
+      bitCrusher[channel].setQuantizedBitDepth(*bitDepth);
+      tremolo[channel].setFrequency(*modFreq);
+      tremolo[channel].setModDepth(*modDepth);
+
+      // get current value from read pointer
+      float inputSample = inputData[sample];
+
       // edit input signal with effect
-      pitchShifter.processFrame(channelData[sample], output);
+      pitchShifter[channel].processFrame(inputSample, output[channel]);
+      bitCrusher[channel].processFrame(output[channel], output[channel]);
+      tremolo[channel].processFrame(output[channel], output[channel]);
+      compressor[channel].processFrame(output[channel], output[channel]);
+      output[channel] = tanh(*saturation * output[channel]) / tanh(*saturation);
 
       // combine input & output for working dry/wet balance
-      output = setDryWet(output, channelData[sample], *dryWet);
-
-      channelData[sample] = output;
-
+      outputData[sample] = setDryWet(output[channel], inputSample, *dryWet);
     }
   }
 }
 
 //==============================================================================
-bool AudioPluginAudioProcessor::hasEditor() const {
-  return true; // (change this to false if you choose to not supply an editor)
-}
+bool AudioPluginAudioProcessor::hasEditor() const { return true; }
 
 juce::AudioProcessorEditor *AudioPluginAudioProcessor::createEditor() {
-  return new AudioPluginAudioProcessorEditor(*this);
+  return new AudioPluginAudioProcessorEditor(*this, Params);
 }
 
 //==============================================================================
@@ -183,16 +220,20 @@ void AudioPluginAudioProcessor::getStateInformation(
   // as intermediaries to make it easy to save and load complex data.
   juce::ignoreUnused(destData);
   auto state = Params.copyState();
+  std::unique_ptr<juce::XmlElement> xml(state.createXml());
+  copyXmlToBinary(*xml, destData);
 }
 
 void AudioPluginAudioProcessor::setStateInformation(const void *data,
                                                     int sizeInBytes) {
-  // You should use this method to restore your parameters from this memory block,
-  // whose contents will have been created by the getStateInformation() call.
-  std::unique_ptr<juce::XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+  // You should use this method to restore your parameters from this memory
+  // block, whose contents will have been created by the getStateInformation()
+  // call.
+  std::unique_ptr<juce::XmlElement> xmlState(
+      getXmlFromBinary(data, sizeInBytes));
   if (xmlState.get() != nullptr)
-    if (xmlState->hasTagName (Params.state.getType()))
-      Params.replaceState (juce::ValueTree::fromXml (*xmlState));
+    if (xmlState->hasTagName(Params.state.getType()))
+      Params.replaceState(juce::ValueTree::fromXml(*xmlState));
 }
 
 //==============================================================================
