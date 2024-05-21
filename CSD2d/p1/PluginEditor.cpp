@@ -7,39 +7,51 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
     : AudioProcessorEditor(&p), ref(Reference), processorRef(p) {
   juce::ignoreUnused(processorRef);
 
+  /*
+   * set look & feel
+   */
+
+  juce::LookAndFeel::setDefaultLookAndFeel(&customLNF);
+
   // detune knob
-  detuneKnob.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
-  detuneKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 30, 10);
+  detuneKnob.setSliderStyle(
+      juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    detuneKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 50, 20);
   detuneKnobAttachment =
       std::make_unique<SliderAttachment>(ref, "detuneKnob", detuneKnob);
 
   // bit depth knob
-  bitDepthKnob.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
-  bitDepthKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 30, 10);
+  bitDepthKnob.setSliderStyle(
+      juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    bitDepthKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 50, 20);
   bitDepthKnobAttachment =
       std::make_unique<SliderAttachment>(ref, "bitDepthKnob", bitDepthKnob);
 
   // mod freq knob
-  modFreqKnob.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
-  modFreqKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 30, 10);
+  modFreqKnob.setSliderStyle(
+      juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    modFreqKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 50, 20);
   modFreqKnobAttachment =
       std::make_unique<SliderAttachment>(ref, "modFreqKnob", modFreqKnob);
 
   // mod depth knob
-  modDepthKnob.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
-  modDepthKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 30, 10);
+  modDepthKnob.setSliderStyle(
+      juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    modDepthKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 50, 20);
   modDepthKnobAttachment =
       std::make_unique<SliderAttachment>(ref, "modDepthKnob", modDepthKnob);
 
   // saturation knob
-  saturationKnob.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
-  saturationKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 30, 10);
+  saturationKnob.setSliderStyle(
+      juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    saturationKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 50, 20);
   saturationKnobAttachment =
       std::make_unique<SliderAttachment>(ref, "saturationKnob", saturationKnob);
 
   // dey/wet knob
-  dryWetKnob.setSliderStyle(juce::Slider::SliderStyle::LinearBar);
-  dryWetKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 30, 10);
+  dryWetKnob.setSliderStyle(
+      juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    dryWetKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 50, 20);
   dryWetKnobAttachment =
       std::make_unique<SliderAttachment>(ref, "dryWetKnob", dryWetKnob);
 
@@ -53,7 +65,9 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
   setSize(400, 300);
 }
 
-AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor() {}
+AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor() {
+  juce::LookAndFeel::setDefaultLookAndFeel(nullptr);
+}
 
 //==============================================================================
 void AudioPluginAudioProcessorEditor::paint(juce::Graphics &g) {
