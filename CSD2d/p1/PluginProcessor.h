@@ -1,9 +1,9 @@
 #pragma once
 
-#include "BitCrusher.h"
-#include "DownwardCompressor.h"
-#include "PitchShifter.h"
-#include "Tremolo.h"
+#include "Effects/BitCrusher.h"
+#include "Effects/DownwardCompressor.h"
+#include "Effects/PitchShifter.h"
+#include "Effects/Tremolo.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
 

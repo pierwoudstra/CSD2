@@ -1,7 +1,8 @@
 #pragma once
 
+#include "Components/StyleSheet.h"
+#include "Components/XYPad.h"
 #include "PluginProcessor.h"
-#include "StyleSheet.h"
 
 //==============================================================================
 class AudioPluginAudioProcessorEditor final
@@ -17,8 +18,7 @@ public:
   void resized() override;
 
 private:
-  // This reference is provided as a quick way for your editor to
-  // access the processor object that created it.
+  juce::Image background;
 
   juce::CustomLNF customLNF;
 
@@ -26,6 +26,8 @@ private:
 
   juce::Slider detuneKnob, bitDepthKnob, modFreqKnob, modDepthKnob,
       saturationKnob, dryWetKnob;
+
+  Gui::XYPad xyPad;
 
   // attachment moet na knob
   using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;

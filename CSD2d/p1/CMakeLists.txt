@@ -14,7 +14,7 @@ cmake_minimum_required(VERSION 3.22)
 # `project()` command. `project()` sets up some helpful variables that describe source/binary
 # directories, and the current project version. This is a standard CMake command.
 
-project(P1 VERSION 0.0.1)
+project(P1 VERSION 0.0.6)
 
 # If you've installed JUCE somehow (via a package manager, or directly using the CMake install
 # target), you'll need to tell this project that it depends on the installed copy of JUCE. If you've
@@ -38,9 +38,9 @@ project(P1 VERSION 0.0.1)
 # Check the readme at `docs/CMake API.md` in the JUCE repo for the full list.
 
 juce_add_plugin(p1
-        VERSION 0.0.1                               # Set this if the plugin version is different to the project version
-        # ICON_BIG ...                              # ICON_* arguments specify a path to an image file to use as an icon for the Standalone
-        # ICON_SMALL ...
+        VERSION 0.0.6                               # Set this if the plugin version is different to the project version
+        ICON_BIG logo.png                           # ICON_* arguments specify a path to an image file to use as an icon for the Standalone
+        ICON_SMALL logo.png
         COMPANY_NAME pirko                          # Specify the name of the plugin's author
         IS_SYNTH FALSE                              # Is this a synth or an effect?
         NEEDS_MIDI_INPUT FALSE                      # Does the plugin need midi input?
