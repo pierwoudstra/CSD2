@@ -12,35 +12,35 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
               .withOutput("Output", juce::AudioChannelSet::stereo(), true)
 #endif
               ),
-      Params(*this, nullptr, "Parameters",
-             {
-                 std::make_unique<juce::AudioParameterFloat>(
-                     juce::ParameterID{"detuneKnob", 1}, "detune", -1, 1, 0),
-                 std::make_unique<juce::AudioParameterFloat>(
-                     juce::ParameterID{"bitDepthKnob", 1}, "bit-depth",
-                     juce::NormalisableRange<float>(4.f, 16.f, 0.001f, 0.2f),
-                     16.f),
-                 std::make_unique<juce::AudioParameterFloat>(
-                     juce::ParameterID{"modFreqKnob", 1}, "frequency", 1.f,
-                     30.f, 5.f),
-                 std::make_unique<juce::AudioParameterFloat>(
-                     juce::ParameterID{"modDepthKnob", 1}, "mod-depth", 0.f,
-                     1.f, 0.5f),
-                 std::make_unique<juce::AudioParameterFloat>(
-                     juce::ParameterID{"saturationKnob", 1}, "saturation", 1.f,
-                     50.f, 1.f),
-                 std::make_unique<juce::AudioParameterFloat>(
-                     juce::ParameterID{"dryWetKnob", 1}, "dry/wet", 0.f, 1.f,
-                     0.5f),
-             }) {
+      Params(
+          *this, nullptr, "Parameters",
+          {
+              std::make_unique<juce::AudioParameterFloat>(
+                  juce::ParameterID{"detuneKnob", 1}, "detune", -1, 1, 0),
+              std::make_unique<juce::AudioParameterFloat>(
+                  juce::ParameterID{"bitDepthKnob", 1}, "bit-depth",
+                  juce::NormalisableRange<float>(4.f, 16.f, 0.001f, 0.2f),
+                  16.f),
+              std::make_unique<juce::AudioParameterFloat>(
+                  juce::ParameterID{"modFreqKnob", 1}, "frequency", 1.f, 30.f,
+                  5.f),
+              std::make_unique<juce::AudioParameterFloat>(
+                  juce::ParameterID{"modDepthKnob", 1}, "mod-depth", 0.f, 1.f,
+                  0.5f),
+              std::make_unique<juce::AudioParameterFloat>(
+                  juce::ParameterID{"saturationKnob", 1}, "saturation", 1.f, 50.f,
+                  1.f),
+              std::make_unique<juce::AudioParameterFloat>(
+                  juce::ParameterID{"dryWetKnob", 1}, "dry/wet", 0.f, 1.f, 0.5f),
+          }) {
 
   // Use the parameter ID to return a pointer to our parameter data
-  pitch = Params.getRawParameterValue("detuneKnob");
-  bitDepth = Params.getRawParameterValue("bitDepthKnob");
-  modFreq = Params.getRawParameterValue("modFreqKnob");
-  modDepth = Params.getRawParameterValue("modDepthKnob");
-  saturation = Params.getRawParameterValue("saturationKnob");
-  dryWet = Params.getRawParameterValue("dryWetKnob");
+  Params.addParameterListener("detuneKnob", this);
+  Params.addParameterListener("bitDepthKnob", this);
+  Params.addParameterListener("modFreqKnob", this);
+  Params.addParameterListener("modDepthKnob", this);
+  Params.addParameterListener("saturationKnob", this);
+  Params.addParameterListener("dryWetKnob", this);
 
   // for each input channel emplace one effect
   for (auto i = 0; i < getBusesLayout().getNumChannels(true, 0); ++i) {
@@ -56,7 +56,14 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
   }
 }
 
-AudioPluginAudioProcessor::~AudioPluginAudioProcessor() {}
+AudioPluginAudioProcessor::~AudioPluginAudioProcessor() {
+  Params.removeParameterListener("detuneKnob", this);
+  Params.removeParameterListener("bitDepthKnob", this);
+  Params.removeParameterListener("modFreqKnob", this);
+  Params.removeParameterListener("modDepthKnob", this);
+  Params.removeParameterListener("saturationKnob", this);
+  Params.removeParameterListener("dryWetKnob", this);
+}
 
 //==============================================================================
 const juce::String AudioPluginAudioProcessor::getName() const {
@@ -114,9 +121,12 @@ void AudioPluginAudioProcessor::changeProgramName(int index,
 //==============================================================================
 void AudioPluginAudioProcessor::prepareToPlay(double sampleRate,
                                               int samplesPerBlock) {
-  // Use this method as the place to do any pre-playback
-  // initialisation that you need..
-  juce::ignoreUnused(sampleRate, samplesPerBlock);
+  pitch = Params.getRawParameterValue("detuneKnob");
+  bitDepth = Params.getRawParameterValue("bitDepthKnob");
+  modFreq = Params.getRawParameterValue("modFreqKnob");
+  modDepth = Params.getRawParameterValue("modDepthKnob");
+  saturation = Params.getRawParameterValue("saturationKnob");
+  dryWet = Params.getRawParameterValue("dryWetKnob");
 }
 
 void AudioPluginAudioProcessor::releaseResources() {
@@ -234,6 +244,22 @@ void AudioPluginAudioProcessor::setStateInformation(const void *data,
   if (xmlState.get() != nullptr)
     if (xmlState->hasTagName(Params.state.getType()))
       Params.replaceState(juce::ValueTree::fromXml(*xmlState));
+}
+
+void AudioPluginAudioProcessor::parameterChanged(const String &parameterID,
+                                                 float newValue) {
+  if (parameterID.equalsIgnoreCase("detuneKnob"))
+    pitch = Params.getRawParameterValue("detuneKnob");
+  if (parameterID.equalsIgnoreCase("bitDepthKnob"))
+    bitDepth = Params.getRawParameterValue("bitDepthKnob");
+  if (parameterID.equalsIgnoreCase("modFreqKnob"))
+    modFreq = Params.getRawParameterValue("modFreqKnob");
+  if (parameterID.equalsIgnoreCase("modDepthKnob"))
+    modDepth = Params.getRawParameterValue("modDepthKnob");
+  if (parameterID.equalsIgnoreCase("saturationKnob"))
+    saturation = Params.getRawParameterValue("saturationKnob");
+  if (parameterID.equalsIgnoreCase("dryWetKnob"))
+    dryWet = Params.getRawParameterValue("dryWetKnob");
 }
 
 //==============================================================================

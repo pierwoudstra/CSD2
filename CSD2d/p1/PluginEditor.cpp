@@ -14,16 +14,17 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
 
   juce::LookAndFeel::setDefaultLookAndFeel(&customLNF);
 
-  /*
-   * xy-pad
-   */
-
   // detune knob
   detuneKnob.setSliderStyle(
       juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
   detuneKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 50, 20);
   detuneKnobAttachment =
       std::make_unique<SliderAttachment>(ref, "detuneKnob", detuneKnob);
+
+  detuneKnob.onValueChange = [this] {
+    // xypad.setDingetjeHorizontal(detuneKnob.getValue();
+    xyPad.sliderValueChanged(&detuneKnob);
+  };
 
   // bit depth knob
   bitDepthKnob.setSliderStyle(
@@ -32,12 +33,18 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
   bitDepthKnobAttachment =
       std::make_unique<SliderAttachment>(ref, "bitDepthKnob", bitDepthKnob);
 
+
   // mod freq knob
   modFreqKnob.setSliderStyle(
       juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
   modFreqKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 50, 20);
   modFreqKnobAttachment =
       std::make_unique<SliderAttachment>(ref, "modFreqKnob", modFreqKnob);
+
+  modFreqKnob.onValueChange = [this] {
+    // xypad.setDingetjeHorizontal(detuneKnob.getValue();
+    xyPad.sliderValueChanged(&modFreqKnob);
+  };
 
   // mod depth knob
   modDepthKnob.setSliderStyle(
@@ -46,6 +53,11 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
   modDepthKnobAttachment =
       std::make_unique<SliderAttachment>(ref, "modDepthKnob", modDepthKnob);
 
+  modDepthKnob.onValueChange = [this] {
+    // xypad.setDingetjeHorizontal(detuneKnob.getValue();
+    xyPad.sliderValueChanged(&modDepthKnob);
+  };
+
   // saturation knob
   saturationKnob.setSliderStyle(
       juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
@@ -53,44 +65,59 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
   saturationKnobAttachment =
       std::make_unique<SliderAttachment>(ref, "saturationKnob", saturationKnob);
 
-  // dey/wet knob
+  saturationKnob.onValueChange = [this] {
+    // xypad.setDingetjeHorizontal(detuneKnob.getValue();
+    xyPad.sliderValueChanged(&saturationKnob);
+  };
+
+  // dry/wet knob
   dryWetKnob.setSliderStyle(
       juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
   dryWetKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 50, 20);
   dryWetKnobAttachment =
       std::make_unique<SliderAttachment>(ref, "dryWetKnob", dryWetKnob);
 
-//  xyPad.registerSlider(&dryWetKnob, XyPad::Axis::Y);
-//  xyPad.registerSlider(&saturationKnob, XyPad::Axis::X);
+  dryWetKnob.onValueChange = [this] {
+    // xypad.setDingetjeHorizontal(detuneKnob.getValue();
+    xyPad.sliderValueChanged(&dryWetKnob);
+  };
+
+  /*
+   * xy-pad
+   */
+
+  // assigning sliders to axis
+  xyPad.registerSlider(&detuneKnob, Gui::XYPad::Axis::X1);
+  xyPad.registerSlider(&bitDepthKnob, Gui::XYPad::Axis::Y1);
+  xyPad.registerSlider(&modFreqKnob, Gui::XYPad::Axis::X2);
+  xyPad.registerSlider(&modDepthKnob, Gui::XYPad::Axis::Y2);
+  xyPad.registerSlider(&saturationKnob, Gui::XYPad::Axis::X3);
+  xyPad.registerSlider(&dryWetKnob, Gui::XYPad::Axis::Y3);
 
   addAndMakeVisible(xyPad);
-
-//  addAndMakeVisible(detuneKnob);
-//  addAndMakeVisible(bitDepthKnob);
-//  addAndMakeVisible(modFreqKnob);
-//  addAndMakeVisible(modDepthKnob);
-//  addAndMakeVisible(saturationKnob);
-//  addAndMakeVisible(dryWetKnob);
 
   setSize(400, 300);
 }
 
 AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor() {
   juce::LookAndFeel::setDefaultLookAndFeel(nullptr);
+
+  xyPad.deregisterSlider(&detuneKnob);
+  xyPad.deregisterSlider(&bitDepthKnob);
+  xyPad.deregisterSlider(&modFreqKnob);
+  xyPad.deregisterSlider(&modDepthKnob);
+  xyPad.deregisterSlider(&saturationKnob);
+  xyPad.deregisterSlider(&dryWetKnob);
 }
 
 //==============================================================================
 void AudioPluginAudioProcessorEditor::paint(juce::Graphics &g) {
-  g.fillAll(juce::Colours::blue);
+  background = juce::ImageCache::getFromMemory(imageData, imageDataSize);
+
+  g.drawImageWithin(background, 0, 0, getWidth(), getHeight(),
+                    juce::RectanglePlacement::stretchToFit);
 }
 
 void AudioPluginAudioProcessorEditor::resized() {
-//  detuneKnob.setBounds(75, 25, 100, 50);
-//  bitDepthKnob.setBounds(75, 125, 100, 50);
-//  modFreqKnob.setBounds(75, 225, 100, 50);
-//  modDepthKnob.setBounds(225, 25, 100, 50);
-//  saturationKnob.setBounds(225, 125, 100, 50);
-//  dryWetKnob.setBounds(225, 225, 100, 50);
-
-  xyPad.setBounds(50, 50, 300, 200);
+  xyPad.setBounds(25, 25, 350, 250);
 }

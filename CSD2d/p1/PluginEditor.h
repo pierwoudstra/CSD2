@@ -2,7 +2,12 @@
 
 #include "Components/StyleSheet.h"
 #include "Components/XYPad.h"
+#include "Components/background.h"
 #include "PluginProcessor.h"
+
+#include "Components/BinaryData.h"
+
+#include <JuceHeader.h>
 
 //==============================================================================
 class AudioPluginAudioProcessorEditor final
@@ -19,6 +24,9 @@ public:
 
 private:
   juce::Image background;
+
+  const char* imageData = background::background_png;
+  const int imageDataSize = background::background_pngSize;
 
   juce::CustomLNF customLNF;
 

@@ -8,7 +8,8 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 
 //==============================================================================
-class AudioPluginAudioProcessor final : public juce::AudioProcessor {
+class AudioPluginAudioProcessor final : public juce::AudioProcessor,
+                                        juce::AudioProcessorValueTreeState::Listener {
 public:
   //==============================================================================
   AudioPluginAudioProcessor();
@@ -48,6 +49,9 @@ public:
 
 private:
   //==============================================================================
+
+  void parameterChanged(const juce::String& parameterID, float newValue) override;
+
   static std::atomic<float> setDryWet(float wetSignal, float drySignal,
                                       float dryWetValue);
 

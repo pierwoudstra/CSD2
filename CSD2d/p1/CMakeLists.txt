@@ -70,7 +70,9 @@ juce_generate_juce_header(p1)
 target_sources(p1
         PRIVATE
         PluginEditor.cpp
-        PluginProcessor.cpp)
+        PluginProcessor.cpp
+		Components/background.cpp
+        Components/BinaryData.cpp)
 
 # `target_compile_definitions` adds some preprocessor definitions to our target. In a Projucer
 # project, these might be passed in the 'Preprocessor Definitions' field. JUCE modules also make use
