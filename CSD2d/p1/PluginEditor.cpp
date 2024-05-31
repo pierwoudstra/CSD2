@@ -22,7 +22,6 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
       std::make_unique<SliderAttachment>(ref, "detuneKnob", detuneKnob);
 
   detuneKnob.onValueChange = [this] {
-    // xypad.setDingetjeHorizontal(detuneKnob.getValue();
     xyPad.sliderValueChanged(&detuneKnob);
   };
 
@@ -33,6 +32,10 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
   bitDepthKnobAttachment =
       std::make_unique<SliderAttachment>(ref, "bitDepthKnob", bitDepthKnob);
 
+  bitDepthKnob.onValueChange = [this] {
+    xyPad.sliderValueChanged(&bitDepthKnob);
+  };
+
 
   // mod freq knob
   modFreqKnob.setSliderStyle(
@@ -42,7 +45,6 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
       std::make_unique<SliderAttachment>(ref, "modFreqKnob", modFreqKnob);
 
   modFreqKnob.onValueChange = [this] {
-    // xypad.setDingetjeHorizontal(detuneKnob.getValue();
     xyPad.sliderValueChanged(&modFreqKnob);
   };
 
@@ -54,7 +56,6 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
       std::make_unique<SliderAttachment>(ref, "modDepthKnob", modDepthKnob);
 
   modDepthKnob.onValueChange = [this] {
-    // xypad.setDingetjeHorizontal(detuneKnob.getValue();
     xyPad.sliderValueChanged(&modDepthKnob);
   };
 
@@ -66,7 +67,6 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
       std::make_unique<SliderAttachment>(ref, "saturationKnob", saturationKnob);
 
   saturationKnob.onValueChange = [this] {
-    // xypad.setDingetjeHorizontal(detuneKnob.getValue();
     xyPad.sliderValueChanged(&saturationKnob);
   };
 
@@ -78,7 +78,6 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
       std::make_unique<SliderAttachment>(ref, "dryWetKnob", dryWetKnob);
 
   dryWetKnob.onValueChange = [this] {
-    // xypad.setDingetjeHorizontal(detuneKnob.getValue();
     xyPad.sliderValueChanged(&dryWetKnob);
   };
 

@@ -52,6 +52,12 @@ public:
     return std::pow(2.f, (semitones / 12.f));
   }
 
+  float smoothParameterChange(float oldValue, float newValue) {
+    // adjust the factor based on how quickly you want the parameter to change
+    const float smoothingFactor = 0.01f;
+    return oldValue + smoothingFactor * (newValue - oldValue);
+  }
+
   void applyEffect(const float &input, float &output) override {
 
     // using Daan's filter to high-pass the input
@@ -110,7 +116,13 @@ public:
     output = float(sum);
   }
 
-  void setPitch(float shift) { this->shift = shift; }
+  void setPitch(float shift) {
+    float newShiftValue = this->shift;
+    float oldShiftValue = 0.f;
+    shift = smoothParameterChange(oldShiftValue, newShiftValue);
+
+    oldShiftValue = shift;
+  }
 
 private:
   //  MoogLadder filter;

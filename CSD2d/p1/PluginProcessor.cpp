@@ -176,7 +176,14 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
   for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     buffer.clear(i, 0, buffer.getNumSamples());
 
+  // main loop
   for (int channel = 0; channel < totalNumInputChannels; ++channel) {
+
+    // edit parameters
+    pitchShifter[channel].setPitch(*pitch);
+    bitCrusher[channel].setQuantizedBitDepth(*bitDepth);
+    tremolo[channel].setFrequency(*modFreq);
+    tremolo[channel].setModDepth(*modDepth);
 
     float output[totalNumOutputChannels];
 
@@ -192,12 +199,6 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
     juce::ignoreUnused(outputData);
 
     for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
-
-      // edit parameters
-      pitchShifter[channel].setPitch(*pitch);
-      bitCrusher[channel].setQuantizedBitDepth(*bitDepth);
-      tremolo[channel].setFrequency(*modFreq);
-      tremolo[channel].setModDepth(*modDepth);
 
       // get current value from read pointer
       float inputSample = inputData[sample];
