@@ -16,6 +16,8 @@
 class PitchShifter : public Effect {
 public:
   PitchShifter(float dryWet = 1.f, float shift = 2.f) {
+
+    oldShiftValue = 0.f;
     //
     //    // initializing the filter
     //    filter = MoogLadder();
@@ -54,7 +56,7 @@ public:
 
   float smoothParameterChange(float oldValue, float newValue) {
     // adjust the factor based on how quickly you want the parameter to change
-    const float smoothingFactor = 0.01f;
+    const float smoothingFactor = 0.1f;
     return oldValue + smoothingFactor * (newValue - oldValue);
   }
 
@@ -116,9 +118,7 @@ public:
     output = float(sum);
   }
 
-  void setPitch(float shift) {
-    float newShiftValue = this->shift;
-    float oldShiftValue = 0.f;
+  void setPitch(float newShiftValue) {
     shift = smoothParameterChange(oldShiftValue, newShiftValue);
 
     oldShiftValue = shift;
@@ -133,6 +133,8 @@ private:
   float readHead;
   float shift;
   float crossFade;
+
+  float oldShiftValue;
 };
 
 #endif // INC_03_PRESENTATION_PITCHSHIFTER_H
