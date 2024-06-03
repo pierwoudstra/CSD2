@@ -4,6 +4,7 @@
 #include "Effects/DownwardCompressor.h"
 #include "Effects/PitchShifter.h"
 #include "Effects/Tremolo.h"
+#include "Effects/Sine.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
 
@@ -47,6 +48,14 @@ public:
   void getStateInformation(juce::MemoryBlock &destData) override;
   void setStateInformation(const void *data, int sizeInBytes) override;
 
+  void printFunc() {
+    std::cout << "printing" << std::endl;
+  }
+
+  float getSaturationValue() {
+    return saturationValue;
+  }
+
 private:
   //==============================================================================
 
@@ -63,11 +72,14 @@ private:
   std::atomic<float> *saturation;
   std::atomic<float> *dryWet;
 
+  float saturationValue;
+
   // effects
   std::vector<PitchShifter> pitchShifter;
   std::vector<BitCrusher> bitCrusher;
   std::vector<Tremolo> tremolo;
   std::vector<DownwardCompressor> compressor;
+  Sine lfo;
 
   juce::AudioProcessorValueTreeState Params;
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AudioPluginAudioProcessor)

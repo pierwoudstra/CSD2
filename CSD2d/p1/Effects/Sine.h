@@ -8,7 +8,7 @@
 
 class Sine : public Oscillator {
 public:
-  Sine(float sampleRate, float frequency, float amplitude)
+  Sine(float sampleRate = 44100, float frequency = 4.f, float amplitude = 1.f)
       : Oscillator(sampleRate, frequency, amplitude) {
     this->sampleRate = sampleRate;
     this->frequency = frequency;

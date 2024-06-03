@@ -8,6 +8,8 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
 
   juce::ignoreUnused(processorRef);
 
+  processorRef.printFunc();
+
   /*
    * set look & feel
    */

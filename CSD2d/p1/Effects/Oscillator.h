@@ -4,7 +4,7 @@
 class Oscillator {
 public:
   // constructor & deconstructor
-  Oscillator(float sampleRate, float frequency, float amplitude) {
+  Oscillator(float sampleRate = 44100, float frequency = 4.f, float amplitude = 1.f) {
     this->sampleRate = sampleRate;
     this->frequency = frequency;
     this->amplitude = amplitude;

@@ -121,6 +121,8 @@ void AudioPluginAudioProcessor::changeProgramName(int index,
 //==============================================================================
 void AudioPluginAudioProcessor::prepareToPlay(double sampleRate,
                                               int samplesPerBlock) {
+  lfo = Sine(sampleRate, 4.f, 1.f);
+
   pitch = Params.getRawParameterValue("detuneKnob");
   bitDepth = Params.getRawParameterValue("bitDepthKnob");
   modFreq = Params.getRawParameterValue("modFreqKnob");
@@ -208,10 +210,16 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
       bitCrusher[channel].processFrame(output[channel], output[channel]);
       tremolo[channel].processFrame(output[channel], output[channel]);
       compressor[channel].processFrame(output[channel], output[channel]);
-      output[channel] = tanh(*saturation * output[channel]) / tanh(*saturation);
+
+      saturationValue = *saturation * abs(lfo.getSample());
+
+      output[channel] = tanh(saturationValue * output[channel]) / tanh(saturationValue);
 
       // combine input & output for working dry/wet balance
       outputData[sample] = setDryWet(output[channel], inputSample, *dryWet);
+
+      // std::cout << lfo.getSample() << std::endl;
+      lfo.tick();
     }
   }
 }
